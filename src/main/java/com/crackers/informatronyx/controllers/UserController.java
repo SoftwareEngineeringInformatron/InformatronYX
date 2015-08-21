@@ -15,6 +15,7 @@ import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 import static org.springframework.data.mongodb.core.query.Update.update;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,9 +30,9 @@ public class UserController {
     @RequestMapping("/addUser")
     public boolean addUserTest() throws UnknownHostException
     {
-        MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), "database"));
+        MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo("localhost",27017),"database"));
         Boolean ok = false;
-        User p = new User("Username" , "Test password");
+        User p = new User("osiastedian" , "osias.tedian");
         mongoOps.insert(p);
         System.out.println(p);
         ok = true;
@@ -42,7 +43,7 @@ public class UserController {
     {
         MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), "database"));
         User p = null;
-        p = mongoOps.findOne(query(where("username").is("Username")), User.class);
+        p = mongoOps.findOne(query(where("username").is("osiastedian")), User.class);
         System.out.println(p.toString());
         return p;
     }
@@ -60,7 +61,7 @@ public class UserController {
     {
         MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), "database"));
         boolean ok = false;
-        mongoOps.remove(query(where("username").is("Username")), User.class);
+        mongoOps.remove(query(where("username").is("osiastedian")), User.class);
         ok = true;
         return ok;
     }

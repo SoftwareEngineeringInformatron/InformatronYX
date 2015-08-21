@@ -1,0 +1,5 @@
+com\crackers\informatronyx\models\User.class
+com\crackers\informatronyx\models\Person.class
+com\crackers\informatronyx\controllers\UserController.class
+com\crackers\informatronyx\controllers\AppConfig.class
+com\crackers\informatronyx\controllers\TestClass.class
