@@ -5,15 +5,19 @@
  */
 package com.crackers.informatronyx.models;
 
+import java.util.Date;
+
 /**
  *
- * @author User
+ * @author Andrew Paul Mago
  */
 public class Quiz {
     
     int result;
     String LOtitle;
     String username;
+    Date startTime;
+    Date endTime;
 
     public Quiz() {
     }
@@ -41,6 +45,22 @@ public class Quiz {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+    
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
     
 }

@@ -9,7 +9,7 @@ import java.util.Date;
 
 /**
  *
- * @author User
+ * @author Andrew Paul Mago
  */
 public class LearningElement {
     String Id;
