@@ -16,6 +16,9 @@ public class LearningObject {
     private int id;
     private List<LearningElement> sequence;
 
+    public LearningObject() {
+    }
+    
     public String getDescription() {
         return description;
     }
