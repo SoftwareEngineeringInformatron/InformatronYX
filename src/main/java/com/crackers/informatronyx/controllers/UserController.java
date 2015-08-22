@@ -31,7 +31,7 @@ public class UserController {
     public boolean addUserTest() throws UnknownHostException
     {
         MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo("localhost",27017),"database"));
-        Boolean ok = false;
+        boolean ok = false;
         User p = new User("osiastedian" , "osias.tedian");
         mongoOps.insert(p);
         System.out.println(p);

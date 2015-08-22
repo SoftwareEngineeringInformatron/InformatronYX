@@ -1,0 +1,145 @@
+	/* 
+	Generic Styling, for Desktops/Laptops 
+	*/
+        .dataTable th {
+            min-width: 100px !important;
+        }
+        
+        .account-info thead {
+            background: #e1e1e1;
+            color: #ff4000;
+
+        }
+
+	@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px)  {
+
+		.search-option {
+		    border-bottom: 5px solid #ff4000 !important;
+		}
+	
+		
+                
+		
+		#header-wrap {
+			margin-bottom: 0px;
+			padding: 0px;
+		}
+
+
+	}
+	
+	/* Smartphones (portrait and landscape) ----------- */
+	@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+		body { 
+			padding: 0; 
+			margin: 0; 
+			width: 320px; 
+		}
+
+
+	}
+	
+	/* iPads (portrait and landscape) ----------- */
+	@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+		body { 
+			width: 495px; 
+		}
+	}
+
+	@media (min-width: 980px) and (max-width: 1168px)  { 
+		#header-wrap {
+			/*margin-bottom: 150px;*/
+		}
+
+		.search, .collapse {
+			position: relative;
+			float: none;
+			display: inline-block;
+		}
+	}
+
+	@media (max-width: 512px) {
+		.search, .box {
+			position: relative;
+			float: none !important;
+			display: inline-block !important;
+		}
+
+		.account, .brand {
+			position: relative;
+			float: none !important;
+			display: inline-block !important;
+		}
+
+		
+	}
+
+	@media (max-width: 979px) {
+		#header-wrap {
+			margin-bottom: 0px;
+		}
+
+		#learning-objects {
+		    margin-top: 0px;
+		}
+                
+                .ul-search {
+                    float: none !important;
+                }
+	}
+
+	@media (max-width: 1190px) {
+		.admin {
+			position: relative;
+			display: inline-block !important;
+			float: none !important;
+		}
+
+		.search-account, .history { 
+			float: none !important;
+			display: inline-block;
+		}
+	}
+
+	@media (max-width: 1190px) {
+		.dataTables_length, .dataTables_filter {
+			width: inherit !important;
+			float: none !important;
+			text-align: left !important;
+			margin: 8px !important;
+		}
+	}
+
+	@media (min-width: 770px) {
+		/* modal */
+		.modal-center {
+			
+		}
+
+		.modal {
+			margin-left: -200px;
+			width: 371px;
+		}
+                
+                #evaluation {
+                    margin-left: -200px;
+                    width: 450px;
+                }
+               
+                
+                
+	}
+        
+        @media (max-width: 380px) {
+            #evaluation {
+                margin-left: -50px;
+                width: 400px;
+            }
+        }
+        
+        @media (max-width: 280px) {
+            #evaluation {
+                margin-left: -37%;
+                width: 400px;
+            }
+        }

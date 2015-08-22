@@ -11,11 +11,11 @@ import com.crackers.informatronyx.dto.UserDto;
  *
  * @author Ted Ian Osias
  */
-public class UsreService {
+public class UserService {
     
     public boolean promote(UserDto user){return true;}
     public boolean demote(UserDto user){return true;}
     public boolean register(UserDto user){return true;}
-    public boolean verify(UserDto user){return false;}
+    public boolean login(UserDto user){return false;}
     
 }
