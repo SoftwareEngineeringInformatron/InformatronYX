@@ -1,0 +1,258 @@
+	/* 
+	Generic Styling, for Desktops/Laptops 
+	*/
+        
+        
+	table { 
+		width: 100%; 
+		border-collapse: collapse; 
+	}
+	
+	.meter-admin th { 
+		font-weight: bold; 
+		color: #fff !important;
+  		background: #ff4000;
+	}
+	td, th { 
+		padding-left: 25px !important; 
+		/*border: 1px solid #ccc; */
+		text-align: left; 
+	}
+
+	#header-wrap {
+	    /*margin-bottom: 107px;*/
+	}
+
+
+	
+
+	@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px)  {
+
+		.search-option {
+		    border-bottom: 5px solid #ff4000 !important;
+		}
+	
+		/* Zebra striping */
+		tr:nth-of-type(odd) { 
+			background: #eee; 
+		}
+		/* Force table to not be like tables anymore */
+		table, thead, tbody, th, td, tr { 
+			display: block; 
+		}
+		
+		/* Hide table headers (but not display: none;, for accessibility) */
+		thead tr { 
+			position: absolute;
+			top: -9999px;
+			left: -9999px;
+		}
+		
+		tr { border: 1px solid #ccc; }
+		
+		td { 
+			/* Behave  like a "row" */
+			border: none !important;
+			/*border-bottom: 1px solid #eee; */
+			position: relative;
+			padding-left: 140px !important; 
+		}
+		
+		td:before { 
+			/* Now like a table header */
+			position: absolute; 
+			/* Top/left values mimic padding */
+			top: 8px;
+			left: 6px;
+			white-space: nowrap; 
+		}
+                
+                
+		 .account-info td {
+			display: inline-block;
+			padding-left:  0 !important;
+		}
+
+		.account-info tr:hover>td {
+			background: transparent !important;
+		}
+
+		.account-info thead tr {
+			top: inherit;
+			left: inherit;
+			position: relative;
+		}
+                
+		
+		
+		/*Label the data*/
+		
+		td:before { font-weight: bold; }
+
+		.user td:nth-of-type(1):before { content: "Name"; }
+		.user td:nth-of-type(2):before { content: "Subject"; }
+		.user td:nth-of-type(3):before { content: "Date Uploaded"; }
+		.user td:nth-of-type(4):before { content: "Evaluation"; }
+		.user td:nth-of-type(5):before { content: " "; }
+
+                .approve-admin td:nth-of-type(1):before { content: ""; }
+		.approve-admin td:nth-of-type(2):before { content: "Name"; }
+		.approve-admin td:nth-of-type(3):before { content: "Last Login"; }
+		.approve-admin td:nth-of-type(4):before { content: "Last Download"; }
+
+                .superadmin td:nth-of-type(1):before { content: ""; }
+		.superadmin td:nth-of-type(2):before { content: "Name"; }
+		.superadmin td:nth-of-type(3):before { content: "Last Login"; }
+		.superadmin td:nth-of-type(4):before { content: "Admin Type"; }
+
+		.meter-admin td:nth-of-type(1):before { content: "Name"; }
+		.meter-admin td:nth-of-type(2):before { content: "Amount to pay"; }
+
+		#transaction td:nth-of-type(1):before { content: "Name"; }
+		#transaction td:nth-of-type(2):before { content: "Transaction ID"; }
+		#transaction td:nth-of-type(3):before { content: "Amount Paid"; }
+		#transaction td:nth-of-type(4):before { content: "OR number"; }
+		#transaction td:nth-of-type(5):before { content: "Date Paid"; }
+
+		#download td:nth-of-type(1):before { content: "User ID"; }
+		#download td:nth-of-type(2):before { content: "Learning Object"; }
+		#download td:nth-of-type(3):before { content: "Subject"; }
+		#download td:nth-of-type(4):before { content: "Date Downloaded"; }
+
+		#pending td:nth-of-type(1):before { content: "Learning Object"; }
+		#pending td:nth-of-type(2):before { content: "Subject"; }
+		#pending td:nth-of-type(3):before { content: "Date Downloaded"; }
+
+		#user_transaction td:nth-of-type(1):before { content: "Transaction ID"; }
+		#user_transaction td:nth-of-type(2):before { content: "Amount Paid"; }
+		#user_transaction td:nth-of-type(3):before { content: "OR number"; }
+		#user_transaction td:nth-of-type(4):before { content: "Date Paid"; }
+
+		#user_download td:nth-of-type(1):before { content: "Learning Object"; }
+		#user_download td:nth-of-type(2):before { content: "Subject"; }
+		#user_download td:nth-of-type(3):before { content: "Date Downloaded"; }
+                
+
+		#header-wrap {
+			margin-bottom: 0px;
+			padding: 0px;
+		}
+
+
+	}
+	
+	/* Smartphones (portrait and landscape) ----------- */
+	@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+		body { 
+			padding: 0; 
+			margin: 0; 
+			width: 320px; 
+		}
+
+
+	}
+	
+	/* iPads (portrait and landscape) ----------- */
+	@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+		body { 
+			width: 495px; 
+		}
+	}
+
+	@media (min-width: 980px) and (max-width: 1168px)  { 
+		#header-wrap {
+			/*margin-bottom: 150px;*/
+		}
+
+		.search, .collapse {
+			position: relative;
+			float: none;
+			display: inline-block;
+		}
+	}
+
+	@media (max-width: 512px) {
+		.search, .box {
+			position: relative;
+			float: none !important;
+			display: inline-block !important;
+		}
+
+		.account, .brand {
+			position: relative;
+			float: none !important;
+			display: inline-block !important;
+		}
+
+		
+	}
+
+	@media (max-width: 979px) {
+		#header-wrap {
+			margin-bottom: 0px;
+		}
+
+		#learning-objects {
+		    margin-top: 0px;
+		}
+                
+                .ul-search {
+                    float: none !important;
+                }
+	}
+
+	@media (max-width: 1190px) {
+		.admin {
+			position: relative;
+			display: inline-block !important;
+			float: none !important;
+		}
+
+		.search-account, .history { 
+			float: none !important;
+			display: inline-block;
+		}
+	}
+
+	@media (max-width: 1190px) {
+		.dataTables_length, .dataTables_filter {
+			width: inherit !important;
+			float: none !important;
+			text-align: left !important;
+			margin: 8px !important;
+		}
+	}
+
+	@media (min-width: 770px) {
+		/* modal */
+		.modal-center {
+			
+		}
+
+		.modal {
+			margin-left: -200px;
+			width: 371px;
+		}
+                
+                #evaluation {
+                    margin-left: -200px;
+                    width: 450px;
+                }
+               
+                
+                
+	}
+        
+        @media (max-width: 380px) {
+            #evaluation {
+                margin-left: -50px;
+                width: 400px;
+            }
+        }
+        
+        @media (max-width: 280px) {
+            #evaluation {
+                margin-left: -37%;
+                width: 400px;
+            }
+        }

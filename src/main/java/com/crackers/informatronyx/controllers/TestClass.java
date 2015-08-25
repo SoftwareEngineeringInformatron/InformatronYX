@@ -21,7 +21,7 @@ public class TestClass {
     @RequestMapping("/test")
     public User test()
     {
-        return new User("testusername","testpassword");
+        return null;
     }
     
     

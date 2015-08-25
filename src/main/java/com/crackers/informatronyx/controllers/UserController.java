@@ -30,40 +30,22 @@ public class UserController {
     @RequestMapping("/addUser")
     public boolean addUserTest() throws UnknownHostException
     {
-        MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo("localhost",27017),"database"));
-        boolean ok = false;
-        User p = new User("osiastedian" , "osias.tedian");
-        mongoOps.insert(p);
-        System.out.println(p);
-        ok = true;
-        return ok;
+        return true;
     }
     @RequestMapping("/getUser")
     public User getUserTest() throws UnknownHostException
     {
-        MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), "database"));
-        User p = null;
-        p = mongoOps.findOne(query(where("username").is("osiastedian")), User.class);
-        System.out.println(p.toString());
-        return p;
+        return null;
     }
     @RequestMapping("/updateUser")
     public boolean updateUserTest() throws UnknownHostException
     {
-        MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), "database"));
-        boolean ok = false;
-        mongoOps.updateFirst(query(where("username").is("Username")),update("age",23),User.class);
-        ok = true;
-        return ok;
+        return true;
     }
     @RequestMapping("/deleteUser")
     public boolean deleteUserTest() throws UnknownHostException
     {
-        MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new Mongo(), "database"));
-        boolean ok = false;
-        mongoOps.remove(query(where("username").is("osiastedian")), User.class);
-        ok = true;
-        return ok;
+        return true;
     }
     
 }
