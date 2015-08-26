@@ -36,6 +36,7 @@ public class User{
     private String token;
     public User(){
         liableLearningObjects = new ArrayList<>();
+        this.userType = User.USERTYPE_COMMON;
     }
     public String getId() {
         return id;
@@ -73,11 +74,8 @@ public class User{
         return userType;
     }
 
-    public void setUserType(int userType) throws Exception {
-        if(userType>0 && userType <4)
-            this.userType = userType;
-        else
-            throw new Exception("Invalid Usertype");
+    public void setUserType(int userType) {
+        this.userType = userType;
     }
 
     public String getFirstName() {

@@ -62,8 +62,8 @@
                                              <!-- Everything you want hidden at 940px or less, place within here -->
                                              <div class="nav-collapse collapse index">
                                                 <ul class="nav pull-right index">
-                                                    <li class="sign-up"><a class="btn index btn-index" href="login_signup.html?action=signup">Sign Up</a></li>
-                                                    <li class="sign-up"><a class="btn index btn-index" href="login_signup.html?action=login">Login</a></li>
+                                                    <li class="sign-up"><a class="btn index btn-index" href="login_signup?action=signup">Sign Up</a></li>
+                                                    <li class="sign-up"><a class="btn index btn-index" href="login_signup?action=login">Login</a></li>
                                                 </ul>				                   
                                             </div>
                                      </div> 
@@ -205,34 +205,7 @@
                 </div>
             </footer>
         </div>
-        
-        <script src="bootstrap/js/jquery-1.10.2.min.js"></script>
-        <script src="js/jquery-1.9.0.min.js"></script>
-    	<script src="js/jquery-ui-1.10.3.custom.min.js"></script>
-    	<script src="js/jquery.ui.touch-punch.min.js"></script>
-    	<script src="js/bootstrap.min.js"></script>
-    	<script src="js/bootstrap-select.js"></script>
-    	<script src="js/bootstrap-switch.js"></script>
-    	<script src="js/flatui-checkbox.js"></script>
-    	<script src="js/flatui-radio.js"></script>
-    	<script src="js/jquery.tagsinput.js"></script>
-    	<script src="js/jquery.placeholder.js"></script>
-    	<script src="js/jquery.stacktable.js"></script>
-    	<script src="js/application.js"></script>
-        
-    <!-- slider js plugin -->
-        <script type="text/javascript" src="js/jquery.nivo.slider.js"></script>
+       <jsp:include page="scripts.jsp" /> 
     </body>
 </html>
-
-<script type="text/javascript">
-//alert('working');
-    $(document).ready(function() {
-       $('#slider_now').nivoSlider();
-
-        
-
-    });
-
-   
-</script>
+<script src= "site_js/index.js" type="text/javascript"></script>

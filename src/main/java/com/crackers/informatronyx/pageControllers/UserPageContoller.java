@@ -14,19 +14,10 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Ted Ian Osias
  */
 @Controller
-public class IndexController {
+public class UserPageContoller {
     
-    @RequestMapping("/home")
+    @RequestMapping("/login_signup")
     public ModelAndView accessIndex() {
-        return new ModelAndView("index");
+        return new ModelAndView("login_signup");
     }  
-    @RequestMapping("/test")
-    public ModelAndView accessTestPage() {
-        return new ModelAndView("test");
-    }
-    @RequestMapping("/scripts")
-    public ModelAndView scriptsPage() {
-        return new ModelAndView("scripts");
-    }
-    
 }
