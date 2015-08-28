@@ -14,7 +14,7 @@ import java.util.Date;
 public class Quiz {
     
     int result;
-    String LOtitle;
+    String learningObjectTitle;
     String username;
     Date startTime;
     Date endTime;
@@ -32,11 +32,11 @@ public class Quiz {
     }
 
     public String getLOtitle() {
-        return LOtitle;
+        return learningObjectTitle;
     }
 
     public void setLOtitle(String LOtitle) {
-        this.LOtitle = LOtitle;
+        this.learningObjectTitle = LOtitle;
     }
 
     public String getUsername() {
@@ -61,6 +61,11 @@ public class Quiz {
 
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
+    }
+    
+    @Override
+    public String toString() {
+        return "\nLOtitle: " + this.learningObjectTitle + "\nUsername: " + this.username + "\nResult: " + this.result + "\nStart Time: " + this.startTime + "\nEnd Time: " + this.endTime;
     }
     
 }

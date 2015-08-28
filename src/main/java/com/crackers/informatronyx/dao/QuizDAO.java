@@ -10,10 +10,12 @@ import com.crackers.informatronyx.models.Quiz;
 import com.mongodb.Mongo;
 import java.net.UnknownHostException;
 import java.util.List;
+import javax.swing.JOptionPane;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
+import org.springframework.data.mongodb.core.query.Update;
 
 /**
  *
@@ -21,22 +23,75 @@ import static org.springframework.data.mongodb.core.query.Query.query;
  */
 public class QuizDAO {
     
+    public static boolean addQuiz(Quiz quiz) throws UnknownHostException {
+        try {
+         MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"quiz");
+         mongoOps.insert(quiz);
+         return true;
+         
+        } catch (NullPointerException ae) {System.out.println(ae.getMessage()); return false;}   
+    }
+    
+    public static boolean editQuiz(Quiz quiz) throws UnknownHostException {
+        try {
+         MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"quiz");
+         Update updateQuiz = new Update();
+         updateQuiz.set("result",quiz.getResult());
+         updateQuiz.set("startTime", quiz.getStartTime());
+         updateQuiz.set("endTime",quiz.getEndTime());
+         mongoOps.findAndModify(query(where("username").is(quiz.getUsername()).andOperator(where("learningObjectTitle").is(quiz.getLOtitle()))),updateQuiz,Quiz.class);
+         return true;
+         
+        } catch (NullPointerException ae) {System.out.println(ae.getMessage()); return false;}
+    }   
+    
+    public static boolean deleteQuiz(Quiz quiz) throws UnknownHostException {
+        try {
+         MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"quiz");
+         mongoOps.remove(query(where("username").is(quiz.getUsername()).andOperator(where("learningObjectTitle").is(quiz.getLOtitle()))), Quiz.class);
+         return true;
+         
+        } catch (NullPointerException ae) {System.out.println("BLADEE ELL"); return false;}
+    }
+    
     public static Quiz getQuiz(Quiz quiz) throws UnknownHostException {
-        MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"database");
+        MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"quiz");
         Quiz q = null;
-        q = mongoOps.findOne(query(where("username").is(q.getUsername()).orOperator(where("endTime").is(q.getEndTime()))), Quiz.class);
+        q = mongoOps.findOne(query(where("username").is(quiz.getUsername()).orOperator((where("startTime").is(quiz.getStartTime()).andOperator(where("endTime").is(quiz.getEndTime()))))), Quiz.class);
         return q;
     }
     
-    public static List<Quiz> getQuizResultsByLearningObject() throws UnknownHostException {
-        return null;
-    }
-    
-    public static List<Quiz> getQuizResultsByUser() throws UnknownHostException {
-        return null;
-    }
-    
     public static List<Quiz> getQuizResults() throws UnknownHostException {
-        return null;
+        MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"quiz");
+        return mongoOps.findAll(Quiz.class);
     }
+    
+    public static List<Quiz> getQuizResults(Quiz quiz,String filter) throws UnknownHostException {
+        try {
+        MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"quiz");
+        if(filter.contentEquals("learningObjectTitle"))
+        return mongoOps.find(query(where("learningObjectTitle").is(quiz.getLOtitle())), Quiz.class);
+        else
+        return mongoOps.find(query(where("username").is(quiz.getUsername())), Quiz.class);
+        
+        } catch(NullPointerException ae) {System.out.println(ae.getMessage()); return null;}
+    }
+    
+    /*
+    public static void main(String[] args) throws Exception {   
+        Quiz q = new Quiz();
+        q.setResult(20);
+        q.setUsername("mago");
+        q.setLOtitle("TestLO3");
+        q.setStartTime(new java.util.Date(115,3,15));
+        q.setEndTime(new java.util.Date(115,3,15));
+        JOptionPane.showMessageDialog(null, q.toString());
+        JOptionPane.showMessageDialog(null, QuizDAO.addQuiz(q));
+        JOptionPane.showMessageDialog(null, QuizDAO.deleteQuiz(q));
+        JOptionPane.showMessageDialog(null, QuizDAO.getQuiz(q).toString());
+        JOptionPane.showMessageDialog(null, QuizDAO.editQuiz(q));
+        System.out.println(QuizDAO.getQuizResults());
+        System.out.println(QuizDAO.getQuizResults(q, "learningObjectTitle"));
+    }
+    */
 }
