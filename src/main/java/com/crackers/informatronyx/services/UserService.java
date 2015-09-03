@@ -9,6 +9,7 @@ import com.crackers.informatronyx.dao.UserDAO;
 import com.crackers.informatronyx.dto.UserDto;
 import com.crackers.informatronyx.models.User;
 import java.net.UnknownHostException;
+import java.util.List;
 
 /**
  *
@@ -16,28 +17,8 @@ import java.net.UnknownHostException;
  */
 public class UserService {
     
-    public boolean promote(String username) throws UnknownHostException{
-        User model = new User();
-        model.setUsername(username);
-        model =UserDAO.getUser(model);
-        if(model.getUserType()<3){
-            model.setUserType(model.getUserType()+1);
-            UserDAO.saveUser(model);
-        }
-        else return false;
-        return true;
-    }
-    public boolean demote(String username) throws UnknownHostException{
-        User model = new User();
-        model.setUsername(username);
-        model =UserDAO.getUser(model);
-        if(model.getUserType()>1){
-            model.setUserType(model.getUserType()-1);
-            UserDAO.saveUser(model);
-        }
-        else return false;
-        return true;
-    }
+    public boolean verify(UserDto user){return false;}
+    public boolean login(UserDto user){return false;}
     public boolean register(UserDto user) throws UnknownHostException{
         boolean ok = false;
         if(!UserDAO.exists(user.getUsername())){
@@ -51,6 +32,18 @@ public class UserService {
         }
         return ok;
     }
-    public boolean login(UserDto user){return false;}
+    public boolean edit(UserDto user) throws UnknownHostException{return false;}
+    public boolean block(UserDto user) throws UnknownHostException{return false;}
+    public boolean unblock(UserDto user) throws UnknownHostException{return false;}
+    public UserDto promote(String username) throws UnknownHostException{return null;}
+    public UserDto demote(String username) throws UnknownHostException{return null;}
+    public UserDto getUserInfo(UserDto user) throws UnknownHostException{return null;}
+    public List<UserDto> getAllUsers(UserDto user) throws UnknownHostException{return null;}
+    public List<UserDto> getAllAdmin(UserDto user) throws UnknownHostException{return null;}
+    public List<UserDto> getAllCommonUsers(UserDto user) throws UnknownHostException{return null;}
+    public List<UserDto> getAllPendingUsers(UserDto user) throws UnknownHostException{return null;}
+    public boolean appoveUserRegistration(UserDto user) throws UnknownHostException{return false;}
+    
+    
     
 }

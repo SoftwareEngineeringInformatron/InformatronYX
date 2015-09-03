@@ -10,6 +10,7 @@ import com.crackers.informatronyx.models.User;
 import com.crackers.informatronyx.services.UserService;
 import com.mongodb.Mongo;
 import java.net.UnknownHostException;
+import java.util.List;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
@@ -56,4 +57,30 @@ public class UserController {
         }
         return user;
     }
+    @RequestMapping("/validate")
+    public boolean validate(UserDto user){return false;}
+    
+    @RequestMapping("/edit")
+    public boolean edit(UserDto user){return false;}
+    
+    @RequestMapping("/approve")
+    public boolean approve(UserDto user){return false;}
+    
+    @RequestMapping("/promote")
+    public boolean promote(UserDto user){return false;}
+    
+    @RequestMapping("/demote")
+    public boolean demote(UserDto user){return false;}
+    
+    @RequestMapping("/block")
+    public boolean block(UserDto user){return false;}
+    
+    @RequestMapping("/unblock")
+    public boolean unblock(UserDto user){return false;}
+    
+    @RequestMapping("/admins")
+    public List<UserDto> admins(UserDto user){return null;}
+    
+    @RequestMapping("/commonUsers")
+    public List<UserDto> commonUsers(UserDto user){return null;}
 }

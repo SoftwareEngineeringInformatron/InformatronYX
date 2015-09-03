@@ -18,25 +18,66 @@ import org.springframework.data.annotation.Id;
  * @author Ted Ian Osias
  */
 public class User{
-    public static int USERTYPE_SUPERADMIN = 3;
-    public static int USERTYPE_ADMIN = 2;
-    public static int USERTYPE_COMMON = 1;
+    public static int FUNCTION_SUPERADMIN = 4;
+    public static int FUNCTION_ADMIN_APPROVAL = 2;
+    public static int FUNCTION_ADMIN_METERING = 3;
+    public static int FUNCTION_COMMON = 1;
+    public static int FUNCTION_GUEST = 0;
+    public static String USERTYPE_SUPERADMIN = "Super Admin";
+    public static String USERTYPE_ADMIN = "Admin";
+    public static String USERTYPE_COMMON = "User";
+    public static String USERTYPE_GUEST = "Guest";
+    
     @Id
     private String id;
-    private String password;
     private String username;
-    private String email;
-    private int userType;
+    private String password;
     private String firstName;
     private String lastName;
+    private String email;
     private Date lastLogin;
     private Date lastDownloadDate;
     private String lastDownloadId;
     private List<LearningObject> liableLearningObjects;
     private String token;
+    private boolean approved;
+    private boolean blocked;
+    private String userType;
+    private int functionType;
+
+    public boolean isBlocked() {
+        return blocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    public int getFunctionType() {
+        return functionType;
+    }
+
+    public void setFunctionType(int functionType) {
+        this.functionType = functionType;
+    }
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
+    }
     public User(){
         liableLearningObjects = new ArrayList<>();
-        this.userType = User.USERTYPE_COMMON;
+        this.userType = User.USERTYPE_GUEST;
     }
     public String getId() {
         return id;
@@ -70,13 +111,6 @@ public class User{
         this.email = email;
     }
 
-    public int getUserType() {
-        return userType;
-    }
-
-    public void setUserType(int userType) {
-        this.userType = userType;
-    }
 
     public String getFirstName() {
         return firstName;

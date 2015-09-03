@@ -9,6 +9,7 @@ import com.crackers.informatronyx.config.AppConfig;
 import com.crackers.informatronyx.models.User;
 import com.mongodb.Mongo;
 import java.net.UnknownHostException;
+import java.util.List;
 
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -24,7 +25,7 @@ public class UserDAO {
     
     
     public static User getUser(User user) throws UnknownHostException{ 
-        MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"database");
+        MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"data");
         User p = null;
         p = mongoOps.findOne(query(where("username").is(user.getUsername())), User.class);
         return p;
@@ -90,4 +91,6 @@ public class UserDAO {
         ok = mongoOps.exists(query, User.class);
         return ok;
     }
+    public static User getUser(String username,String password){return null;}
+    public static List<User> getAllUserOfType(String type){return null;}
 }
