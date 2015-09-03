@@ -10,5 +10,5 @@ package com.crackers.informatronyx.services;
  * @author Nelson
  */
 public class LearningObjectService {
-    
+    public boolean getRequiredLearningElements(){ return false;}
 }

@@ -10,9 +10,11 @@ import com.crackers.informatronyx.models.LearningObject;
 import com.crackers.informatronyx.models.User;
 import com.mongodb.Mongo;
 import java.net.UnknownHostException;
+import java.util.List;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
+import org.springframework.data.mongodb.core.query.Query;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
 /**
@@ -21,21 +23,31 @@ import static org.springframework.data.mongodb.core.query.Query.query;
  */
 public class LearningObjectDAO {
     
-    public static LearningObject getList(LearningObject LO) throws UnknownHostException {
-        MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port), "database");
-        LearningObject l = null;
-        return l;
+    public static List<LearningObject> getList() throws UnknownHostException {
+       MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"quiz");
+        return mongoOps.findAll(LearningObject.class);
     }
     
-    public static LearningObject exists(String id) throws UnknownHostException {
+    public static boolean exists(String id) throws UnknownHostException {
         MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port), "database");
-        LearningObject l = null;
-        l = mongoOps.findOne(query(where("id").is(id)), LearningObject.class);
-        return l;
+        boolean ok = false;
+        Query query = new Query();
+        query.addCriteria(where("id").is(id));
+        ok = mongoOps.exists(query, LearningObject.class);
+        return ok;
     }
     
     //Clears the list then Adds the available LOs
-    public static LearningObject updateList(LearningObject LO) {
-        return null;
+    public static boolean updateList(LearningObject LO) throws UnknownHostException {
+        try {
+         MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"quiz");
+         mongoOps.insert(LO);
+         return true;         
+        } 
+        catch (NullPointerException e) 
+        {
+            System.out.println(e.getMessage());
+            return false;
+        }
     }    
 }
