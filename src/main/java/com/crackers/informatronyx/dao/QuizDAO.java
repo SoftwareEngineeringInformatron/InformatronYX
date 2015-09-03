@@ -36,10 +36,13 @@ public class QuizDAO {
         try {
          MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"quiz");
          Update updateQuiz = new Update();
-         updateQuiz.set("result",quiz.getScore());
-         updateQuiz.set("startTime", quiz.getTime_started());
-         updateQuiz.set("endTime",quiz.getTime_finished());
-         mongoOps.findAndModify(query(where("username").is(quiz.getUsername()).andOperator(where("lo_name").is(quiz.getLo_name()))),updateQuiz,Quiz.class);
+         updateQuiz.set("score",quiz.getScore());
+         updateQuiz.set("time_started", quiz.getTime_started());
+         updateQuiz.set("time_finished",quiz.getTime_finished());
+         updateQuiz.set("totalScore", quiz.getTotalScore());
+         updateQuiz.set("date_submitted", quiz.getDate_Submitted());
+         updateQuiz.set("user_id", quiz.getUser_id());
+         mongoOps.findAndModify(query(where("username").is(quiz.getUsername()).andOperator((where("lo_id").is(quiz.getLo_id()).andOperator(where("lo_name").is(quiz.getLo_name()))))),updateQuiz,Quiz.class);
          return true;
          
         } catch (NullPointerException ae) {System.out.println(ae.getMessage()); return false;}
