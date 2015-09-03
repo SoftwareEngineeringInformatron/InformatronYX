@@ -16,11 +16,16 @@ import java.util.List;
  */
 public class QuizDto {
     
-    int result;
-    String learningObjectTitle;
+    int id;
+    int lo_id;
+    int lo_name;
+    int score;
+    int totalScore;
+    Date date_submitted;
+    Date time_started;
+    Date time_finished;
     String username;
-    Date startTime;
-    Date endTime;
+    int user_id;
     List<Quiz> quizResults;
     List<String> errorList;
     
@@ -28,20 +33,68 @@ public class QuizDto {
         errorList = new ArrayList<String>();
     }
 
-    public int getResult() {
-        return result;
+    public int getId() {
+        return id;
     }
 
-    public void setResult(int result) {
-        this.result = result;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getLearningObjectTitle() {
-        return learningObjectTitle;
+    public int getLo_id() {
+        return lo_id;
     }
 
-    public void setLearningObjectTitle(String learningObjectTitle) {
-        this.learningObjectTitle = learningObjectTitle;
+    public void setLo_id(int lo_id) {
+        this.lo_id = lo_id;
+    }
+
+    public int getLo_name() {
+        return lo_name;
+    }
+
+    public void setLo_name(int lo_name) {
+        this.lo_name = lo_name;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public int getTotalScore() {
+        return totalScore;
+    }
+
+    public void setTotalScore(int totalScore) {
+        this.totalScore = totalScore;
+    }
+
+    public Date getDate_submitted() {
+        return date_submitted;
+    }
+
+    public void setDate_submitted(Date date_submitted) {
+        this.date_submitted = date_submitted;
+    }
+
+    public Date getTime_started() {
+        return time_started;
+    }
+
+    public void setTime_started(Date time_started) {
+        this.time_started = time_started;
+    }
+
+    public Date getTime_finished() {
+        return time_finished;
+    }
+
+    public void setTime_finished(Date time_finished) {
+        this.time_finished = time_finished;
     }
 
     public String getUsername() {
@@ -52,24 +105,12 @@ public class QuizDto {
         this.username = username;
     }
 
-    public Date getStartTime() {
-        return startTime;
+    public int getUser_id() {
+        return user_id;
     }
 
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
-    }
-
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
-    }
-
-    public List<Quiz> getQuizResults() {
-        return quizResults;
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
     public void setQuizResults(List<Quiz> quizResults) {

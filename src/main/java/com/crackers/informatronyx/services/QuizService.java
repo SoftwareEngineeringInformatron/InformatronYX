@@ -21,11 +21,16 @@ public class QuizService {
         try {
             if(evaluate(quiz)) {
             Quiz quizModel = new Quiz();
-            quizModel.setResult(quiz.getResult());
-            quizModel.setLOtitle(quiz.getLearningObjectTitle());
-            quizModel.setStartTime(quiz.getStartTime());
-            quizModel.setEndTime(quiz.getEndTime());
+            quizModel.setScore(quiz.getScore());
+            quizModel.setLo_name(quiz.getLo_name());
+            quizModel.setLo_id(quiz.getLo_id());
+            quizModel.setId(quiz.getId());
+            quizModel.setTime_started(quiz.getTime_started());
+            quizModel.setTime_finished(quiz.getTime_finished());
             quizModel.setUsername(quiz.getUsername());
+            quizModel.setDate_Submitted(quiz.getDate_submitted());
+            quizModel.setTotalScore(quiz.getTotalScore());
+            quizModel.setUser_id(quiz.getUser_id());
             QuizDAO.addQuiz(quizModel);
             return true;
             } else {
@@ -35,9 +40,9 @@ public class QuizService {
     }
     
     private boolean evaluate(QuizDto quiz) {
-        if(quiz.getEndTime()!=null && quiz.getLearningObjectTitle()!=null && quiz.getResult()>=0 && quiz.getStartTime()!=null && quiz.getUsername()!=null)
+        //if(quiz.getEndTime()!=null && quiz.getLearningObjectTitle()!=null && quiz.getResult()>=0 && quiz.getStartTime()!=null && quiz.getUsername()!=null)
             return true;
-        else
-            return false;
+        //else
+        //    return false;
     }
 }
