@@ -36,10 +36,10 @@ public class QuizDAO {
         try {
          MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"quiz");
          Update updateQuiz = new Update();
-         updateQuiz.set("result",quiz.getResult());
-         updateQuiz.set("startTime", quiz.getStartTime());
-         updateQuiz.set("endTime",quiz.getEndTime());
-         mongoOps.findAndModify(query(where("username").is(quiz.getUsername()).andOperator(where("learningObjectTitle").is(quiz.getLOtitle()))),updateQuiz,Quiz.class);
+         updateQuiz.set("result",quiz.getScore());
+         updateQuiz.set("startTime", quiz.getTime_started());
+         updateQuiz.set("endTime",quiz.getTime_finished());
+         mongoOps.findAndModify(query(where("username").is(quiz.getUsername()).andOperator(where("lo_name").is(quiz.getLo_name()))),updateQuiz,Quiz.class);
          return true;
          
         } catch (NullPointerException ae) {System.out.println(ae.getMessage()); return false;}
@@ -48,16 +48,16 @@ public class QuizDAO {
     public static boolean deleteQuiz(Quiz quiz) throws UnknownHostException {
         try {
          MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"quiz");
-         mongoOps.remove(query(where("username").is(quiz.getUsername()).andOperator(where("learningObjectTitle").is(quiz.getLOtitle()))), Quiz.class);
+         mongoOps.remove(query(where("username").is(quiz.getUsername()).andOperator(where("lo_name").is(quiz.getLo_name()))), Quiz.class);
          return true;
          
-        } catch (NullPointerException ae) {System.out.println("BLADEE ELL"); return false;}
+        } catch (NullPointerException ae) {System.out.println(ae.getMessage()); return false;}
     }
     
     public static Quiz getQuiz(Quiz quiz) throws UnknownHostException {
         MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"quiz");
         Quiz q = null;
-        q = mongoOps.findOne(query(where("username").is(quiz.getUsername()).orOperator((where("startTime").is(quiz.getStartTime()).andOperator(where("endTime").is(quiz.getEndTime()))))), Quiz.class);
+        q = mongoOps.findOne(query(where("username").is(quiz.getUsername()).orOperator((where("time_started").is(quiz.getTime_started()).andOperator(where("time_finished").is(quiz.getTime_finished()))))), Quiz.class);
         return q;
     }
     
@@ -70,7 +70,7 @@ public class QuizDAO {
         try {
         MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"quiz");
         if(filter.contentEquals("learningObjectTitle"))
-        return mongoOps.find(query(where("learningObjectTitle").is(quiz.getLOtitle())), Quiz.class);
+        return mongoOps.find(query(where("lo_name").is(quiz.getLo_name())), Quiz.class);
         else
         return mongoOps.find(query(where("username").is(quiz.getUsername())), Quiz.class);
         
