@@ -13,9 +13,9 @@ import java.util.Date;
  */
 public class Quiz {
     
-    int id;
-    int lo_id;
-    int lo_name;
+    String id;
+    String lo_id;
+    String lo_name;
     int score;
     int totalScore;
     Date date_submitted;
@@ -27,28 +27,36 @@ public class Quiz {
     public Quiz() {
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public int getLo_id() {
+    public String getLo_id() {
         return lo_id;
     }
 
-    public void setLo_id(int lo_id) {
+    public void setLo_id(String lo_id) {
         this.lo_id = lo_id;
     }
 
-    public int getLo_name() {
+    public String getLo_name() {
         return lo_name;
     }
 
-    public void setLo_name(int lo_name) {
+    public void setLo_name(String lo_name) {
         this.lo_name = lo_name;
+    }
+
+    public Date getDate_submitted() {
+        return date_submitted;
+    }
+
+    public void setDate_submitted(Date date_submitted) {
+        this.date_submitted = date_submitted;
     }
 
     public int getScore() {
@@ -65,14 +73,6 @@ public class Quiz {
 
     public void setTotalScore(int totalScore) {
         this.totalScore = totalScore;
-    }
-
-    public Date getDate_Submitted() {
-        return date_submitted;
-    }
-
-    public void setDate_Submitted(Date date_Submitted) {
-        this.date_submitted = date_Submitted;
     }
 
     public Date getTime_started() {

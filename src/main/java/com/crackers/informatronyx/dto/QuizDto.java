@@ -16,9 +16,9 @@ import java.util.List;
  */
 public class QuizDto {
     
-    int id;
-    int lo_id;
-    int lo_name;
+    String id;
+    String lo_id;
+    String lo_name;
     int score;
     int totalScore;
     Date date_submitted;
@@ -33,27 +33,27 @@ public class QuizDto {
         errorList = new ArrayList<String>();
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public int getLo_id() {
+    public String getLo_id() {
         return lo_id;
     }
 
-    public void setLo_id(int lo_id) {
+    public void setLo_id(String lo_id) {
         this.lo_id = lo_id;
     }
 
-    public int getLo_name() {
+    public String getLo_name() {
         return lo_name;
     }
 
-    public void setLo_name(int lo_name) {
+    public void setLo_name(String lo_name) {
         this.lo_name = lo_name;
     }
 
@@ -115,6 +115,10 @@ public class QuizDto {
 
     public void setQuizResults(List<Quiz> quizResults) {
         this.quizResults = quizResults;
+    }
+    
+    public List<Quiz> getQuizResults() {
+        return quizResults;
     }
 
     public List<String> getErrorList() {
