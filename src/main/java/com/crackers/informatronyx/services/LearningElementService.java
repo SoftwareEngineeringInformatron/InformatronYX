@@ -17,7 +17,7 @@ public class LearningElementService {
         return null;
     }
     
-    public boolean alreadyExistsInRepository() {
+    public boolean isAvailable() {
         return false;
     }
 }
