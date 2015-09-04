@@ -24,7 +24,7 @@ import static org.springframework.data.mongodb.core.query.Query.query;
 public class LearningObjectDAO {
     
     public static List<LearningObject> getList() throws UnknownHostException {
-       MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"quiz");
+       MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"database");
         return mongoOps.findAll(LearningObject.class);
     }
     
@@ -40,14 +40,20 @@ public class LearningObjectDAO {
     //Clears the list then Adds the available LOs
     public static boolean updateList(LearningObject LO) throws UnknownHostException {
         try {
-         MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"quiz");
+         MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"database");
+         //Clear LO list
+         //Add Available LOs         
          mongoOps.insert(LO);
          return true;         
         } 
-        catch (NullPointerException e) 
-        {
+        catch (NullPointerException e) {
             System.out.println(e.getMessage());
             return false;
         }
-    }    
+    }
+    
+    public static List<LearningObject> getLatestUploads(LearningObject LO) throws UnknownHostException {
+        MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"database");
+        return mongoOps.find(query(where("uploadDate").is(LO.getUploadDate())), LearningObject.class);
+    }
 }
