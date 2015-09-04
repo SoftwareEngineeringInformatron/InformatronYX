@@ -23,7 +23,7 @@ public class LearningObjectController {
         
     }
     
-    @RequestMapping("/downloadLO")
+    @RequestMapping("/downloadLE")
     public byte download(@RequestBody LearningElement element) throws UnknownHostException {
         return 1;
     }
