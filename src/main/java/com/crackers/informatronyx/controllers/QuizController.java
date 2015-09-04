@@ -29,7 +29,29 @@ public class QuizController {
                 quiz.getErrorList().add("Failed to record");
             }
         } catch(NullPointerException ae) {quiz.getErrorList().add(ae.getMessage());}
-        return quiz;
+         finally {return quiz;}
+    }
+    
+    @RequestMapping("/delete")
+    public QuizDto delete(@RequestBody QuizDto quiz) throws UnknownHostException {
+        try {
+            QuizService q = new QuizService();
+            if(!q.delete(quiz)) {
+                quiz.getErrorList().add("Failed to delete");
+            }
+        } catch(NullPointerException ae) {quiz.getErrorList().add(ae.getMessage());}
+        finally {return quiz;}
+    }
+    
+    @RequestMapping("/resubmit")
+    public QuizDto resubmit(@RequestBody QuizDto quiz) throws UnknownHostException {
+        try {
+            QuizService q = new QuizService();
+            if(!q.edit(quiz)) {
+                quiz.getErrorList().add("Failed to resubmit quiz");
+            }
+        } catch(NullPointerException ae) {quiz.getErrorList().add(ae.getMessage());}
+         finally{return quiz;}
     }
     
     
