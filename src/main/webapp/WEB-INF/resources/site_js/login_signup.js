@@ -73,9 +73,28 @@ $(document).ready(function() {
 		}
             });
         });
-        
-        
-        
+        $("#btn-login").click(function(){
+            var jsonData = 
+                        JSON.stringify({
+			username:$("#username").val(),
+			password: $("#password").val()
+                        });
+            $.ajax({
+                url: "/InformatronYX/informatron/user/login",
+                contentType:'application/json',
+                data: jsonData,
+                dataType: 'json',
+                type: "POST",
+                success: function(data, status, jqXHR){
+                    if(data.errorList.length>0){
+                        alert("Login Succesful!");
+                       // $.switchPage("login");
+                    }
+                },
+		error: function(jqXHR, status, error) {;
+		}
+            });
+        });
     });
     function get(name){
         if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))

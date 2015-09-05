@@ -6,20 +6,11 @@
 package com.crackers.informatronyx.controllers;
 
 import com.crackers.informatronyx.dto.UserDto;
-import com.crackers.informatronyx.models.User;
 import com.crackers.informatronyx.services.UserService;
-import com.mongodb.Mongo;
 import java.net.UnknownHostException;
 import java.util.List;
-import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
-import static org.springframework.data.mongodb.core.query.Criteria.where;
-import static org.springframework.data.mongodb.core.query.Query.query;
-import static org.springframework.data.mongodb.core.query.Update.update;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import org.springframework.web.bind.annotation.RestController;
 
@@ -49,8 +40,8 @@ public class UserController {
     {
         try{
         UserService service = new UserService();
-        boolean ok = service.register(user);
-        if(ok==false)
+        UserDto result = service.login(user);
+        if(result==null)
             user.getErrorList().add("Registration unsucessful.");
         }catch(Exception e){
             user.getErrorList().add(e.toString());

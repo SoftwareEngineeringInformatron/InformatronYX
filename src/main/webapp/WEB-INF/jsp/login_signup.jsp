@@ -85,7 +85,22 @@
                         </div>
                         <div class="span5">
                             <div><a href="#" class="brand header-txt"><i class="icon-download-alt logo"></i> InformatronYX</a></div>
-                        <form action="login" method="post">
+                        <div class="login">
+                                <div class="divider"></div>
+                                <div class="clearfix"></div>
+                                <div class="divider"></div>
+                                <s:fielderror fieldName="username" />
+                                <input id="username" type="text" size="20" placeholder="Username" title="Username" required>
+                                <br><input id="password" type="password" size="20" placeholder="Password" title="Password" required>
+                                <div class="divider"></div>
+                                <div class="clearfix"></div>
+                                <div class="divider"></div>
+                                <button id="btn-login" type="submit" class="btn btn-primary" data-dismiss="modal"> Login </button>&nbsp;
+                                <button type="reset" class="btn btn-cancel" data-dismiss="modal"> Clear </button>&nbsp;&nbsp;&nbsp;
+                                <a href="#" class="a_login"> Sign Up</a>
+                            </div>
+                         <!-- Old Implementation
+                         <form action="login" method="post">
                             <div class="login">
                                 <div class="divider"></div>
                                 <div class="clearfix"></div>
@@ -101,6 +116,7 @@
                                 <a href="#" class="a_login"> Sign Up</a>
                             </div>
                         </form>
+                          -->   
                         <!-- 
                             Old implementation
                         <form action="signup" method="post" >

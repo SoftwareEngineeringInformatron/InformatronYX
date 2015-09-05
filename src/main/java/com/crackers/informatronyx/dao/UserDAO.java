@@ -6,6 +6,7 @@
 package com.crackers.informatronyx.dao;
 
 import com.crackers.informatronyx.config.AppConfig;
+import com.crackers.informatronyx.config.DatabaseManager;
 import com.crackers.informatronyx.models.User;
 import com.mongodb.Mongo;
 import java.net.UnknownHostException;
@@ -91,6 +92,10 @@ public class UserDAO {
         ok = mongoOps.exists(query, User.class);
         return ok;
     }
-    public static User getUser(String username,String password){return null;}
+    public static User getUser(String username,String password) throws UnknownHostException{
+        Query query = new Query();
+        query.addCriteria(where("username").is(username).andOperator(where("password").is(password)));
+        return DatabaseManager.getMongoOpsInstance("database").findOne(query, User.class);
+    }
     public static List<User> getAllUserOfType(String type){return null;}
 }

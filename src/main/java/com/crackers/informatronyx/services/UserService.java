@@ -9,6 +9,7 @@ import com.crackers.informatronyx.dao.UserDAO;
 import com.crackers.informatronyx.dto.UserDto;
 import com.crackers.informatronyx.models.User;
 import java.net.UnknownHostException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,7 +19,26 @@ import java.util.List;
 public class UserService {
     
     public boolean verify(UserDto user){return false;}
-    public boolean login(UserDto user){return false;}
+    public UserDto login(UserDto user) throws UnknownHostException{
+        User userModel = UserDAO.getUser(user.getUsername(), user.getPassword());
+        if(userModel != null){
+            user.setId(userModel.getId());
+            user.setEmail(userModel.getEmail());
+            user.setFirstName(userModel.getFirstName());
+            user.setLastName(userModel.getLastName());
+            user.setLastDownloadDate(userModel.getLastDownloadDate());
+            user.setLastDownloadId(userModel.getLastDownloadId());
+            user.setLastLogin(new Date());
+            userModel.generateToken();
+            user.setApproved(userModel.isApproved());
+            user.setBlocked(userModel.isBlocked());
+            user.setFunctionType(userModel.getFunctionType());
+            user.setUserType(userModel.getUserType());
+            user.setToken(userModel.getToken());
+            
+        }
+        return user;
+    }
     public boolean register(UserDto user) throws UnknownHostException{
         boolean ok = false;
         if(!UserDAO.exists(user.getUsername())){
