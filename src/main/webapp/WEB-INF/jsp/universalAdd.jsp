@@ -12,25 +12,10 @@
         <title>JSP Page</title>
     </head>
     <body ng-controller="buttonController">
-        <button>Add Learning Object</button>
+        <button ng-click="addLO()">Add Learning Objects</button>
         <button>Add Learning Element</button>
     </body>
     <script src="js/angular.min.js"></script>
-    <script>
-        var app = angular.module("addApp",[]);
-        app.controller('generateEvents', function($scope, $http){
-           
-           $scope.addLO = function(){
-               var req = {
-                 url:  
-                   
-               };
-           };
-            
-        });
-        
-        
-        
-    </script>
+    <script src="site_js/universalAdd.js" type="text/javascript"></script>
 </html>
 

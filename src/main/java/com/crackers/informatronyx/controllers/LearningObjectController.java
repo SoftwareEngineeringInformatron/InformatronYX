@@ -8,15 +8,20 @@ package com.crackers.informatronyx.controllers;
 import com.crackers.informatronyx.dto.LearningObjectDto;
 import com.crackers.informatronyx.models.LearningElement;
 import com.crackers.informatronyx.models.LearningObject;
+import com.crackers.informatronyx.services.LearningObjectService;
+import com.crackers.informatronyx.services.UserService;
 import java.net.UnknownHostException;
 import java.util.List;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
  * @author Nelson
  */
+@RestController
+@RequestMapping("/LO")
 public class LearningObjectController {
     @RequestMapping("/downloadLO")
     public void download(@RequestBody LearningObject object) throws UnknownHostException {
@@ -36,5 +41,10 @@ public class LearningObjectController {
         return null;
     }
     
-    
+    @RequestMapping("/upload/avaiableLOs")
+    public Boolean uploadAvaiableLearningObjects(@RequestBody LearningObjectDto[] objects) throws UnknownHostException {
+        LearningObjectService service = new LearningObjectService ();
+        service.uploadAvaiableLearningObjects(objects);
+        return true;
+    }
 }
