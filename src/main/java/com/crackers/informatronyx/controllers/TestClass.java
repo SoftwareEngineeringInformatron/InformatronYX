@@ -21,7 +21,10 @@ public class TestClass {
     @RequestMapping("/test")
     public User test()
     {
-        return null;
+        User user = new User();
+        user.setUsername("Test username");
+        user.setPassword("Test password");
+        return user;
     }
     
     

@@ -26,13 +26,13 @@ public class UserDAO {
     
     
     public static User getUser(User user) throws UnknownHostException{ 
-        MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"data");
+        MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"database");
         User p = null;
         p = mongoOps.findOne(query(where("username").is(user.getUsername())), User.class);
         return p;
     }
     public static boolean addUser(User user) throws UnknownHostException{
-        MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"database");
+        MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host),"database");
         boolean ok = false;
         mongoOps.insert(user);
         ok = true;

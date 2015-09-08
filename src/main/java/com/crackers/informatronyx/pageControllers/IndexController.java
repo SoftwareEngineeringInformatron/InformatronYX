@@ -87,5 +87,9 @@ public class IndexController {
     public ModelAndView advancedSearch() {
         return new ModelAndView("advanced_search");
     }
+    @RequestMapping("/univ_add")
+    public ModelAndView accessUniversalAddPage() {
+        return new ModelAndView("universalAdd");
+    }
 }
 
