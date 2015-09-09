@@ -21,7 +21,7 @@ import java.util.List;
 public class QuizService {
     
     public boolean record(QuizDto quiz) throws UnknownHostException {
-        try {
+        //try {
             if(evaluate(quiz)) {
             Quiz quizModel = new Quiz();
             quizModel.setScore(quiz.getScore());
@@ -36,9 +36,10 @@ public class QuizService {
             quizModel.setUser_id(quiz.getUser_id());
             QuizDAO.addQuiz(quizModel);
             return true;
-            }
-        } catch(NullPointerException ae) {System.out.println(ae.getMessage());}
-         finally{return false;}
+            } else
+                return false;
+        //} catch(NullPointerException ae) {System.out.println(ae.getMessage());}
+        // finally{return false;}
     }
     
     /*
