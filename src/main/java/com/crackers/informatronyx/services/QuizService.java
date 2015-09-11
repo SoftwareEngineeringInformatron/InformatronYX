@@ -26,13 +26,14 @@ public class QuizService {
             Quiz quizModel = new Quiz();
             quizModel.setScore(quiz.getScore());
             quizModel.setLo_name(quiz.getLo_name());
-            quizModel.setLo_id(quiz.getLo_id());
-            quizModel.setId(quiz.getId());
+            //quizModel.setLo_id(quiz.getLo_id()); 
+            //quizModel.setLo_subject(quiz.getLo_subject());
+            //quizModel.setId(quiz.getId());
             quizModel.setTime_started(quiz.getTime_started());
             quizModel.setTime_finished(quiz.getTime_finished());
             quizModel.setUsername(quiz.getUsername());
-            quizModel.setDate_submitted(quiz.getDate_submitted());
-            quizModel.setTotalScore(quiz.getTotalScore());
+            quizModel.setDate_submitted(quiz.getTime_finished());
+            //quizModel.setTotalScore(quiz.getTotalScore());
             quizModel.setUser_id(quiz.getUser_id());
             QuizDAO.addQuiz(quizModel);
             return true;
@@ -65,12 +66,60 @@ public class QuizService {
     }
     */
     
+    /*
+    ** @param - condition
+                        - userSpecific = specific LO from specific user
+                        - LOSpecific = specific LO from all users
+                        - NASpecific = all LOs from specific user
+                        - empty/null/"" = all LOs from all users
+    */
+    public List<QuizDto> getQuizResults(QuizDto quiz, String condition) throws UnknownHostException {
+        List<QuizDto> quizResultsDto = new ArrayList<QuizDto>();
+        try {
+            Quiz quizModel = new Quiz();
+            if(condition.isEmpty()) {
+                quiz.setQuizResults(QuizDAO.getQuizResults(quizModel,""));
+                System.out.println(quiz.getQuizResults());
+            } else {
+                quizModel.setLo_id(quiz.getLo_id());
+                quizModel.setLo_name(quiz.getLo_name());
+                quizModel.setLo_subject(quiz.getLo_subject());
+                quizModel.setUser_id(quiz.getUser_id());
+                quizModel.setUsername(quiz.getUsername());
+            if(condition.contentEquals("userSpecific"))
+                quiz.setQuizResults(QuizDAO.getQuizResults(quizModel,"both"));
+            else if(condition.contentEquals("LOSpecific"))
+                quiz.setQuizResults(QuizDAO.getQuizResults(quizModel,"lo_name"));
+            else if(condition.contentEquals("NASpecific"))
+                quiz.setQuizResults(QuizDAO.getQuizResults(quizModel,"user"));
+            }
+            
+            System.out.println("SIZE:"+ quiz.getQuizResults().size());
+            for(int i = 1; i <= quiz.getQuizResults().size(); i++) {
+                quizResultsDto.get(i).setDate_submitted(quiz.getQuizResults().get(i).getDate_submitted());
+                quizResultsDto.get(i).setTime_started(quiz.getQuizResults().get(i).getTime_started());
+                quizResultsDto.get(i).setTime_finished(quiz.getQuizResults().get(i).getTime_finished());
+                //quizResultsDto.get(i).setId(quiz.getQuizResults().get(i).getId());
+                //quizResultsDto.get(i).setLo_id(quiz.getQuizResults().get(i).getLo_id());
+                quizResultsDto.get(i).setLo_name(quiz.getQuizResults().get(i).getLo_name());
+                //quizResultsDto.get(i).setLo_subject(quiz.getQuizResults().get(i).getLo_subject());
+                //quizResultsDto.get(i).setUser_id(quiz.getQuizResults().get(i).getUser_id());
+                quizResultsDto.get(i).setUsername(quiz.getQuizResults().get(i).getUsername());
+                quizResultsDto.get(i).setScore(quiz.getQuizResults().get(i).getScore());
+                //quizResultsDto.get(i).setTotalScore(quiz.getQuizResults().get(i).getTotalScore());
+            }
+        } catch(NullPointerException ae) {System.out.println("Service Error!"); ae.printStackTrace();}
+         finally{return quizResultsDto;}
+    }
+    
+    /*
     public List<QuizDto> getQuizResultsOfUserFromSpecificLearningObject(QuizDto quiz) throws UnknownHostException {
         List<QuizDto> quizResultsDto = new ArrayList<QuizDto>();
         try {
             Quiz quizModel = new Quiz();
             quizModel.setLo_id(quiz.getLo_id());
             quizModel.setLo_name(quiz.getLo_name());
+            quizModel.setLo_subject(quiz.getLo_subject());
             quizModel.setUser_id(quiz.getUser_id());
             quizModel.setUsername(quiz.getUsername());
             quiz.setQuizResults(QuizDAO.getQuizResults(quizModel,"both"));
@@ -81,6 +130,7 @@ public class QuizService {
                 quizResultsDto.get(i).setId(quiz.getQuizResults().get(i).getId());
                 quizResultsDto.get(i).setLo_id(quiz.getQuizResults().get(i).getLo_id());
                 quizResultsDto.get(i).setLo_name(quiz.getQuizResults().get(i).getLo_name());
+                quizResultsDto.get(i).setLo_subject(quiz.getQuizResults().get(i).getLo_subject());
                 quizResultsDto.get(i).setUser_id(quiz.getQuizResults().get(i).getUser_id());
                 quizResultsDto.get(i).setUsername(quiz.getQuizResults().get(i).getUsername());
                 quizResultsDto.get(i).setScore(quiz.getQuizResults().get(i).getScore());
@@ -96,6 +146,7 @@ public class QuizService {
             Quiz quizModel = new Quiz();
             quizModel.setLo_id(quiz.getLo_id());
             quizModel.setLo_name(quiz.getLo_name());
+            quizModel.setLo_subject(quiz.getLo_subject());
             quizModel.setUser_id(quiz.getUser_id());
             quizModel.setUsername(quiz.getUsername());
             quiz.setQuizResults(QuizDAO.getQuizResults(quizModel,""));
@@ -106,6 +157,8 @@ public class QuizService {
                 quizResultsDto.get(i).setId(quiz.getQuizResults().get(i).getId());
                 quizResultsDto.get(i).setLo_id(quiz.getQuizResults().get(i).getLo_id());
                 quizResultsDto.get(i).setLo_name(quiz.getQuizResults().get(i).getLo_name());
+                quizResultsDto.get(i).setLo_subject(quiz.getQuizResults().get(i).getLo_subject());
+                quizResultsDto.get(i).setUsername(quiz.getQuizResults().get(i).getUsername());
                 quizResultsDto.get(i).setUser_id(quiz.getQuizResults().get(i).getUser_id());
                 quizResultsDto.get(i).setUsername(quiz.getQuizResults().get(i).getUsername());
                 quizResultsDto.get(i).setScore(quiz.getQuizResults().get(i).getScore());
@@ -121,6 +174,7 @@ public class QuizService {
             Quiz quizModel = new Quiz();
             quizModel.setLo_id(quiz.getLo_id());
             quizModel.setLo_name(quiz.getLo_name());
+            quizModel.setLo_subject(quiz.getLo_subject());
             quizModel.setUser_id(quiz.getUser_id());
             quizModel.setUsername(quiz.getUsername());
             quiz.setQuizResults(QuizDAO.getQuizResults(quizModel, "lo_name"));
@@ -131,6 +185,7 @@ public class QuizService {
                 quizResultsDto.get(i).setId(quiz.getQuizResults().get(i).getId());
                 quizResultsDto.get(i).setLo_id(quiz.getQuizResults().get(i).getLo_id());
                 quizResultsDto.get(i).setLo_name(quiz.getQuizResults().get(i).getLo_name());
+                quizResultsDto.get(i).setLo_subject(quiz.getQuizResults().get(i).getLo_subject());
                 quizResultsDto.get(i).setUser_id(quiz.getQuizResults().get(i).getUser_id());
                 quizResultsDto.get(i).setUsername(quiz.getQuizResults().get(i).getUsername());
                 quizResultsDto.get(i).setScore(quiz.getQuizResults().get(i).getScore());
@@ -140,7 +195,7 @@ public class QuizService {
         } catch(NullPointerException ae) {System.out.println(ae.getMessage());}
         finally{return quizResultsDto;}
     }
-    
+    */
     private boolean evaluate(QuizDto quiz) {
         //if(quiz.getEndTime()!=null && quiz.getLearningObjectTitle()!=null && quiz.getResult()>=0 && quiz.getStartTime()!=null && quiz.getUsername()!=null)
             return true;

@@ -151,14 +151,14 @@
                         <input type="text" placeholder="Student" id="student" alt="student" ng-model="student"><br>
                         <input type="text" placeholder="Learning Object" id="lo" alt="lo" ng-model="lo"><br>
                         <div id="datetimepicker1" class="input-append date">
-                            <input data-format="yyyy/MM/dd hh:mm:ss" type="text" id="time_started" placeholder="Time Started" ng-model="time_started"></input>
+                            <input data-format="yyyy-MM-dd hh:mm:ss" type="text" id="time_started" placeholder="Time Started"></input>
                             <span class="add-on">
                             <i data-time-icon="icon-time" data-date-icon="icon-calendar">
                             </i>
                             </span>
                         </div><br>
                         <div id="datetimepicker2" class="input-append date">
-                            <input data-format="yyyy/MM/dd hh:mm:ss" type="text" id="time_finished" placeholder="Time Finished" ng-model="time_ended"></input>
+                            <input data-format="yyyy-MM-dd hh:mm:ss" type="text" id="time_finished" placeholder="Time Finished"></input>
                             <span class="add-on">
                             <i data-time-icon="icon-time" data-date-icon="icon-calendar">
                             </i>
@@ -222,13 +222,14 @@
         <script src="scripts/user-service.js"></script>-->
         <script src="js/bootstrap-datetimepicker.min.js"></script>
         <script src="js/jquery.coolautosuggest.js"></script>
-        <script src ="site_js/addQuizResult.js"></script>
         
         <!-- datepicker plugin -->
         <script src="bootstrap-formhelpers/js/bootstrap-formhelpers-datepicker.en_US.js"></script>
         <script src="bootstrap-formhelpers/js/bootstrap-formhelpers-datepicker.js"></script>
         
 <!--        <script src="js/chart-original.js"></script>-->
+        
+        <script src ="site_js/addQuizResult.js"></script>
         
     </body>
 </html>

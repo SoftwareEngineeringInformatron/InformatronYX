@@ -10,12 +10,10 @@ import com.crackers.informatronyx.models.Quiz;
 import com.mongodb.Mongo;
 import java.net.UnknownHostException;
 import java.util.List;
-import javax.swing.JOptionPane;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
-import org.springframework.data.mongodb.core.query.Update;
 
 /**
  *
@@ -78,10 +76,12 @@ public class QuizDAO {
         return mongoOps.find(query(where("lo_name").is(quiz.getLo_name())), Quiz.class);
         else if(filter.contentEquals("both"))
         return mongoOps.find(query(where("lo_name").is(quiz.getLo_name()).andOperator((where("username").is(quiz.getUsername())))), Quiz.class);   
-        else
+        else if(filter.contentEquals("user"))
         return mongoOps.find(query(where("username").is(quiz.getUsername())), Quiz.class);
+        else
+        return mongoOps.findAll(Quiz.class);
         
-        } catch(NullPointerException ae) {System.out.println(ae.getMessage()); return null;}
+        } catch(NullPointerException ae) {System.out.println("DAO Error!"); return null;}
     }
     /*
     public static void main(String[] args) throws Exception {   

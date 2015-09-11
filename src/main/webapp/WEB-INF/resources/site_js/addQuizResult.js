@@ -10,33 +10,39 @@ var quizApp = angular.module("QUIZ", []);
     quizApp.controller("lolController", function($scope,$http){
     var errorList = "";
     
+    $scope.datepickerON = function () {
+        $('#datetimepicker1, #datetimepicker2').datetimepicker();
+    }
+    $scope.datepickerON();
+        
     $scope.addQuiz = function () {
-        alert('');
+                $scope.time = {time_started:''};
         var quizJson = {
           "id":null,
           "lo_id":null,
           "lo_name": $scope.lo,
           "score": $scope.score,
+          "subject": null,
           "totalScore":0,
-          "date_submitted":null,
-          "time_started": $scope.time_started,
-          "time_finished": $scope.time_finished,
+          "date_submitted": null,
+          "time_started": new Date(document.getElementById('time_started').value),
+          "time_finished": new Date(document.getElementById('time_finished').value),
           "username": $scope.student,
-          "user_id":0,
+          "user_id": 0,
           "quizResults":null,
           "errorList":[]
         };
         
-        var WALANGFOREVER = $http.post("/InformatronYX/informatron/quiz/submit", quizJson);
-            WALANGFOREVER.success(function(data,status,header,config) {
+        var angularPromise = $http.post("/InformatronYX/informatron/quiz/submit", quizJson);
+            angularPromise.success(function(data) {
                     if(data.errorList.length === 0) {
                         alert("Added Quiz successfully!");
                         location.reload();
                     } else {
-                        var errorMsg = "";
+                        var errorMsg = "Errors:\n";
                         for(var i = 0; i < data.errorList.length; i ++)
                             errorMsg += data.errorList[i] + "\n";
-                        console.log(errorMsg);
+                            console.log(errorMsg);
                     }
         })  .error(function(data,status,header,config) {
             

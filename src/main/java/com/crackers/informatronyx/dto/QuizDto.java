@@ -19,6 +19,7 @@ public class QuizDto {
     String id;
     String lo_id;
     String lo_name;
+    String lo_subject;
     int score;
     int totalScore;
     Date date_submitted;
@@ -55,6 +56,14 @@ public class QuizDto {
 
     public void setLo_name(String lo_name) {
         this.lo_name = lo_name;
+    }
+
+    public String getLo_subject() {
+        return lo_subject;
+    }
+
+    public void setLo_subject(String lo_subject) {
+        this.lo_subject = lo_subject;
     }
 
     public int getScore() {

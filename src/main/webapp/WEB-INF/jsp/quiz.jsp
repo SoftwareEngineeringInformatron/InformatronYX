@@ -114,7 +114,7 @@
                             
                                 <a href="${url_main}" class="brand offset1 header-txt"><i class="icon-download-alt logo"></i> InformatronPlus</a>
 
-                                <div class="account" ng-controller="userController">
+                                <div class="account"> <!--ng-controller="userController"-->
                                     <ul class="nav pull-right">
                                         <li class="dropdown" id="usermeter">  
                                             
@@ -326,25 +326,25 @@
                                 <th>Score</th>
                             </tr>
                         </thead>
-                        <!--<tbody>
-                            <tr ng-repeat="result in QuizResult | filter:searchText">
-								<td><a href="learningobject?loID={{result.lo.id}}"><i class="icon-file"></i> {{result.lo.name}}</a>
-                                    <div class="few-details"><i>Downloads: {{result.lo.downloads}} &nbsp;&nbsp;<span class="icon-thumbs-up"></span> {{result.lo.likes}} &nbsp;&nbsp;
+                        <tbody>
+                            <tr ng-repeat="result in quizList">
+								<td><a href="learningobject?loID={{result.lo_id}}"><i class="icon-file"></i> {{result.lo_name}}</a>
+                                    <!--<div class="few-details"><i>Downloads: {{result.lo.downloads}} &nbsp;&nbsp;<span class="icon-thumbs-up"></span> {{result.lo.likes}} &nbsp;&nbsp;
                                         </i>
-                                    </div>
+                                    </div>-->
                                 </td>
-								<td>{{result.lo.subject}}</td>
+								<td>{{result.lo_subject}}</td>
 								<th>{{result.username}}</th>
-								<td>{{result.timeStarted}}</td>
-								<td>{{result.timeFinished}}</td>
-								<td>{{result.dateSubmitted}}</td>
+								<td>{{result.time_started}}</td>
+								<td>{{result.time_finished}}</td>
+								<td>{{result.date_submitted}}</td>
 								<td>{{result.score}}</td>
                             </tr>
-                        </tbody>-->
+                        </tbody>
                     </table>
-                            <div class="offset1 error">
+                           <!-- <div class="offset1 error">
                                 <h5>{{errorMessage}}</h5>
-                            </div>
+                            </div>-->
                 </div>
             </section>
             <div class="clearfix"></div>
@@ -356,7 +356,7 @@
                 </div>
             </footer>
         </div>
-        <div ng-controller="userController">
+        <div><!--ng-controller="userController"-->
             <input type="hidden" id="usertype" value="<% //out.println(isid); %>" />
             
         </div>
@@ -393,8 +393,8 @@
         <script src="scripts/angular.min.js"></script>
         <script src="scripts/quizController.js"></script>
         <script src="scripts/quizServices.js"></script>
-        <script src="scripts/userController.js"></script>
-        <script src="scripts/user-service.js"></script>
+        <!--<script src="scripts/userController.js"></script>
+        <script src="scripts/user-service.js"></script>-->
         
         <!-- datepicker plugin -->
         <script src="bootstrap-formhelpers/js/bootstrap-formhelpers-datepicker.en_US.js"></script>
@@ -402,9 +402,12 @@
         
 <!--        <script src="js/chart-original.js"></script>-->
         
+        <script src="site_js/quiz.js"></script>
+        
     </body>
 </html>
 
+<!--
 <script type="text/javascript">
 //alert('working');
     $(document).ready(function() {
@@ -421,4 +424,5 @@
         return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
     }
 </script>
+-->
 

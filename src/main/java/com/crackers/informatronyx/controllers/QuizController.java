@@ -49,34 +49,50 @@ public class QuizController {
     */
     
     @RequestMapping("/loresult")
-    public QuizDto loresult(@RequestBody QuizDto quiz) throws UnknownHostException {
-        try {
-            if(q.getQuizResultsOfUserFromSpecificLearningObject(quiz)==null) {
-                quiz.getErrorList().add("Failed to retrieve");
-            }
-        } catch(NullPointerException ae) {quiz.getErrorList().add(ae.getMessage());}
-        finally {return quiz;}
-    }
-    
-    @RequestMapping("/userresult")
-    public QuizDto userresult(@RequestBody QuizDto quiz) throws UnknownHostException {
-        try {
-            if(q.getQuizResultsOfUser(quiz)==null) {
-                quiz.getErrorList().add("Failed to retrieve");
-            }
-        } catch(NullPointerException ae) {quiz.getErrorList().add(ae.getMessage());}
-        finally {return quiz;}
-    }
-    
-    @RequestMapping("/results")
-    public List<QuizDto> results(@RequestBody QuizDto quiz) throws UnknownHostException {
+    public List<QuizDto> loresult(@RequestBody QuizDto quiz) throws UnknownHostException {
         List<QuizDto> quizResults = new ArrayList<QuizDto>();
         try {
-            quizResults = q.getQuizResultsOfLearningObject(quiz);
+            quizResults = q.getQuizResults(quiz,"LOSpecific");
             if(quizResults==null) {
                 quiz.getErrorList().add("Failed to retrieve");
             }
         } catch(NullPointerException ae) {quiz.getErrorList().add(ae.getMessage());}
+        finally {return quizResults;}
+    }
+    
+    @RequestMapping("/userresult")
+    public List<QuizDto> userresult(@RequestBody QuizDto quiz) throws UnknownHostException {
+        List<QuizDto> quizResults = new ArrayList<QuizDto>();
+        try {
+            quizResults = q.getQuizResults(quiz,"userSpecific");
+            if(quizResults==null) {
+                quiz.getErrorList().add("Failed to retrieve");
+            }
+        } catch(NullPointerException ae) {quiz.getErrorList().add(ae.getMessage());}
+        finally {return quizResults;}
+    }
+    
+    @RequestMapping("/usersresult")
+    public List<QuizDto> usersresult(@RequestBody QuizDto quiz) throws UnknownHostException {
+        List<QuizDto> quizResults = new ArrayList<QuizDto>();
+        try {
+            quizResults = q.getQuizResults(quiz,"NASpecific");
+            if(quizResults==null) {
+                quiz.getErrorList().add("Failed to retrieve");
+            }
+        } catch(NullPointerException ae) {quiz.getErrorList().add(ae.getMessage());}
+        finally {return quizResults;}
+    }
+    
+    @RequestMapping("/results")
+    public List<QuizDto> results() throws UnknownHostException {
+        List<QuizDto> quizResults = new ArrayList<QuizDto>();
+        try {
+            quizResults = q.getQuizResults(new QuizDto(),"");
+            if(quizResults==null) {
+                System.out.println("Failed to retrieve");
+            }
+        } catch(NullPointerException ae) {System.out.println("Controller Error!");}
         finally{return quizResults;}
     }
     
