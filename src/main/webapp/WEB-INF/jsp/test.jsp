@@ -30,9 +30,15 @@
         <link rel="stylesheet" type="text/css" href="css/940grid.css" />
         <link rel="stylesheet" type="text/css" href="css/media.css" />
         <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css" />
+        
+    
+        
     <!-- Date Picker -->
         <link href="bootstrap-formhelpers/docs/css/bootstrap-responsive.css" rel="stylesheet" />
         <link href="bootstrap-formhelpers/css/bootstrap-formhelpers.css" rel="stylesheet" />
+   
+    
+    
     
     </head>
     <body ng-controller="loController">
@@ -96,7 +102,7 @@
                             
                                 <a href="${url_main}" class="brand offset1 header-txt"><i class="icon-download-alt logo"></i> InformatronPlus</a>
 
-                                <div class="account" ng-controller="userController">
+                                <div class="account" >
                                     <ul class="nav pull-right">
                                         <li class="dropdown" id="usermeter">  
                                             
@@ -336,7 +342,7 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="lo in LOs | filter:searchText">
-                                <td><a href="learningobject?loID={{lo.id}}"><i class="icon-file"></i> {{lo.name}}</a>
+                                <td><a href="learningobject?loID={{lo.id}}"><i class="icon-file"></i> {{lo.title}}</a>
                                     <div class="few-details"><i>Downloads: {{lo.downloads}} &nbsp;&nbsp;<span class="icon-thumbs-up"></span> {{lo.likes}} &nbsp;&nbsp;
                                         </i>
                                     </div>
@@ -371,7 +377,7 @@
                 </div>
             </footer>
         </div>
-        <div ng-controller="userController">
+        <div >
             <input type="hidden" id="usertype" value="< //% out.println(isid); %>" />
             
         </div>
@@ -413,7 +419,6 @@
         
     </body>
 </html>
-
 <script type="text/javascript">
 //alert('working');
     $(document).ready(function() {
@@ -429,4 +434,3 @@
         return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
     }
 </script>
-

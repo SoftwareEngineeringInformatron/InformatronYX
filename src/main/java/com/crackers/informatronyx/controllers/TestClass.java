@@ -5,11 +5,9 @@
  */
 package com.crackers.informatronyx.controllers;
 
-<<<<<<< HEAD
+
 import com.crackers.informatronyx.dto.QuizDto;
-=======
 import com.crackers.informatronyx.models.LearningObject;
->>>>>>> origin/master
 import com.crackers.informatronyx.models.User;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,8 +26,7 @@ public class TestClass {
     {
         return new User();
     }
-<<<<<<< HEAD
-    
+
     @RequestMapping("/testQ")
     public QuizDto quiz() {
         QuizDto quiz = new QuizDto();
@@ -37,7 +34,4 @@ public class TestClass {
         quiz.setLo_name("");
         return quiz;
     }
-    
-=======
->>>>>>> origin/master
 }

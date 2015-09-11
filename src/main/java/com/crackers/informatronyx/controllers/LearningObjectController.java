@@ -11,6 +11,7 @@ import com.crackers.informatronyx.models.LearningObject;
 import com.crackers.informatronyx.services.LearningObjectService;
 import com.crackers.informatronyx.services.UserService;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,8 +34,13 @@ public class LearningObjectController {
         return 1;
     }
     
-    public List<LearningObject> availableLearningObjects() throws UnknownHostException {
-        return null;
+    @RequestMapping("/availableLearningObjects")
+    public List<LearningObjectDto> availableLearningObjects(){
+        List<LearningObjectDto> dtos = new ArrayList<>();
+        try{
+            dtos = (new LearningObjectService()).getAvailableLearningObjects();
+        }catch(Exception e){ e.printStackTrace(); }
+        return dtos;
     }
     
     public List<LearningObject> purchaseLearningObjects() throws UnknownHostException {

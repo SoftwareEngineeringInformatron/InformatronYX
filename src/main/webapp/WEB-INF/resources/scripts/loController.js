@@ -6,9 +6,8 @@ loModule.controller('loController', function($scope, loRepository) {
     $scope.setAcceptID = -1;
     
     loRepository.getAllLO().success(function(lo) {
-        $scope.LOs = lo.downloadedLOs;
+        $scope.LOs = lo;
     });
-    
     
     loRepository.learningObject(getURLParameter('loID')).success(function(lo) {
         $scope.learningObject = lo.learningobject;
@@ -180,9 +179,6 @@ loModule.controller('loController', function($scope, loRepository) {
         
         $scope.lori(getURLParameter('loID'));
         $scope.checkIfDownloaded();
-    
-        
-    
 });
 
 

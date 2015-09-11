@@ -10,7 +10,7 @@ loModule.factory('loRepository', function($http) {
             return $http.get(url);
         },
         getAllLO: function() {
-            var url = "alllo";
+            var url = "/InformatronYX/informatron/LO/availableLearningObjects";//"alllo";
             return $http.get(url);
         },
         getMostLiked: function() {
