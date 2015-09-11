@@ -75,7 +75,7 @@ loModule.controller('loController', function($scope, loRepository) {
     
     $scope.callAllMostLiked = function() {
         loRepository.getMostLiked().success(function(lo) {
-            $scope.LOs = lo.mostliked;
+            $scope.LOs = lo;
         });
     };
     

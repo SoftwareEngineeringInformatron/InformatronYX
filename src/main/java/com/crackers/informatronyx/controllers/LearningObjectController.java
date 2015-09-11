@@ -43,6 +43,15 @@ public class LearningObjectController {
         return dtos;
     }
     
+    @RequestMapping("/mostLiked")
+    public List<LearningObjectDto> mostLikedLearningObjects(){
+        List<LearningObjectDto> dtos = new ArrayList<>();
+        try{
+            dtos = (new LearningObjectService()).getMostLikedLearningObjects();
+        }catch(Exception e){ e.printStackTrace(); }
+        return dtos;
+    }
+    
     public List<LearningObject> purchaseLearningObjects() throws UnknownHostException {
         return null;
     }

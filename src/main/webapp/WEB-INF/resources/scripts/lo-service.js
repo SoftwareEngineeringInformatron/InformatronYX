@@ -14,7 +14,7 @@ loModule.factory('loRepository', function($http) {
             return $http.get(url);
         },
         getMostLiked: function() {
-            var url = "most-liked";
+            var url = "/InformatronYX/informatron/LO/mostLiked";
             return $http.get(url);
         },
         getLoriTopLOs: function() {

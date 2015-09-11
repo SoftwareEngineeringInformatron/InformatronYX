@@ -25,8 +25,7 @@ public class LearningObjectService {
     public List<LearningObjectDto> getAvailableLearningObjects() throws UnknownHostException{
         List<LearningObject> availableLO = LearningObjectDAO.getList();//LearningObjectDAO.getAllLearningObjectByDateUpload(new Date());
         List<LearningObjectDto> objects = new ArrayList<LearningObjectDto>();
-        for(LearningObject model: availableLO)
-        {
+        for(LearningObject model: availableLO){
             LearningObjectDto dto = new LearningObjectDto();
             dto.setId(model.getId());
             dto.setTitle(model.getTitle());
@@ -42,7 +41,27 @@ public class LearningObjectService {
         return objects;
     }
     
+    public List<LearningObjectDto> getMostLikedLearningObjects() throws UnknownHostException {
+        List<LearningObject> mostLikedLO = LearningObjectDAO.getMostLikedList();
+        List<LearningObjectDto> objects = new ArrayList<LearningObjectDto>();
+        
+        for(LearningObject model: mostLikedLO) {
+            LearningObjectDto dto = new LearningObjectDto();
+            dto.setId(model.getId());
+            dto.setTitle(model.getTitle());
+            dto.setDescription(model.getDescription());
+            dto.setSubject(model.getSubject());
+            dto.setPrice(model.getPrice());
+            dto.setLikes(model.getLikes());
+            dto.setDownloads(model.getDownloads());
+            dto.setUploadDate(model.getUploadDate());
+            dto.setSequence(model.getSequence());
+            objects.add(dto);
+        }
+        return objects;
+    }
     
+   
     public boolean uploadAvaiableLearningObjects(LearningObjectDto[] objects) {
         boolean ok  = false;
         for(LearningObjectDto obj : objects){

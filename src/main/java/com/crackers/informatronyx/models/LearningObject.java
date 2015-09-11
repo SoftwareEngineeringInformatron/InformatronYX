@@ -96,5 +96,8 @@ public class LearningObject {
     public LearningObject() {
     }
     
-    
+    @Override
+    public String toString() {
+        return "\nID:" + this.id + "\nLOtitle: " + this.title + "\nSubject: " + this.subject + "\nDescription: " + this.description + "\nLikes: " + this.likes + "\n";
+    }
 }
