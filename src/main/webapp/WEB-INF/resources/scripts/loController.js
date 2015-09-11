@@ -69,7 +69,7 @@ loModule.controller('loController', function($scope, loRepository) {
     
     $scope.callAllMostDownloaded = function() {
         loRepository.getMostDownloaded().success(function(lo) {
-            $scope.LOs = lo.LOs;
+            $scope.LOs = lo;
         });
     };
     

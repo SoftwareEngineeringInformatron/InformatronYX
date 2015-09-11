@@ -61,6 +61,27 @@ public class LearningObjectService {
         return objects;
     }
     
+    public List<LearningObjectDto> getMostDownloadedLearningObjects() throws UnknownHostException {
+        List<LearningObject> mostLikedLO = LearningObjectDAO.getMostDownloadedList();
+        List<LearningObjectDto> objects = new ArrayList<LearningObjectDto>();
+        
+        for(LearningObject model: mostLikedLO) {
+            LearningObjectDto dto = new LearningObjectDto();
+            dto.setId(model.getId());
+            dto.setTitle(model.getTitle());
+            dto.setDescription(model.getDescription());
+            dto.setSubject(model.getSubject());
+            dto.setPrice(model.getPrice());
+            dto.setLikes(model.getLikes());
+            dto.setDownloads(model.getDownloads());
+            dto.setUploadDate(model.getUploadDate());
+            dto.setSequence(model.getSequence());
+            objects.add(dto);
+        }
+        return objects;
+    }
+    
+    
    
     public boolean uploadAvaiableLearningObjects(LearningObjectDto[] objects) {
         boolean ok  = false;

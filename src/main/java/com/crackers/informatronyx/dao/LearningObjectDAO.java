@@ -50,6 +50,13 @@ public class LearningObjectDAO {
        return mongoOps.find(query, LearningObject.class);
     }
     
+    public static List<LearningObject> getMostDownloadedList() throws UnknownHostException {
+       MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"database");
+       Query query = new Query();
+       query.with(new Sort(new Order(Direction.DESC, "downloads")));
+       return mongoOps.find(query, LearningObject.class);
+    }
+    
     //Clears the list then Adds the available LOs
     public static boolean updateList(LearningObject object) throws UnknownHostException {
         try {
@@ -82,7 +89,7 @@ public class LearningObjectDAO {
     
     
     //Tests
-    /*
+    
     public static void main(String[] args) throws Exception {
         LearningObject lo = new LearningObject();
         LearningObject lo2 = new LearningObject();
@@ -90,31 +97,28 @@ public class LearningObjectDAO {
         LearningObject lo4 = new LearningObject();
         
         lo.setLikes(111);
+        lo.setDownloads(666);
         lo.setTitle("Nihingo");
-        lo.setPrice(69);
-        lo.setDescription("We be Ballin");
         LearningObjectDAO.addLearningObject(lo);
         
         lo2.setLikes(20);
+        lo2.setDownloads(153);
         lo2.setTitle("Biboaf");
-        lo2.setPrice(50);
-        lo.setDescription("We be Ballinss");
         LearningObjectDAO.addLearningObject(lo2);
         
         lo3.setLikes(9);
+        lo3.setDownloads(15);
         lo3.setTitle("Jjjownjii");
-        lo3.setPrice(120);
-        lo.setDescription("We be Ballinsssss");
         LearningObjectDAO.addLearningObject(lo3);
         
         lo4.setLikes(50);
+        lo4.setDownloads(73);
         lo4.setTitle("walksPerSecond");
-        lo4.setPrice(300);
-        lo.setDescription("We be Ballinsssssss");
         LearningObjectDAO.addLearningObject(lo4);
         
-        JOptionPane.showMessageDialog(null, LearningObjectDAO.getMostLikedList().toString());
+        //JOptionPane.showMessageDialog(null, LearningObjectDAO.getMostLikedList().toString());
+        JOptionPane.showMessageDialog(null, LearningObjectDAO.getMostDownloadedList().toString());
         //System.out.println(LearningObjectDAO.getMostLikedList());
     }
-    */
+    
 }

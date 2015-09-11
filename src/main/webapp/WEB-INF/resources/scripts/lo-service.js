@@ -6,7 +6,7 @@ loModule.factory('loRepository', function($http) {
     return {
         
         getMostDownloaded: function() {
-            var url = "mostdownloaded";
+            var url = "/InformatronYX/informatron/LO/mostDownloaded";
             return $http.get(url);
         },
         getAllLO: function() {
