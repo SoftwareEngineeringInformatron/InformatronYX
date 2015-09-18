@@ -63,20 +63,20 @@ public class UserDAO {
         return ok;
     }
     public static boolean saveUser(User user) throws UnknownHostException{
-        MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"database");
+        MongoOperations mongoOps = DatabaseManager.getMongoOpsInstance("database");
         boolean ok = false;
         mongoOps.save(user);
         return ok;
     }
     public static boolean deleteUser(User user) throws UnknownHostException{
-        MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"database");
+        MongoOperations mongoOps =DatabaseManager.getMongoOpsInstance("database");
         boolean ok = false;
         mongoOps.remove(user);
         ok = true;
         return ok;
     }
     public static boolean exists(String username) throws UnknownHostException{
-        MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"database");
+        MongoOperations mongoOps = DatabaseManager.getMongoOpsInstance("database");
         boolean ok = false;
         Query query = new Query();
         query.addCriteria(where("username").is(username));
