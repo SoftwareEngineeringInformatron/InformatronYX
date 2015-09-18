@@ -6,6 +6,7 @@
 package com.crackers.informatronyx.dto;
 
 import com.crackers.informatronyx.models.LearningObject;
+import com.crackers.informatronyx.models.User;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -165,6 +166,23 @@ public class UserDto implements Serializable {
         this.errorList = errorList;
     }
     
+    public void setData(User model){
+        this.id = model.getId();
+        this.username = model.getUsername();
+        this.password = model.getPassword();
+        this.firstName = model.getFirstName();
+        this.lastName = model.getLastName();
+        this.email = model.getEmail();
+        this.lastLogin = model.getLastLogin();
+        this.lastDownloadDate = model.getLastDownloadDate();
+        this.lastDownloadId = model.getLastDownloadId();
+        this.liableLearningObjects = model.getLiableLearningObjects();
+        this.token = model.getToken();
+        this.approved = model.isApproved();
+        this.blocked = model.isBlocked();
+        this.userType = model.getUserType();
+        this.functionType = model.getFunctionType();
+    }
     
     
     

@@ -9,6 +9,7 @@ import com.crackers.informatronyx.dao.UserDAO;
 import com.crackers.informatronyx.dto.UserDto;
 import com.crackers.informatronyx.models.User;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,24 +19,34 @@ import java.util.List;
  */
 public class UserService {
     
-    public boolean verify(UserDto user){return false;}
+    public List<String> verify(UserDto user) throws UnknownHostException{
+        List<String> errorList = new ArrayList<>();
+        User model = UserDAO.getUser(user.getUsername(), user.getPassword());
+        if(model!=null)
+            errorList.add("User does not exist.");
+        else{
+            if(model.getToken() == null){
+                errorList.add("Access token not found. User not yet able to login. Please login.");
+            }
+            if(user.getToken() == null)
+                errorList.add("No Acces Token found.");
+            else if(user.getToken().equals(model.getToken()))
+                errorList.add("Outdated Access Token.");
+        }
+        
+        return errorList;
+    
+    }
     public UserDto login(UserDto user) throws UnknownHostException{
         User userModel = UserDAO.getUser(user.getUsername(), user.getPassword());
         if(userModel != null){
-            user.setId(userModel.getId());
-            user.setEmail(userModel.getEmail());
-            user.setFirstName(userModel.getFirstName());
-            user.setLastName(userModel.getLastName());
-            user.setLastDownloadDate(userModel.getLastDownloadDate());
-            user.setLastDownloadId(userModel.getLastDownloadId());
-            user.setLastLogin(new Date());
+            user.setData(userModel);
+            userModel.setLastLogin(new Date());
             userModel.generateToken();
-            user.setApproved(userModel.isApproved());
-            user.setBlocked(userModel.isBlocked());
-            user.setFunctionType(userModel.getFunctionType());
-            user.setUserType(userModel.getUserType());
+            user.setLastLogin(userModel.getLastLogin());
             user.setToken(userModel.getToken());
-            
+            if(!UserDAO.editUser(userModel))
+                user = null;
         }
         return user;
     }
@@ -47,23 +58,147 @@ public class UserService {
             model.setPassword(user.getPassword());
             model.setFirstName(user.getFirstName());
             model.setLastName(user.getLastName());
+            model.setEmail(user.getEmail());
             UserDAO.addUser(model);
             ok = true;
         }
         return ok;
     }
-    public boolean edit(UserDto user) throws UnknownHostException{return false;}
-    public boolean block(UserDto user) throws UnknownHostException{return false;}
-    public boolean unblock(UserDto user) throws UnknownHostException{return false;}
-    public UserDto promote(String username) throws UnknownHostException{return null;}
-    public UserDto demote(String username) throws UnknownHostException{return null;}
-    public UserDto getUserInfo(UserDto user) throws UnknownHostException{return null;}
-    public List<UserDto> getAllUsers(UserDto user) throws UnknownHostException{return null;}
-    public List<UserDto> getAllAdmin(UserDto user) throws UnknownHostException{return null;}
-    public List<UserDto> getAllCommonUsers(UserDto user) throws UnknownHostException{return null;}
-    public List<UserDto> getAllPendingUsers(UserDto user) throws UnknownHostException{return null;}
-    public boolean appoveUserRegistration(UserDto user) throws UnknownHostException{return false;}
+    public boolean edit(UserDto user) throws UnknownHostException, Exception{
+        boolean ok = false;
+        User model = UserDAO.getUser(user.getId());
+        if( model !=null)
+        {
+            model.setFirstName(user.getFirstName());
+            model.setLastName(user.getLastName());
+            model.setUsername(user.getUsername());
+            model.setPassword(user.getPassword());
+            model.setEmail(user.getEmail());
+            model.setApproved(user.isApproved());
+            model.setBlocked(user.isBlocked());
+            model.setFunctionType(user.getFunctionType());
+            ok = UserDAO.editUser(model);
+        }
+        else
+            throw new Exception("User does not exist. ");
+        return ok;
+    }
+    public boolean block(UserDto user) throws UnknownHostException, Exception{
+        boolean ok = false;
+        User model = UserDAO.getUser(user.getId());
+        if(model!= null){
+            model.setBlocked(true);
+            UserDAO.editUser(model);
+            ok = true;
+        }
+        else
+            throw new Exception("User does not exist. ");
+        return ok;
+    }
+    public boolean unblock(UserDto user) throws UnknownHostException, Exception{
+        boolean ok = false;
+        User model = UserDAO.getUser(user.getId());
+        if(model!= null){
+            model.setBlocked(false);
+            UserDAO.editUser(model);
+            ok = true;
+        }
+        else
+            throw new Exception("User does not exist. ");
+        return ok;
+    }
+    public UserDto promote(String id) throws UnknownHostException, Exception{
+        User model = UserDAO.getUser(id);
+        if(model== null)
+            throw new Exception("User does not exist. ");
+        else
+        {
+            if(model.getUserType() == User.USERTYPE_SUPERADMIN)
+                throw new Exception("User cannot be promoted anymore.");
+            else
+            {
+                switch(model.getUserType()){
+                    case User.USERTYPE_COMMON : model.setUserType(User.USERTYPE_ADMIN);break;
+                    case User.USERTYPE_ADMIN : model.setUserType(User.USERTYPE_SUPERADMIN);break;
+                }
+                if(!UserDAO.editUser(model))
+                    model = null;
+            }
+        }
+        UserDto dto = null;
+        
+        if(model!=null){
+            dto = new UserDto();
+            dto.setData(model);
+        }
+        return dto;
+    }
+    public UserDto demote(String id) throws UnknownHostException, Exception{
+        User model = UserDAO.getUser(id);
+        if(model== null)
+            throw new Exception("User does not exist. ");
+        else
+        {
+            if(model.getUserType().equals(User.USERTYPE_COMMON))
+                throw new Exception("User cannot be demoted anymore.");
+            else
+            {
+                switch(model.getUserType()){
+                    case User.USERTYPE_ADMIN : model.setUserType(User.USERTYPE_COMMON);break;
+                }
+                if(!UserDAO.editUser(model))
+                    model = null;
+            }
+        }
+        UserDto dto = null;
+        if(model!=null){
+            dto = new UserDto();
+            dto.setData(model);
+        }
+        return dto;
+    }
+    public UserDto getUserInfo(UserDto user) throws UnknownHostException{
+        User model = UserDAO.getUser(user.getId());
+        if(model!=null)
+            user.setData(model);
+        else 
+            user = null;
+        return user;
+    }
+    public List<UserDto> getAllUsers() throws UnknownHostException{
+        return modelsToDto(UserDAO.getAllUsers());
+    }
+    public List<UserDto> getAllAdmin() throws UnknownHostException{
+        return modelsToDto(UserDAO.getAllUserOfType(User.USERTYPE_ADMIN));
+    }
+    public List<UserDto> getAllCommonUsers() throws UnknownHostException{
+        return modelsToDto(UserDAO.getAllUserOfType(User.USERTYPE_COMMON));
+    }
+    public List<UserDto> getAllPendingUsers() throws UnknownHostException{
+        return modelsToDto(UserDAO.getUserByPropertyAndValue("approved", false));
+    }
+    public boolean appoveUserRegistration(UserDto user) throws UnknownHostException, Exception{
+        boolean ok = false;
+        User model = UserDAO.getUser(user.getId());
+        if(model!= null){
+            model.setApproved(true);
+            UserDAO.editUser(model);
+            ok = true;
+        }
+        else
+            throw new Exception("User does not exist. ");
+        return ok;
+    }
     
-    
+    // HELPER FUNCTIONS
+    private List<UserDto> modelsToDto(List<User> models){
+        List<UserDto> users = new ArrayList<>();
+        for(User model: models){
+            UserDto user = new UserDto();
+            user.setData(model);
+            users.add(user);
+        }
+        return users;
+    }
     
 }

@@ -3,6 +3,77 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+var app = angular.module("login_signup",["ngStorage"]);
+app.controller("AuthenticationController", function($scope,$http,$sessionStorage){
+    $scope.firstName = "";
+    $scope.lastname = "";
+    $scope.email="";
+    $scope.username="";
+    $scope.password="";
+    $scope.errorList = [];
+    $scope.login = function(){
+        $scope.errorList = [];
+        var req = {
+                 url: "/InformatronYX/informatron/user/login",
+                 contentType:'application/json',
+                 data: {'username':$scope.username,'password':$scope.password},
+                 dataType: 'json',
+                 method: "POST",
+               };
+               $http(req).then(
+                   function(response){
+                        var user = response.data;
+                        if(user.token!==null)
+                            $sessionStorage.user = response.data;
+                        else{
+                            $scope.errorList.push("Wrong User/Password.");
+                        }
+                   },
+                   function(response){
+                       $scope.errorList.push("Goto Error page");
+                       
+                   }
+               );
+        
+    };
+    $scope.signup = function(){
+        $scope.errorList = [];
+        var req = {
+                 url: "/InformatronYX/informatron/user/signup",
+                 contentType:'application/json',
+                 data: {'username':$scope.username,'password':$scope.password,'firstname':$scope.firstName,'lastname':$scope.lastname},
+                 dataType: 'json',
+                 method: "POST",
+               };
+               $http(req).then(
+                   function(response){
+                        var user = response.data;
+                        
+                   },
+                   function(response){
+                       $scope.errorList.push("Goto Error page");
+                       
+                   }
+               );
+        
+    };
+    $scope.clear = function(){
+        $scope.firstName = "";
+        $scope.lastname = "";
+        $scope.email="";
+        $scope.username="";
+        $scope.password="";
+    };
+    
+    
+});
+
+
+
+
+
+
+/*
 $(document).ready(function() {
         $("#username, #password").val("");
 
@@ -28,7 +99,7 @@ $(document).ready(function() {
                 $('.error_message_1').text('');
             }
         });
-        
+        */
         /*
         var switchit = "";
         <%   
@@ -42,6 +113,7 @@ $(document).ready(function() {
         <% } %>
             */
         // Edited     
+       /*
         var switchit = get("action");
         if(switchit == 'signup') 
 		$.switchPage(switchit);
@@ -88,6 +160,7 @@ $(document).ready(function() {
                 success: function(data, status, jqXHR){
                     if(data.errorList.length>0){
                         alert("Login Succesful!");
+                        
                        // $.switchPage("login");
                     }
                 },
@@ -106,4 +179,4 @@ $(document).ready(function() {
     };
     
     
-    
+    */

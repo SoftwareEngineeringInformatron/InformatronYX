@@ -18,15 +18,15 @@ import org.springframework.data.annotation.Id;
  * @author Ted Ian Osias
  */
 public class User{
-    public static int FUNCTION_SUPERADMIN = 4;
-    public static int FUNCTION_ADMIN_APPROVAL = 2;
-    public static int FUNCTION_ADMIN_METERING = 3;
-    public static int FUNCTION_COMMON = 1;
-    public static int FUNCTION_GUEST = 0;
-    public static String USERTYPE_SUPERADMIN = "Super Admin";
-    public static String USERTYPE_ADMIN = "Admin";
-    public static String USERTYPE_COMMON = "User";
-    public static String USERTYPE_GUEST = "Guest";
+    public static final int FUNCTION_SUPERADMIN = 4;
+    public static final int FUNCTION_ADMIN_APPROVAL = 2;
+    public static final int FUNCTION_ADMIN_METERING = 3;
+    public static final int FUNCTION_COMMON = 1;
+    public static final int FUNCTION_GUEST = 0;
+    public static final String USERTYPE_SUPERADMIN = "Super Admin";
+    public static final String USERTYPE_ADMIN = "Admin";
+    public static final String USERTYPE_COMMON = "User";
+    public static final String USERTYPE_GUEST = "Guest";
     
     @Id
     private String id;

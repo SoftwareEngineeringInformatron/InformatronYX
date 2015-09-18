@@ -8,7 +8,10 @@ package com.crackers.informatronyx.controllers;
 import com.crackers.informatronyx.dto.UserDto;
 import com.crackers.informatronyx.services.UserService;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -41,6 +44,9 @@ public class UserController {
         try{
         UserService service = new UserService();
         UserDto result = service.login(user);
+        if(!result.isApproved()){
+            user.getErrorList().add("User account is not yet approved by admin.");
+        }
         if(result==null)
             user.getErrorList().add("Registration unsucessful.");
         }catch(Exception e){
@@ -49,29 +55,144 @@ public class UserController {
         return user;
     }
     @RequestMapping("/validate")
-    public boolean validate(UserDto user){return false;}
+    public List<String> validate(UserDto user){
+        List<String> errorList = new ArrayList<>();
+        try{
+             errorList = (new UserService()).verify(user);
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.CONFIG, "MongoDB is not connected");
+        }
+        return errorList;
+    }
     
     @RequestMapping("/edit")
-    public boolean edit(UserDto user){return false;}
+    public boolean edit(@RequestBody UserDto user){
+        boolean ok = false;
+        UserService service  = new UserService();
+        
+        try {
+            ok = service.edit(user);
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.CONFIG, "MongoDB is not connected");
+        } catch (Exception ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.INFO, ex.getMessage());
+        }
+        return ok;
+    }
     
     @RequestMapping("/approve")
-    public boolean approve(UserDto user){return false;}
+    public boolean approve(@RequestBody UserDto user){
+        boolean ok = false;
+        UserService service = new UserService();
+        try {
+            ok  = service.appoveUserRegistration(user);
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.CONFIG, "MongoDB is not connected");
+        } catch (Exception ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.INFO, ex.getMessage());
+        }
+        return ok;
+    }
     
     @RequestMapping("/promote")
-    public boolean promote(UserDto user){return false;}
+    public boolean promote(@RequestBody UserDto user){
+        boolean ok = false;
+        UserService service = new UserService();
+        try {
+            ok  = service.promote(user.getId())!=null;
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.CONFIG, "MongoDB is not connected");
+        } catch (Exception ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.INFO, ex.getMessage());
+        }
+        return ok;
+    }
     
     @RequestMapping("/demote")
-    public boolean demote(UserDto user){return false;}
+    public boolean demote(@RequestBody UserDto user){
+        boolean ok = false;
+        UserService service = new UserService();
+        try {
+            ok  = service.demote(user.getId())!=null;
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.CONFIG, "MongoDB is not connected");
+        } catch (Exception ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.INFO, ex.getMessage());
+        }
+        return ok;
+    }
     
     @RequestMapping("/block")
-    public boolean block(UserDto user){return false;}
+    public boolean block(@RequestBody UserDto user){
+        boolean ok = false;
+        UserService service = new UserService();
+        try {
+            ok  = service.block(user);
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.CONFIG, "MongoDB is not connected");
+        } catch (Exception ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.INFO, ex.getMessage());
+        }
+        return ok;
+    }
     
     @RequestMapping("/unblock")
-    public boolean unblock(UserDto user){return false;}
+    public boolean unblock(@RequestBody UserDto user){
+        boolean ok = false;
+        UserService service = new UserService();
+        try {
+            ok  = service.unblock(user);
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.CONFIG, "MongoDB is not connected");
+        } catch (Exception ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.INFO, ex.getMessage());
+        }
+        return ok;
+    }
     
     @RequestMapping("/admins")
-    public List<UserDto> admins(UserDto user){return null;}
+    public List<UserDto> admins(){
+        List<UserDto> admins = new ArrayList<>();
+        UserService service = new UserService();
+        try {
+            admins = service.getAllAdmin();
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.CONFIG, "MongoDB is not connected");
+        }
+        return admins;
+    }
     
     @RequestMapping("/commonUsers")
-    public List<UserDto> commonUsers(UserDto user){return null;}
+    public List<UserDto> commonUsers(){
+        List<UserDto> commonUsers = new ArrayList<>();
+        UserService service = new UserService();
+        try {
+            commonUsers = service.getAllCommonUsers();
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.CONFIG, "MongoDB is not connected");
+        }
+        return commonUsers;
+    }
+    @RequestMapping("/pendingUsers")
+    public List<UserDto> pendingUsers(UserDto user){
+        List<UserDto> commonUsers = new ArrayList<>();
+        UserService service = new UserService();
+        try {
+            commonUsers = service.getAllPendingUsers();
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.CONFIG, "MongoDB is not connected");
+        }
+        return commonUsers;
+    }
+    @RequestMapping("/allUsers")
+    public List<UserDto> allUsers(){
+        List<UserDto> commonUsers = new ArrayList<>();
+        UserService service = new UserService();
+        try {
+            commonUsers = service.getAllUsers();
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.CONFIG, "MongoDB is not connected");
+        }
+        return commonUsers;
+    }
 }
