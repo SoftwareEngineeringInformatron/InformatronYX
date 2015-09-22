@@ -5,13 +5,11 @@
  */
 package com.crackers.informatronyx.dao;
 
-import com.crackers.informatronyx.config.AppConfig;
+import com.crackers.informatronyx.config.DatabaseManager;
 import com.crackers.informatronyx.models.Quiz;
-import com.mongodb.Mongo;
 import java.net.UnknownHostException;
 import java.util.List;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
@@ -23,7 +21,7 @@ public class QuizDAO {
     
     public static boolean addQuiz(Quiz quiz) throws UnknownHostException {
         try {
-         MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"quiz");
+         MongoOperations mongoOps = DatabaseManager.getMongoOpsInstance("quiz");
          mongoOps.insert(quiz);
          return true;
          
@@ -71,7 +69,7 @@ public class QuizDAO {
     
     public static List<Quiz> getQuizResults(Quiz quiz,String filter) throws UnknownHostException {
         try {
-        MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"quiz");
+        MongoOperations mongoOps = DatabaseManager.getMongoOpsInstance("quiz");
         if(filter.contentEquals("lo_name"))
         return mongoOps.find(query(where("lo_name").is(quiz.getLo_name())), Quiz.class);
         else if(filter.contentEquals("both"))

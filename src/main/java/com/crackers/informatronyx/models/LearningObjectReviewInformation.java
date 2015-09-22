@@ -11,7 +11,7 @@ import org.springframework.data.annotation.Id;
  *
  * @author Ted Ian Osias
  */
-public class LearningObjectReviewInformatioin {
+public class LearningObjectReviewInformation {
     @Id
     String id;
     String evaluation = null;
