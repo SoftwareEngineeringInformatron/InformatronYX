@@ -93,7 +93,7 @@ public class QuizController {
                 System.out.println("Failed to retrieve");
             }
         } catch(NullPointerException ae) {System.out.println("Controller Error!");}
-        finally{return quizResults;}
+        finally{System.out.println(quizResults); return quizResults;}
     }
     
 }

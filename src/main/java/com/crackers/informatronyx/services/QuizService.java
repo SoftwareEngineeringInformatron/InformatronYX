@@ -79,7 +79,7 @@ public class QuizService {
             Quiz quizModel = new Quiz();
             if(condition.isEmpty()) {
                 quiz.setQuizResults(QuizDAO.getQuizResults(quizModel,""));
-                System.out.println(quiz.getQuizResults());
+                //System.out.println(quiz.getQuizResults().get(0).getLo_name());
             } else {
                 quizModel.setLo_id(quiz.getLo_id());
                 quizModel.setLo_name(quiz.getLo_name());
@@ -92,110 +92,16 @@ public class QuizService {
                 quiz.setQuizResults(QuizDAO.getQuizResults(quizModel,"lo_name"));
             else if(condition.contentEquals("NASpecific"))
                 quiz.setQuizResults(QuizDAO.getQuizResults(quizModel,"user"));
+            else
+                return null;
             }
             
-            System.out.println("SIZE:"+ quiz.getQuizResults().size());
-            for(int i = 1; i <= quiz.getQuizResults().size(); i++) {
-                quizResultsDto.get(i).setDate_submitted(quiz.getQuizResults().get(i).getDate_submitted());
-                quizResultsDto.get(i).setTime_started(quiz.getQuizResults().get(i).getTime_started());
-                quizResultsDto.get(i).setTime_finished(quiz.getQuizResults().get(i).getTime_finished());
-                //quizResultsDto.get(i).setId(quiz.getQuizResults().get(i).getId());
-                //quizResultsDto.get(i).setLo_id(quiz.getQuizResults().get(i).getLo_id());
-                quizResultsDto.get(i).setLo_name(quiz.getQuizResults().get(i).getLo_name());
-                //quizResultsDto.get(i).setLo_subject(quiz.getQuizResults().get(i).getLo_subject());
-                //quizResultsDto.get(i).setUser_id(quiz.getQuizResults().get(i).getUser_id());
-                quizResultsDto.get(i).setUsername(quiz.getQuizResults().get(i).getUsername());
-                quizResultsDto.get(i).setScore(quiz.getQuizResults().get(i).getScore());
-                //quizResultsDto.get(i).setTotalScore(quiz.getQuizResults().get(i).getTotalScore());
-            }
+            for(int i = 0; i < quiz.getQuizResults().size(); i++)
+                quizResultsDto.add(quiz.getsetQuiz(quiz.getQuizResults().get(i)));
         } catch(NullPointerException ae) {System.out.println("Service Error!"); ae.printStackTrace();}
          finally{return quizResultsDto;}
     }
     
-    /*
-    public List<QuizDto> getQuizResultsOfUserFromSpecificLearningObject(QuizDto quiz) throws UnknownHostException {
-        List<QuizDto> quizResultsDto = new ArrayList<QuizDto>();
-        try {
-            Quiz quizModel = new Quiz();
-            quizModel.setLo_id(quiz.getLo_id());
-            quizModel.setLo_name(quiz.getLo_name());
-            quizModel.setLo_subject(quiz.getLo_subject());
-            quizModel.setUser_id(quiz.getUser_id());
-            quizModel.setUsername(quiz.getUsername());
-            quiz.setQuizResults(QuizDAO.getQuizResults(quizModel,"both"));
-            for(int i = 0; i < quiz.getQuizResults().size(); i++) {
-                quizResultsDto.get(i).setDate_submitted(quiz.getQuizResults().get(i).getDate_submitted());
-                quizResultsDto.get(i).setTime_started(quiz.getQuizResults().get(i).getTime_started());
-                quizResultsDto.get(i).setTime_finished(quiz.getQuizResults().get(i).getTime_finished());
-                quizResultsDto.get(i).setId(quiz.getQuizResults().get(i).getId());
-                quizResultsDto.get(i).setLo_id(quiz.getQuizResults().get(i).getLo_id());
-                quizResultsDto.get(i).setLo_name(quiz.getQuizResults().get(i).getLo_name());
-                quizResultsDto.get(i).setLo_subject(quiz.getQuizResults().get(i).getLo_subject());
-                quizResultsDto.get(i).setUser_id(quiz.getQuizResults().get(i).getUser_id());
-                quizResultsDto.get(i).setUsername(quiz.getQuizResults().get(i).getUsername());
-                quizResultsDto.get(i).setScore(quiz.getQuizResults().get(i).getScore());
-                quizResultsDto.get(i).setTotalScore(quiz.getQuizResults().get(i).getTotalScore());
-            }
-        } catch(NullPointerException ae) {System.out.println(ae.getMessage());}
-         finally{return quizResultsDto;}
-    }
-    
-    public List<QuizDto> getQuizResultsOfUser(QuizDto quiz) throws UnknownHostException {
-        List<QuizDto> quizResultsDto = new ArrayList<QuizDto>();
-        try {
-            Quiz quizModel = new Quiz();
-            quizModel.setLo_id(quiz.getLo_id());
-            quizModel.setLo_name(quiz.getLo_name());
-            quizModel.setLo_subject(quiz.getLo_subject());
-            quizModel.setUser_id(quiz.getUser_id());
-            quizModel.setUsername(quiz.getUsername());
-            quiz.setQuizResults(QuizDAO.getQuizResults(quizModel,""));
-            for(int i = 0; i < quiz.getQuizResults().size(); i++) {
-                quizResultsDto.get(i).setDate_submitted(quiz.getQuizResults().get(i).getDate_submitted());
-                quizResultsDto.get(i).setTime_started(quiz.getQuizResults().get(i).getTime_started());
-                quizResultsDto.get(i).setTime_finished(quiz.getQuizResults().get(i).getTime_finished());
-                quizResultsDto.get(i).setId(quiz.getQuizResults().get(i).getId());
-                quizResultsDto.get(i).setLo_id(quiz.getQuizResults().get(i).getLo_id());
-                quizResultsDto.get(i).setLo_name(quiz.getQuizResults().get(i).getLo_name());
-                quizResultsDto.get(i).setLo_subject(quiz.getQuizResults().get(i).getLo_subject());
-                quizResultsDto.get(i).setUsername(quiz.getQuizResults().get(i).getUsername());
-                quizResultsDto.get(i).setUser_id(quiz.getQuizResults().get(i).getUser_id());
-                quizResultsDto.get(i).setUsername(quiz.getQuizResults().get(i).getUsername());
-                quizResultsDto.get(i).setScore(quiz.getQuizResults().get(i).getScore());
-                quizResultsDto.get(i).setTotalScore(quiz.getQuizResults().get(i).getTotalScore());
-            }
-        } catch(NullPointerException ae) {System.out.println(ae.getMessage());}
-         finally{return quizResultsDto;}
-    }
-    
-    public List<QuizDto> getQuizResultsOfLearningObject(QuizDto quiz) throws UnknownHostException {
-        List<QuizDto> quizResultsDto = new ArrayList<QuizDto>();
-        try {
-            Quiz quizModel = new Quiz();
-            quizModel.setLo_id(quiz.getLo_id());
-            quizModel.setLo_name(quiz.getLo_name());
-            quizModel.setLo_subject(quiz.getLo_subject());
-            quizModel.setUser_id(quiz.getUser_id());
-            quizModel.setUsername(quiz.getUsername());
-            quiz.setQuizResults(QuizDAO.getQuizResults(quizModel, "lo_name"));
-            for(int i = 0; i < quiz.getQuizResults().size(); i++) {
-                quizResultsDto.get(i).setDate_submitted(quiz.getQuizResults().get(i).getDate_submitted());
-                quizResultsDto.get(i).setTime_started(quiz.getQuizResults().get(i).getTime_started());
-                quizResultsDto.get(i).setTime_finished(quiz.getQuizResults().get(i).getTime_finished());
-                quizResultsDto.get(i).setId(quiz.getQuizResults().get(i).getId());
-                quizResultsDto.get(i).setLo_id(quiz.getQuizResults().get(i).getLo_id());
-                quizResultsDto.get(i).setLo_name(quiz.getQuizResults().get(i).getLo_name());
-                quizResultsDto.get(i).setLo_subject(quiz.getQuizResults().get(i).getLo_subject());
-                quizResultsDto.get(i).setUser_id(quiz.getQuizResults().get(i).getUser_id());
-                quizResultsDto.get(i).setUsername(quiz.getQuizResults().get(i).getUsername());
-                quizResultsDto.get(i).setScore(quiz.getQuizResults().get(i).getScore());
-                quizResultsDto.get(i).setTotalScore(quiz.getQuizResults().get(i).getTotalScore());
-            }
-            
-        } catch(NullPointerException ae) {System.out.println(ae.getMessage());}
-        finally{return quizResultsDto;}
-    }
-    */
     private boolean evaluate(QuizDto quiz) {
         //if(quiz.getEndTime()!=null && quiz.getLearningObjectTitle()!=null && quiz.getResult()>=0 && quiz.getStartTime()!=null && quiz.getUsername()!=null)
             return true;

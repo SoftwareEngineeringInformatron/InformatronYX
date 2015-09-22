@@ -129,6 +129,21 @@ public class QuizDto {
     public List<Quiz> getQuizResults() {
         return quizResults;
     }
+    
+    public QuizDto getsetQuiz(Quiz quiz) {
+        this.setDate_submitted(quiz.getDate_submitted());
+        this.setId(quiz.getId());
+        this.setLo_id(quiz.getLo_id());
+        this.setLo_name(quiz.getLo_name());
+        this.setLo_subject(quiz.getLo_subject());
+        this.setScore(quiz.getScore());
+        this.setTime_finished(quiz.getTime_finished());
+        this.setTime_started(quiz.getTime_started());
+        this.setTotalScore(quiz.getTotalScore());
+        this.setUser_id(quiz.getUser_id());
+        this.setUsername(quiz.getUsername());
+        return this;
+    }
 
     public List<String> getErrorList() {
         return errorList;

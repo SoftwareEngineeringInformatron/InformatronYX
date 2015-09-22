@@ -16,7 +16,6 @@ var quizApp = angular.module("QUIZ", []);
     $scope.datepickerON();
         
     $scope.addQuiz = function () {
-                $scope.time = {time_started:''};
         var quizJson = {
           "id":null,
           "lo_id":null,
