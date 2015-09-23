@@ -24,6 +24,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/LO")
 public class LearningObjectController {
+    
+    LearningObjectService loService = new LearningObjectService();
+    
     @RequestMapping("/downloadLO")
     public void download(@RequestBody LearningObject object) throws UnknownHostException {
         
@@ -38,7 +41,7 @@ public class LearningObjectController {
     public List<LearningObjectDto> availableLearningObjects(){
         List<LearningObjectDto> dtos = new ArrayList<>();
         try{
-            dtos = (new LearningObjectService()).getAvailableLearningObjects();
+            dtos = loService.getAvailableLearningObjects();
         }catch(Exception e){ e.printStackTrace(); }
         return dtos;
     }
@@ -47,7 +50,7 @@ public class LearningObjectController {
     public List<LearningObjectDto> mostLikedLearningObjects(){
         List<LearningObjectDto> dtos = new ArrayList<>();
         try{
-            dtos = (new LearningObjectService()).getMostLikedLearningObjects();
+            dtos = loService.getMostLikedLearningObjects();
         }catch(Exception e){ e.printStackTrace(); }
         return dtos;
     }
@@ -56,7 +59,7 @@ public class LearningObjectController {
     public List<LearningObjectDto> mostDownloadedLearningObjects(){
         List<LearningObjectDto> dtos = new ArrayList<>();
         try{
-            dtos = (new LearningObjectService()).getMostDownloadedLearningObjects();
+            dtos = loService.getMostDownloadedLearningObjects();
         }catch(Exception e){ e.printStackTrace(); }
         return dtos;
     }
@@ -67,8 +70,8 @@ public class LearningObjectController {
     
     @RequestMapping("/upload/avaiableLOs")
     public Boolean uploadAvaiableLearningObjects(@RequestBody LearningObjectDto[] objects) throws UnknownHostException {
-        LearningObjectService service = new LearningObjectService ();
-        service.uploadAvaiableLearningObjects(objects);
+        //LearningObjectService service = new LearningObjectService ();
+        loService.uploadAvaiableLearningObjects(objects);
         return true;
     }
 }

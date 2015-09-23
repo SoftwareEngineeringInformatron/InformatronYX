@@ -6,6 +6,7 @@
 package com.crackers.informatronyx.services;
 
 import com.crackers.informatronyx.dao.DownloadRecordDAO;
+import com.crackers.informatronyx.dto.DownloadRecordDto;
 import com.crackers.informatronyx.models.DownloadRecord;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -16,33 +17,35 @@ import java.util.List;
  * @author Nelson
  */
 public class DownloadRecordService {
-    public List<DownloadRecord> getDownloadRecordsByUserID(DownloadRecord DR, String ID) throws UnknownHostException {
+    public List<DownloadRecordDto> getDownloadRecordsByUserID(String ID) throws UnknownHostException {
         List<DownloadRecord> records = DownloadRecordDAO.getAllDownloadRecordByUserID(ID);
-        List<DownloadRecord> objects = new ArrayList<DownloadRecord>();        
+        List<DownloadRecordDto> objects = new ArrayList<DownloadRecordDto>();        
         for(DownloadRecord model: records) {
-            model.setId(DR.getId());
-            model.setUserId(DR.getUserId());
-            model.setLearningObjectId(DR.getLearningObjectId());
-            model.setDateDownload(DR.getDateDownload());
-            objects.add(model);
+            DownloadRecordDto dto = new DownloadRecordDto();
+            dto.setId(model.getId());
+            dto.setUserId(model.getUserId());
+            dto.setLearningObjectId(model.getLearningObjectId());
+            dto.setDateDownload(model.getDateDownload());
+            objects.add(dto);
         }
         return objects;
     }
     
-    public List<DownloadRecord> getDownloadRecordsByLOID(DownloadRecord DR, String LOID) throws UnknownHostException {
+    public List<DownloadRecordDto> getDownloadRecordsByLOID(String LOID) throws UnknownHostException {
         List<DownloadRecord> records = DownloadRecordDAO.getAllDownloadRecordByLearningObjectID(LOID);
-        List<DownloadRecord> objects = new ArrayList<DownloadRecord>();        
+        List<DownloadRecordDto> objects = new ArrayList<DownloadRecordDto>();        
         for(DownloadRecord model: records) {
-            model.setId(DR.getId());
-            model.setUserId(DR.getUserId());
-            model.setLearningObjectId(DR.getLearningObjectId());
-            model.setDateDownload(DR.getDateDownload());
-            objects.add(model);
+            DownloadRecordDto dto = new DownloadRecordDto();
+            dto.setId(model.getId());
+            dto.setUserId(model.getUserId());
+            dto.setLearningObjectId(model.getLearningObjectId());
+            dto.setDateDownload(model.getDateDownload());
+            objects.add(dto);
         }
         return objects;
     }
     
-    public boolean addRecord(DownloadRecord record) throws UnknownHostException {
+    public boolean addRecord(DownloadRecordDto record) throws UnknownHostException {
         if(evaluate(record)) {
             DownloadRecord model = new DownloadRecord();
             model.setId(record.getId());
@@ -55,7 +58,7 @@ public class DownloadRecordService {
             return false;
     }
     
-    public boolean editRecord(DownloadRecord record) throws UnknownHostException {
+    public boolean editRecord(DownloadRecordDto record) throws UnknownHostException {
         if(evaluate(record)) {
             DownloadRecord model = new DownloadRecord();
             model.setId(record.getId());
@@ -68,7 +71,7 @@ public class DownloadRecordService {
             return false;
     }
     
-    public boolean removetRecord(DownloadRecord record) throws UnknownHostException {
+    public boolean removeRecord(DownloadRecordDto record) throws UnknownHostException {
         if(evaluate(record)) {
             DownloadRecord model = new DownloadRecord();
             model.setId(record.getId());
@@ -81,7 +84,7 @@ public class DownloadRecordService {
             return false;
     }
     
-    private boolean evaluate(DownloadRecord record) {
+    private boolean evaluate(DownloadRecordDto record) {
         return true;
     }
 }
