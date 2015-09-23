@@ -33,12 +33,12 @@ public class LearningObjectReviewInformationDAO {
         try {
          MongoOperations mongoOps = DatabaseManager.getMongoOpsInstance("lori");
          Update updateLORI = new Update();
-         updateLORI.set("id",LORI.getId());
+         //updateLORI.set("id",LORI.getId());
          updateLORI.set("evaluation", LORI.getEvaluation());
          updateLORI.set("learningObjectId",LORI.getLearningObjectId());
          updateLORI.set("reviewId", LORI.getReviewId());
          updateLORI.set("subject", LORI.getSubject());
-         mongoOps.findAndModify(query(where("id").is(LORI.getId()).andOperator((where("learningObjectId").is(LORI.getLearningObjectId()).andOperator(where("reviewId").is(LORI.getReviewId()))))),updateLORI,LearningObjectReviewInformation.class);
+         mongoOps.findAndModify(query(where("subject").is(LORI.getSubject()).andOperator((where("learningObjectId").is(LORI.getLearningObjectId()).andOperator(where("reviewId").is(LORI.getReviewId()))))),updateLORI,LearningObjectReviewInformation.class);
          return true;
          
         } catch (NullPointerException ae) {System.out.println(ae.getMessage()); return false;}
@@ -47,7 +47,7 @@ public class LearningObjectReviewInformationDAO {
     public static boolean deleteLORI(LearningObjectReviewInformation LORI) throws UnknownHostException {
         try {
          MongoOperations mongoOps = DatabaseManager.getMongoOpsInstance("lori");
-         mongoOps.remove(query(where("id").is(LORI.getId()).andOperator(where("reviewId").is(LORI.getReviewId()))), LearningObjectReviewInformation.class);
+         mongoOps.remove(query(where("learningObjectId").is(LORI.getLearningObjectId()).andOperator(where("reviewId").is(LORI.getReviewId()))), LearningObjectReviewInformation.class);
          return true;
          
         } catch (NullPointerException ae) {System.out.println(ae.getMessage()); return false;}
@@ -82,6 +82,7 @@ public class LearningObjectReviewInformationDAO {
         System.out.println(LearningObjectReviewInformationDAO.editLORI(lori));
         System.out.println(LearningObjectReviewInformationDAO.getLORIs(lori, "learningObjectId"));
         //System.out.println(LearningObjectReviewInformationDAO.deleteLORI(lori2));
+        System.out.println(LearningObjectReviewInformationDAO.getLORIs(new LearningObjectReviewInformation(), "").toString());
     }
     */
     
