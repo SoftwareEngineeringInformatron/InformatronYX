@@ -62,10 +62,10 @@ public class LearningObjectService {
     }
     
     public List<LearningObjectDto> getMostDownloadedLearningObjects() throws UnknownHostException {
-        List<LearningObject> mostLikedLO = LearningObjectDAO.getMostDownloadedList();
+        List<LearningObject> mostDownloadedLO = LearningObjectDAO.getMostDownloadedList();
         List<LearningObjectDto> objects = new ArrayList<LearningObjectDto>();
         
-        for(LearningObject model: mostLikedLO) {
+        for(LearningObject model: mostDownloadedLO) {
             LearningObjectDto dto = new LearningObjectDto();
             dto.setId(model.getId());
             dto.setTitle(model.getTitle());
