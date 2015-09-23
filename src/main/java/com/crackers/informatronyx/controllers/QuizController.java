@@ -33,7 +33,8 @@ public class QuizController {
                 quiz.getErrorList().add("Failed to record");
             }
         } catch(NullPointerException ae) {quiz.getErrorList().add(ae.getMessage());}
-         finally {return quiz;}
+        
+            return quiz;
     }
     
     /*
@@ -57,7 +58,8 @@ public class QuizController {
                 quiz.getErrorList().add("Failed to retrieve");
             }
         } catch(NullPointerException ae) {quiz.getErrorList().add(ae.getMessage());}
-        finally {return quizResults;}
+            
+            return quizResults;
     }
     
     @RequestMapping("/userresult")
@@ -69,7 +71,8 @@ public class QuizController {
                 quiz.getErrorList().add("Failed to retrieve");
             }
         } catch(NullPointerException ae) {quiz.getErrorList().add(ae.getMessage());}
-        finally {return quizResults;}
+        
+            return quizResults;
     }
     
     @RequestMapping("/usersresult")
@@ -81,7 +84,8 @@ public class QuizController {
                 quiz.getErrorList().add("Failed to retrieve");
             }
         } catch(NullPointerException ae) {quiz.getErrorList().add(ae.getMessage());}
-        finally {return quizResults;}
+        
+            return quizResults;
     }
     
     @RequestMapping("/results")
@@ -93,7 +97,8 @@ public class QuizController {
                 System.out.println("Failed to retrieve");
             }
         } catch(NullPointerException ae) {System.out.println("Controller Error!");}
-        finally{System.out.println(quizResults); return quizResults;}
+        
+            return quizResults;
     }
     
 }

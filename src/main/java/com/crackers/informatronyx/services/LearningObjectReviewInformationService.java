@@ -6,6 +6,7 @@
 package com.crackers.informatronyx.services;
 
 import com.crackers.informatronyx.dao.LearningObjectReviewInformationDAO;
+import com.crackers.informatronyx.dto.LearningObjectReviewInformationDto;
 import com.crackers.informatronyx.models.LearningObjectReviewInformation;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -13,11 +14,11 @@ import java.util.List;
 
 /**
  *
- * @author User
+ * @author Andrew Paul Mago
  */
 public class LearningObjectReviewInformationService {
     
-    public boolean submitReview(LearningObjectReviewInformation LORI) throws UnknownHostException {
+    public boolean submitReview(LearningObjectReviewInformationDto LORI) throws UnknownHostException {
         if(evaluate(LORI)) {
             LearningObjectReviewInformation loriModel = new LearningObjectReviewInformation();
             loriModel.setEvaluation(LORI.getEvaluation());
@@ -31,7 +32,7 @@ public class LearningObjectReviewInformationService {
                 return false;
     }
     
-    public boolean editReview(LearningObjectReviewInformation LORI) throws UnknownHostException {
+    public boolean editReview(LearningObjectReviewInformationDto LORI) throws UnknownHostException {
         if(evaluate(LORI)) {
             LearningObjectReviewInformation loriModel = new LearningObjectReviewInformation();
             loriModel.setEvaluation(LORI.getEvaluation());
@@ -45,7 +46,7 @@ public class LearningObjectReviewInformationService {
                 return false;
     }
     
-    public boolean deleteReview(LearningObjectReviewInformation LORI) throws UnknownHostException {
+    public boolean deleteReview(LearningObjectReviewInformationDto LORI) throws UnknownHostException {
         if(evaluate(LORI)) {
             LearningObjectReviewInformation loriModel = new LearningObjectReviewInformation();
             loriModel.setEvaluation(LORI.getEvaluation());
@@ -59,12 +60,12 @@ public class LearningObjectReviewInformationService {
                 return false;
     }
     
-    public List<LearningObjectReviewInformation> getQuizResults(LearningObjectReviewInformation LORI, String condition) throws UnknownHostException {
-        List<LearningObjectReviewInformation> LearningObjectReviewInformationResults = new ArrayList<LearningObjectReviewInformation>();
+    public List<LearningObjectReviewInformationDto> getQuizResults(LearningObjectReviewInformationDto LORI, String condition) throws UnknownHostException {
+        List<LearningObjectReviewInformationDto> LearningObjectReviewInformationResults = new ArrayList<LearningObjectReviewInformationDto>();
         try {
             LearningObjectReviewInformation loriModel = new LearningObjectReviewInformation();
             if(condition.isEmpty()) {
-                LearningObjectReviewInformationResults = LearningObjectReviewInformationDAO.getLORIs(loriModel, "");
+                LORI.setLORIs(LearningObjectReviewInformationDAO.getLORIs(loriModel, ""));
                 //System.out.println(quiz.getQuizResults().get(0).getLo_name());
             } else {
                 loriModel.setEvaluation(LORI.getEvaluation());
@@ -73,20 +74,23 @@ public class LearningObjectReviewInformationService {
             loriModel.setReviewId(LORI.getReviewId());
             loriModel.setSubject(LORI.getSubject());
             if(condition.contentEquals("learningObjectId"))
-                LearningObjectReviewInformationResults = LearningObjectReviewInformationDAO.getLORIs(loriModel, "learningObjectId");
+                LORI.setLORIs(LearningObjectReviewInformationDAO.getLORIs(loriModel, "learningObjectId"));
             else if(condition.contentEquals("reviewId"))
-                LearningObjectReviewInformationResults = LearningObjectReviewInformationDAO.getLORIs(loriModel, "reviewId");
+                LORI.setLORIs(LearningObjectReviewInformationDAO.getLORIs(loriModel, "reviewId"));
             else if(condition.contentEquals("both"))
-                LearningObjectReviewInformationResults = LearningObjectReviewInformationDAO.getLORIs(loriModel, "both");
+                LORI.setLORIs(LearningObjectReviewInformationDAO.getLORIs(loriModel, "both"));
             else
                 return null;
             }
+            
+            for(int i = 0; i < LORI.getLORIs().size(); i++)
+                LearningObjectReviewInformationResults.add(LORI.getsetLORI(LORI.getLORIs().get(i)));
             
         } catch(NullPointerException ae) {System.out.println("Service Error!"); ae.printStackTrace();}
          finally{return LearningObjectReviewInformationResults;}
     }
     
-    private boolean evaluate(LearningObjectReviewInformation LORI) {
+    private boolean evaluate(LearningObjectReviewInformationDto LORI) {
         return true;
     }
 }
