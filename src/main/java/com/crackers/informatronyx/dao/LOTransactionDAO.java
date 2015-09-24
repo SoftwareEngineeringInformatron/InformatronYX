@@ -14,6 +14,8 @@ import org.springframework.data.mongodb.core.query.Query;
 import com.crackers.informatronyx.models.LearningObjectTransaction;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.data.mongodb.core.MongoOperations;
+import static org.springframework.data.mongodb.core.query.Query.query;
 
 
 /**
@@ -56,5 +58,10 @@ public class LOTransactionDAO {
         } catch (UnknownHostException ex) {
             return null;
         }
+    }
+    
+    public static boolean exists(String user_id, String lo_id) throws UnknownHostException {
+        boolean ok = DatabaseManager.getMongoOpsInstance(AppConfig.DATABASE_TRANSACTION).exists(query(where("user_id").is(user_id).andOperator(where("learningObjectId").is(lo_id))), LearningObjectTransaction.class);
+        return ok;
     }
 }

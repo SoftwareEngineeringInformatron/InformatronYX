@@ -21,6 +21,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -78,8 +79,11 @@ public class TransactionService {
        return ok;
     }
     public boolean recordLOPurchase(LOTransactionDto transaction) throws UnknownHostException{
-        if(!LearningObjectDAO.exists(transaction.getId()))
+        if(!LearningObjectDAO.exists(transaction.getU_Id()))
         {
+            System.out.println(transaction.getU_Id());
+            System.out.println(transaction.getLo_id());
+            if(!LOTransactionDAO.exists(transaction.getU_Id(), transaction.getLo_id())) {
             LearningObjectTransaction transModel = new LearningObjectTransaction();
             transModel.setAmount(transaction.getAmount());
             transModel.setDateOfTransaction(new Date());
@@ -88,6 +92,9 @@ public class TransactionService {
             transModel.setUser_id(transaction.getU_Id());
             LOTransactionDAO.recordLOTransaction(transModel);
             return true;
+            } else {
+                return false;
+            }
         }
         else
             return false;

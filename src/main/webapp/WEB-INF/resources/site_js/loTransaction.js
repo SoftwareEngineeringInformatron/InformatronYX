@@ -24,6 +24,7 @@ var app = angular.module("loTransaction",[]);
         }
         
         $scope.selectedLO = "";
+        $scope.userSelected = "";
         $scope.selectedUser = [
             {id:""},
             {username:""},
@@ -44,7 +45,7 @@ var app = angular.module("loTransaction",[]);
         $scope.recordLOPurchase = function() {
             var transactionJSON = {
               "lo_id":$scope.selectedLO,
-              "u_Id":$scope.selectedUser.id,
+              "u_Id":$scope.userSelected,
               "errorList":null
             };
             
