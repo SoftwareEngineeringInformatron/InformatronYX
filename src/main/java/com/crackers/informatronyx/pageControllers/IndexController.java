@@ -108,6 +108,10 @@ public class IndexController {
     @RequestMapping("/userManager")
     public ModelAndView accessUserManagerTestPage() {
         return new ModelAndView("testPages/userManager_Test");
-    } 
+    }
+    @RequestMapping("/loTransaction")
+    public ModelAndView accessLOTransaction() {
+        return new ModelAndView("testPages/LOTransaction");
+    }
 }
 

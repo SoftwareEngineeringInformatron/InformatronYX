@@ -72,13 +72,19 @@ public class TransactionController {
         return false;
     }
     @RequestMapping(value = "/LO/record", method = RequestMethod.POST)
-    public boolean recordLOPurchase(@RequestBody  LOTransactionDto trans){
-        if(trans!=null){}
+    public boolean recordLOPurchase(@RequestBody  LOTransactionDto trans) throws UnknownHostException {
+        if(trans!=null){
+            TransactionService service = new TransactionService();
+            return service.recordLOPurchase(trans);
+        }
         return false;
     }
     @RequestMapping(value = "/history/LO", method = RequestMethod.POST)
-    public List<LOTransactionDto> getLOTransactionHistory(){
-        return null;
+    public List<LOTransactionDto> getLOTransactionHistory(@RequestBody UserDto user) throws UnknownHostException {
+        List<LOTransactionDto> LOtrans = new ArrayList<LOTransactionDto>();
+        TransactionService service = new TransactionService();
+        LOtrans = service.getLOTransactionHistory(user);
+        return LOtrans;
     }
     @RequestMapping(value = "/history/credit", method = RequestMethod.POST)
     public List<CreditTransactionDto> getCreditTransactionHistory(@RequestBody UserDto dto) throws UnknownHostException{
