@@ -30,23 +30,8 @@
         <link rel="stylesheet" type="text/css" href="css/940grid.css" />
         <link rel="stylesheet" type="text/css" href="css/media.css" />
         <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css" />
-    
-    <%   /*
-        String isid = (String) session.getAttribute("icms_id");
-        
-        if(session.getAttribute("USER") == null) 
-                response.sendRedirect("login.action");
-        else if("icms_guest".equals((String)session.getAttribute("USER")))
-            response.sendRedirect("main.action");
-        else if("icms_user".equals((String)session.getAttribute("USER")))
-            response.sendRedirect("main.action");
-        else if("icms_approveadmin".equals((String)session.getAttribute("USER")))
-            response.sendRedirect("approveadmin.action");*/
-        %>    
     </head>
-    <body ng-controller="meteringController">
-    <s:url id='url_main' action='main'/>
-        
+    <body ng-controller="meterController">
         <div id="message" class="modal hide fade" tabindex="-1" data-width="760">
             <div class="modal-center">
                 <div class="modal-header">
@@ -86,8 +71,8 @@
                                 <label class="file-action">
                                     <div>{{setName}}</div>
                                     <div>Amount to pay: Php {{setBalance}}.00</div><br/>
-                                    <input type="text" size="20" placeholder="Amount paid" ng-model="userpayment" required/>
-                                    <input type="text" size="20" placeholder="O.R. number" ng-model="userreceipt" required/>
+                                    <input type="text" size="20" placeholder="Amount paid"  required/>
+                                    <input type="text" size="20" placeholder="O.R. number"  required/>
                                 </label>
 
                             </div>
@@ -96,7 +81,7 @@
                     <div class="modal-footer">
                         <div class="row-fluid">
                             <div class="span10 offset1">
-                                <button ng-disabled="metering.$invalid" type="button" data-dismiss="modal" class="btn btn-primary" ng-click="submitRequest(userpayment, userreceipt)"><i class="icon-plus-sign-alt icon-large default"></i> Submit</button>
+                                <button type="button" data-dismiss="modal" class="btn btn-primary" ><i class="icon-plus-sign-alt icon-large default"></i> Submit</button>
                                 <button type="button" data-dismiss="modal" class="btn btn-cancel"></i> Cancel</button>
                                 <input type="hidden" id="selectedIndex" name="index" value="0"/>
                             </div>
@@ -105,9 +90,6 @@
                 </div>
             </form>
         </div>
-
-        <s:url id='url_adminhistory' action='adminhistory'/>
-        
         <div class="wrapIt">
             <header id="header-wrap" >
                 <div class="navbar navbar-inverse">
@@ -116,7 +98,7 @@
                             
                                 <a href="${url_main}" class="brand offset1 header-txt"><i class="icon-download-alt logo"></i> InformatronCMS</a>
 
-                                <div class="account" ng-controller="userController">
+                                <div class="account">
                                     <ul class="nav pull-right">
                                         <li class="dropdown" id="usermeter">  
                                             
@@ -142,9 +124,10 @@
                                         <a class="btn-index" ><i class="icon-search"></i> </a>
                                 </div>
                                 <div class="span3" >
-                                    
-                                    <a href="${url_adminhistory}" class="btn-index span9" >VIEW HISTORY</a>
+                                    <a href="#" class="btn-index span4" >CREDIT</a>
+                                    <a href="#" class="btn-index span8" >Learning Object</a>
                                 </div>
+                                
                             </div> 
                         </div>
                     </div>
@@ -152,20 +135,36 @@
                 </div>
             </header>
             <div class="clearfix"></div>
-            <section id="user-charges">
+            <section id="user-charges" >
                 <div class="content-row">
-                    <table class="table table-hover meter-admin">
+                    <table class="table table-hover meter-admin ">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th>Name</th>
-                                <th>Amount to pay</th>
+                                <th>Amount Issued</th>
+                                <th>Receipt</th>
+                                <th> <div  class="text-center">Approve</div></th>
+                                <th></th>
                             </tr>
                         </thead>
 
                         <tbody>
-                            <tr ng-repeat="users in balance | filter:searchText">
-                                <td><a href="#payCharges" data-toggle="modal" ng-click="setID(users.userID, users.userName, users.existingBalance)">{{users.userName}}</a></td>
-                                <td>{{users.existingBalance}}.00</td>
+                            <tr ng-repeat="trans in creditTransactions">
+                                <td></td>
+                                <td><a href="#payCharges" data-toggle="modal">{{getUserNameById(trans.u_ID)}}</a></td>
+                                <td>{{trans.amnt}}</td>
+                                <td>{{trans.or}}</td>
+                                <td>
+                                    <div ng-switch on="trans.ok" class="text-center">
+                                        <div ng-switch-when="false" ">
+                                            <button  class="btn" data-toggle="modal" data-target="#payCharges"> Approve </button>
+                                        <button  class="btn" data-toggle="modal" data-target="#payCharges"> Decline </button>
+                                        </div>
+                                        <h4 ng-switch-when="true"> Approved</h4>
+                                    </div>
+                                </td>
+                                <td></td>
                             </tr>
                         </tbody>
                     </table>
@@ -180,32 +179,15 @@
                 </div>
             </footer>
         </div>
-        <div ng-controller="userController">
+        <div >
             <input type="hidden" id="usertype" value="<%// out.println(isid); %>" />
         </div>
-        
-        <script src="bootstrap/js/jquery-1.10.2.min.js"></script>
-        <script src="js/jquery-1.9.0.min.js"></script>
-    	<script src="js/jquery-ui-1.10.3.custom.min.js"></script>
-    	<script src="js/jquery.ui.touch-punch.min.js"></script>
-    	<script src="js/bootstrap.min.js"></script>
-    	<script src="js/bootstrap-select.js"></script>
-    	<script src="js/bootstrap-switch.js"></script>
-    	<script src="js/flatui-checkbox.js"></script>
-    	<script src="js/flatui-radio.js"></script>
-    	<script src="js/jquery.tagsinput.js"></script>
-    	<script src="js/jquery.placeholder.js"></script>
-    	<script src="js/jquery.stacktable.js"></script>
-    	<script src="js/application.js"></script>
-        <script src="js/original.js"></script>
+        <jsp:include page="includes/scripts.jsp" /> 
 
-        <script src="scripts/angular.min.js"></script>
-        <script src="scripts/adminController.js"></script>
-        <script src="scripts/admin-service.js"></script>
-        <script src="scripts/userController.js"></script>
-        <script src="scripts/user-service.js"></script>
+        <script src="js/angular.js"></script>
+        <script src="site_js/ngStorage.js"></script>
+        <script src="site_js/adminMeter.js"></script>
+        <script src="site_js/services/creditService.js"></script>
+        <script src="site_js/services/userService.js"></script>
     </body>
 </html>
-
-<script type="text/javascript">
-</script>

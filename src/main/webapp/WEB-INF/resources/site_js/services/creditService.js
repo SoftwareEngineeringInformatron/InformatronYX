@@ -15,7 +15,7 @@ app.factory('creditService', function($http) {
             var url = "/InformatronYX/informatron/transact/credit/remove";
             return $http.post(url,data);
         },
-        getAllTransactions : function(data){
+        getTransactionHistoryOfUser : function(data){
             var url = "/InformatronYX/informatron/transact/history/credit";
             return $http.post(url,data);
         },
