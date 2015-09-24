@@ -19,14 +19,9 @@ public class AppConfig {
     /*
      * Factory bean that creates the com.mongodb.Mongo instance
      */
-    public static String mongodb_host = "";
+    public static String mongodb_host = "localhost";
     public static int mongodb_port = 27017;
-     public @Bean MongoFactoryBean mongo() {
-          MongoFactoryBean mongo = new MongoFactoryBean();
-          String address = "localhost";
-          mongo.setHost(address);
-          System.out.println("Mongodb set to :" + address);
-          return mongo;
-     }
+    public static String DATABASE_TRANSACTION = "transaction";
+    public static String DATABASE_USER = "user";
 
 }

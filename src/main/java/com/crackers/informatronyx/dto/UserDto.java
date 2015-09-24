@@ -34,6 +34,7 @@ public class UserDto implements Serializable {
     private String userType;
     private int functionType;
     private List<String> errorList;
+    private float credits = 0.0f;
     public UserDto(){
         errorList = new ArrayList<String>();
     }
@@ -182,6 +183,15 @@ public class UserDto implements Serializable {
         this.blocked = model.isBlocked();
         this.userType = model.getUserType();
         this.functionType = model.getFunctionType();
+        this.credits = model.getCredits();
+    }
+
+    public float getCredits() {
+        return credits;
+    }
+
+    public void setCredits(float credits) {
+        this.credits = credits;
     }
     
     

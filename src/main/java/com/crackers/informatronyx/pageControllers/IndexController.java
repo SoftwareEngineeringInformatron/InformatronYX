@@ -96,5 +96,14 @@ public class IndexController {
     public ModelAndView LORITestPage() {
         return new ModelAndView("MagoTestPages/LORI");
     }
+    // TEST
+    @RequestMapping("/credit")
+    public ModelAndView accessCreditPage() {
+        return new ModelAndView("testPages/credit");
+    }  
+    @RequestMapping("/userManager")
+    public ModelAndView accessUserManagerTestPage() {
+        return new ModelAndView("testPages/userManager_Test");
+    } 
 }
 
