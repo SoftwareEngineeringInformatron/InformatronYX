@@ -5,200 +5,80 @@
  */
 
 
-var app = angular.module("user",[]);
-app.controller("userController",function($scope,userService){
-    $scope.allUsers = [];
-    $scope.userInfo = {
-        username: "",
-        password:"",
-        firstName: "",
-        lastName: "",
-        email:""
-    };
-    $scope.output = "";
-    $scope.load = function (){
-        userService.getAllUsers().success(function(response){
-            $scope.allUsers = response;
-        });
-    };
-    $scope.update = function(userId){
-        var user = getUserById(userId);
-        userService.update(user).success(function(response){
-            var output = "Update was ";
-            if(response == 'true'){
-                output += "successful.";
-                $scope.load();
+var app = angular.module("credit",[]);
+app.controller("loTransactionContoller",function ($scope,$http,userService,creditService){
+    $scope.users = [];
+    $scope.transactions = [];
+    $scope.selectedId = '';
+    $scope.select = function(id){ $scope.selectedId = id;};
+    function load(){
+        userService.getAllUsers().success(
+            function(reponse){
+                $scope.users  = reponse;
+                loadTransactions();
             }
-            else
-                output += "unsuccessful.";
-            alert(output);
-        });
-        userService.update(user).error(function(response){
-            console.log("Error occurred in updateing "+ user.id);
+        );
+    }
+    function loadTransactions(){
+        $scope.transactions = [];
+        for(var i=0;i<$scope.users.length;i++)
+            creditService.getAllTransactions({id: $scope.users[i].id}).success(
+                function(response){
+                    response.forEach(function(data){
+                        $scope.transactions.push(data);
+                    });
+                }
+            );
+        $scope.selectedId = $scope.users[0].id;
+    }
+    
+    $scope.approveTransaction = function (transactionId){
+        creditService.approveTransaction({id:transactionId}).success(function(response){
+            if(response == 'true')
+                load();
+            
         });
         
     };
-    $scope.approve = function(userId){
-        var user = getUserById(userId);
-        userService.approve(user).success(function(response){
-            var output = "Account Approval ";
-            if(response === 'true'){
-                output += "successful.";
-                $scope.load();
-            }
-            else
-                output += "unsuccessful.";
-            alert(output);
+    $scope.removeTransaction = function (transactionId){
+        creditService.removeTransaction({id:transactionId}).success(function(response){
+            if(response == 'true')
+                load();
         });
-        userService.update(user).error(function(response){
-            console.log("Error occurred in updateing "+ user.id);
-        });
+        
     };
-    $scope.block = function(userId){
-        var user = getUserById(userId);
-        userService.block(user).success(function(response){
-            var output = "Account "+user.username+" has been blocked ";
-            if(response === 'true'){
-                output += "successfully.";
-                $scope.load();
-            }
-            else
-                output += "unsuccessful.";
-            alert(output);
-        });
-        userService.block(user).error(function(response){
-            console.log("Error occurred in updateing "+ user.id);
-        });
+    $scope.removeCredits = function(id,amount){
+         var data = {
+          u_ID: id,
+          amnt: amount,
+          //appBy:''
+      };
+      creditService.addRemoveTransaction(data).success(function(response){
+          if(response == 'true')
+                      load();
+                
+      });
     };
-    $scope.unblock = function(userId){
-        var user = getUserById(userId);
-        userService.unblock(user).success(function(response){
-            var output = "Account "+user.username+" has been unblocked ";
-            if(response === 'true'){
-                output += "successfully.";
-                $scope.load();
-            }
-            else
-                output += "unsuccessful.";
-            alert(output);
-        });
-        userService.unblock(user).error(function(response){
-            console.log("Error occurred in updateing "+ user.id);
-        });
+    $scope.record = function(id,amount,officialReciept){
+      var jsonData = {
+          u_ID: id,
+          amnt: amount,
+          or: officialReciept
+          //appBy:''
+      };
+      creditService.addTransaction(jsonData).success(
+              function(response){
+                  if(response.errorList.length > 0){
+                      var string = "";
+                      for(var i=0;i<response.errorList.length;i++)
+                          string+= "Error" + (i + 1)+":  "+ response.errorList[i] + "\n";
+                      alert(string);
+                  }
+                  else if(response.result == 'true')
+                      load();
+                }
+      );
     };
-    $scope.register = function()
-    {
-        var user = $scope.userInfo;
-        userService.signup(user).success(function(response){
-            var output = "Account Registration ";
-            if(response !=null){
-                output += "successful.";
-                $scope.load();
-            }
-            else
-                output += "unsuccessful.";
-            alert(output);
-        });
-        userService.signup(user).error(function(){
-            console.log("Error occurred in updateing "+ user.id);
-        });
-    };
-    $scope.promote = function(userId)
-    {
-        var user = getUserById(userId);
-        userService.promote(user).success(function(response){
-            var output = "Account Promotion ";
-            if(response === "true" ){
-                output += "successful.";
-                $scope.load();
-            }
-            else
-                output += "unsuccessful.";
-            alert(output);
-        });
-        userService.promote(user).error(function(){
-            console.log("Error occurred in updateing "+ user.id);
-        });
-    };
-    $scope.demote = function(userId)
-    {
-        var user = getUserById(userId);
-        userService.demote(user).success(function(response){
-            var output = "Account Demotion ";
-            if(response === "true" ){
-                output += "successful.";
-                $scope.load();
-            }
-            else
-                output += "unsuccessful.";
-            alert(output);
-        });
-        userService.demote(user).error(function(){
-            console.log("Error occurred in updateing "+ user.id);
-        });
-    };
-    // HELPER FUNCTIONS
-    var getUserById = function(userId)
-    {
-        for(var i=0;i<$scope.allUsers.length;i++)
-            if($scope.allUsers[i].id === userId)
-                return $scope.allUsers[i];
-        return null;
-    }
+    load();
     
-    
-    setInterval($scope.load,5000);
-    $scope.load();
-});
-app.factory('userService', function($http) {
-    return {
-        getAllUsers: function(){
-            var url = "/InformatronYX/informatron/user/allUsers";
-            return $http.get(url);
-        },
-        update: function(data){
-            var url = "/InformatronYX/informatron/user/edit";
-            return $http.post(url,data);
-        },
-        approve: function(data){
-            var url = "/InformatronYX/informatron/user/approve";
-            return $http.post(url,data);
-        },
-        block: function(data){
-            var url = "/InformatronYX/informatron/user/block";
-            return $http.post(url,data);
-        },
-        unblock: function(data){
-            var url = "/InformatronYX/informatron/user/unblock";
-            return $http.post(url,data);
-        },
-        promote: function(data){
-            var url = "/InformatronYX/informatron/user/promote";
-            return $http.post(url,data);
-        },
-        demote: function(data){
-            var url = "/InformatronYX/informatron/user/demote";
-            return $http.post(url,data);
-        },
-        getAllAdminUsers: function(){
-            var url = "/InformatronYX/informatron/user/admins";
-            return $http.get(url);
-        },
-        getAllCommonUsers: function(){
-            var url = "/InformatronYX/informatron/user/commonUsers";
-            return $http.get(url);
-        },
-        getAllPendingUsers: function(){
-            var url = "/InformatronYX/informatron/user/pendingUsers";
-            return $http.get(url);
-        },
-        login: function(data){
-            var url = "/InformatronYX/informatron/user/login";
-            return $http.post(url,data);
-        },
-        signup: function(data){
-            var url = "/InformatronYX/informatron/user/signup";
-            return $http.post(url,data);
-        }
-    };    
 });

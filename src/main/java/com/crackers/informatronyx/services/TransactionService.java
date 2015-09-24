@@ -78,7 +78,7 @@ public class TransactionService {
        return ok;
     }
     public boolean recordLOPurchase(LOTransactionDto transaction) throws UnknownHostException{
-        if(LearningObjectDAO.exists(transaction.getId()))
+        if(!LearningObjectDAO.exists(transaction.getId()))
         {
             LearningObjectTransaction transModel = new LearningObjectTransaction();
             transModel.setAmount(transaction.getAmount());
