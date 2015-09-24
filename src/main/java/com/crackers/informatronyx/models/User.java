@@ -44,7 +44,8 @@ public class User{
     private boolean blocked;
     private String userType;
     private int functionType;
-
+    private float credits = 0.0f;
+    
     public boolean isBlocked() {
         return blocked;
     }
@@ -166,6 +167,14 @@ public class User{
 
     public String getToken() {
         return token;
+    }
+
+    public float getCredits() {
+        return credits;
+    }
+
+    public void setCredits(float credits) {
+        this.credits = credits;
     }
     
 }

@@ -5,6 +5,7 @@
  */
 package com.crackers.informatronyx.models;
 
+import java.util.List;
 import org.springframework.data.annotation.Id;
 
 /**
@@ -14,8 +15,8 @@ import org.springframework.data.annotation.Id;
 public class LearningObjectReviewInformation {
     @Id
     String id;
-    String evaluation = null;
-    String reviewId = null;
+    List<String> evaluation = null;
+    String reviewerId = null;
     String learningObjectId = null;
     String subject = null;
 
@@ -27,20 +28,20 @@ public class LearningObjectReviewInformation {
         this.id = id;
     }
 
-    public String getEvaluation() {
+    public List<String> getEvaluation() {
         return evaluation;
     }
 
-    public void setEvaluation(String evaluation) {
+    public void setEvaluation(List<String> evaluation) {
         this.evaluation = evaluation;
     }
 
     public String getReviewId() {
-        return reviewId;
+        return reviewerId;
     }
 
     public void setReviewId(String reviewId) {
-        this.reviewId = reviewId;
+        this.reviewerId = reviewId;
     }
 
     public String getLearningObjectId() {

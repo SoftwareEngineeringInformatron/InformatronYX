@@ -4,58 +4,31 @@
  * and open the template in the editor.
  */
 var app = angular.module("login_signup",["ngStorage"]);
-app.controller("AuthenticationController", function($scope,$http,$sessionStorage){
-    $scope.firstName = "";
-    $scope.lastname = "";
-    $scope.email="";
-    $scope.username="";
-    $scope.password="";
-    $scope.errorList = [];
+app.controller("login_signupController", function($scope,$sessionStorage,userService){
+    $scope.userInfo = {
+        firstName : "",
+        lastname : "",
+        email:"",
+        username:"",
+        password:""
+    };
+    $scope.invalidEmail = true;
+    
     $scope.login = function(){
         $scope.errorList = [];
-        var req = {
-                 url: "/InformatronYX/informatron/user/login",
-                 contentType:'application/json',
-                 data: {'username':$scope.username,'password':$scope.password},
-                 dataType: 'json',
-                 method: "POST",
-               };
-               $http(req).then(
-                   function(response){
-                        var user = response.data;
-                        if(user.token!==null)
-                            $sessionStorage.user = response.data;
-                        else{
-                            $scope.errorList.push("Wrong User/Password.");
-                        }
-                   },
-                   function(response){
-                       $scope.errorList.push("Goto Error page");
-                       
-                   }
-               );
-        
+        userService.login($scope.userInfo).success(function (response){
+            $sessionStorage.user = response;
+        });
+    };
+    $scope.isValidEmail = function (emailAddress) {
+        var pattern = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
+        return pattern.test(emailAddress);
     };
     $scope.signup = function(){
         $scope.errorList = [];
-        var req = {
-                 url: "/InformatronYX/informatron/user/signup",
-                 contentType:'application/json',
-                 data: {'username':$scope.username,'password':$scope.password,'firstname':$scope.firstName,'lastname':$scope.lastname},
-                 dataType: 'json',
-                 method: "POST",
-               };
-               $http(req).then(
-                   function(response){
-                        var user = response.data;
-                        
-                   },
-                   function(response){
-                       $scope.errorList.push("Goto Error page");
-                       
-                   }
-               );
-        
+        userService.signup(userInfo).success(function (response){
+            alert('Response');
+        });
     };
     $scope.clear = function(){
         $scope.firstName = "";
@@ -173,10 +146,4 @@ $(document).ready(function() {
         if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
            return decodeURIComponent(name[1]);
     }
-    function isValidEmailAddress(emailAddress) {
-        var pattern = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
-        return pattern.test(emailAddress);
-    };
-    
-    
     */

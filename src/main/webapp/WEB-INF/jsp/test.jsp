@@ -406,10 +406,10 @@
         <script src="js/original.js"></script>
         
         <script src="scripts/angular.min.js"></script>
-        <script src="scripts/loController.js"></script>
+        <!--<script src="scripts/loController.js"></script>
         <script src="scripts/lo-service.js"></script>
         <script src="scripts/userController.js"></script>
-        <script src="scripts/user-service.js"></script>
+        <script src="scripts/user-service.js"></script>-->
         
         <!-- datepicker plugin -->
         <script src="bootstrap-formhelpers/js/bootstrap-formhelpers-datepicker.en_US.js"></script>
@@ -419,6 +419,7 @@
         
     </body>
 </html>
+<!--
 <script type="text/javascript">
 //alert('working');
     $(document).ready(function() {
@@ -434,3 +435,4 @@
         return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
     }
 </script>
+-->

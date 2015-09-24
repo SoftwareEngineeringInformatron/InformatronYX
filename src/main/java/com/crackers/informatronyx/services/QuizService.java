@@ -7,8 +7,6 @@ package com.crackers.informatronyx.services;
 
 import com.crackers.informatronyx.dao.QuizDAO;
 import com.crackers.informatronyx.dto.QuizDto;
-import com.crackers.informatronyx.dto.UserDto;
-import com.crackers.informatronyx.models.LearningObject;
 import com.crackers.informatronyx.models.Quiz;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -96,8 +94,12 @@ public class QuizService {
                 return null;
             }
             
-            for(int i = 0; i < quiz.getQuizResults().size(); i++)
-                quizResultsDto.add(quiz.getsetQuiz(quiz.getQuizResults().get(i)));
+            QuizDto quizDto;
+            for(int i = 0; i < quiz.getQuizResults().size(); i++) {
+                quizDto = new QuizDto();
+                quizDto = quiz.getsetQuiz(quiz.getQuizResults().get(i));
+                quizResultsDto.add(quizDto);
+            }
         } catch(NullPointerException ae) {System.out.println("Service Error!"); ae.printStackTrace();}
          finally{return quizResultsDto;}
     }

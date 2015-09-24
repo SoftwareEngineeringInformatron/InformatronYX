@@ -36,7 +36,7 @@ public class LearningObjectReviewInformationService {
         if(evaluate(LORI)) {
             LearningObjectReviewInformation loriModel = new LearningObjectReviewInformation();
             loriModel.setEvaluation(LORI.getEvaluation());
-            loriModel.setId(LORI.getId());
+            //loriModel.setId(LORI.getId());
             loriModel.setLearningObjectId(LORI.getLearningObjectId());
             loriModel.setReviewId(LORI.getReviewId());
             loriModel.setSubject(LORI.getSubject());
@@ -60,15 +60,14 @@ public class LearningObjectReviewInformationService {
                 return false;
     }
     
-    public List<LearningObjectReviewInformationDto> getQuizResults(LearningObjectReviewInformationDto LORI, String condition) throws UnknownHostException {
+    public List<LearningObjectReviewInformationDto> getLORIs(LearningObjectReviewInformationDto LORI, String condition) throws UnknownHostException {
         List<LearningObjectReviewInformationDto> LearningObjectReviewInformationResults = new ArrayList<LearningObjectReviewInformationDto>();
         try {
             LearningObjectReviewInformation loriModel = new LearningObjectReviewInformation();
             if(condition.isEmpty()) {
                 LORI.setLORIs(LearningObjectReviewInformationDAO.getLORIs(loriModel, ""));
-                //System.out.println(quiz.getQuizResults().get(0).getLo_name());
             } else {
-                loriModel.setEvaluation(LORI.getEvaluation());
+            loriModel.setEvaluation(LORI.getEvaluation());
             loriModel.setId(LORI.getId());
             loriModel.setLearningObjectId(LORI.getLearningObjectId());
             loriModel.setReviewId(LORI.getReviewId());
@@ -83,11 +82,14 @@ public class LearningObjectReviewInformationService {
                 return null;
             }
             
-            for(int i = 0; i < LORI.getLORIs().size(); i++)
-                LearningObjectReviewInformationResults.add(LORI.getsetLORI(LORI.getLORIs().get(i)));
-            
-        } catch(NullPointerException ae) {System.out.println("Service Error!"); ae.printStackTrace();}
-         finally{return LearningObjectReviewInformationResults;}
+            LearningObjectReviewInformationDto loridto;
+            for(int i = 0; i < LORI.getLORIs().size(); i++) {
+                loridto = new LearningObjectReviewInformationDto();
+                loridto.getsetLORI(LORI.getLORIs().get(i));
+                LearningObjectReviewInformationResults.add(loridto);
+            }
+        } catch(NullPointerException ae) {System.out.println("Service Error!"); ae.printStackTrace();} 
+        return LearningObjectReviewInformationResults;
     }
     
     private boolean evaluate(LearningObjectReviewInformationDto LORI) {

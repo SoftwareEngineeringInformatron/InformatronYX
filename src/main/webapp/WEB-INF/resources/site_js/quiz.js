@@ -19,7 +19,7 @@ var quizApp = angular.module("QUIZ",[]);
                         $scope.quizList = data;
                     } else {
                         var errorMsg = "Errors:\n";
-                        for(var i = 0; i < data.errorList.length; i ++)
+                        for(var i = 0; i < errorList; i ++)
                             errorMsg += data.errorList[i] + "\n";
                             console.log(errorMsg);
                     }

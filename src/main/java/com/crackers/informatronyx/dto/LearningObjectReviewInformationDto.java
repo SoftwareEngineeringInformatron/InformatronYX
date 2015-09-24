@@ -15,8 +15,8 @@ import java.util.List;
  */
 public class LearningObjectReviewInformationDto {
     String id;
-    String evaluation = null;
-    String reviewId = null;
+    List<String> evaluation = null;
+    String reviewerId = null;
     String learningObjectId = null;
     String subject = null;
     List<LearningObjectReviewInformation> LORIs;
@@ -34,20 +34,20 @@ public class LearningObjectReviewInformationDto {
         this.id = id;
     }
 
-    public String getEvaluation() {
+    public List<String> getEvaluation() {
         return evaluation;
     }
 
-    public void setEvaluation(String evaluation) {
+    public void setEvaluation(List<String> evaluation) {
         this.evaluation = evaluation;
     }
 
     public String getReviewId() {
-        return reviewId;
+        return reviewerId;
     }
 
     public void setReviewId(String reviewId) {
-        this.reviewId = reviewId;
+        this.reviewerId = reviewId;
     }
 
     public String getLearningObjectId() {

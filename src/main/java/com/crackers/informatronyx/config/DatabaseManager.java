@@ -8,6 +8,8 @@ package com.crackers.informatronyx.config;
 
 import com.mongodb.Mongo;
 import java.net.UnknownHostException;
+import java.util.List;
+import org.springframework.data.mongodb.core.MongoClientFactoryBean;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
@@ -20,9 +22,19 @@ public class DatabaseManager {
     private static Mongo instanceMongo = null;
     public static MongoOperations getMongoOpsInstance(String databaseName) throws UnknownHostException{
          if(instance==null){
-             instanceMongo = new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port);
-             instance = new MongoTemplate(instanceMongo,databaseName);
+             MongoClientFactoryBean b = new MongoClientFactoryBean();
+             b.setSingleton(false);
+             b.setHost(AppConfig.mongodb_host);
+             b.setPort(AppConfig.mongodb_port);
+             try {
+                instanceMongo = b.getObject();//new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port);
+                List<String> str = instanceMongo.getDatabaseNames();
+                instance = new MongoTemplate(instanceMongo,databaseName);
+             } catch (Exception ex) {
+                 ex.printStackTrace(System.out);
+             }
          }
+         
         return instance;
     }
 }
