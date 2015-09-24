@@ -41,7 +41,7 @@
     
     
     </head>
-    <body ng-controller="LORIController"> <!--ng-controller="loController">-->
+    <body ng-controller="loController">
    
     <s:url id='url_advance' action='advancesearch'/>
     <s:url id='url_main' action='main'/>
@@ -369,16 +369,6 @@
                 </div>
             </section>
             <div class="clearfix"></div>
-            <button ng-click="submitReview()">SUBMIT LORI</button>
-            <button ng-click="editReview()">EDIT LORI</button>
-            <button ng-click="deleteReview()">DELETE LORI</button>
-            <button ng-click="getReview()">GET LORI</button>
-            <ul ng-repeat="LORI in returnedLORI">
-                <li>{{LORI.evaluation}}</li>
-                <li>{{LORI.reviewId}}</li>
-                <li>{{LORI.subject}}</li>
-                <li>{{LORI.learningObjectId}}</li>
-            </ul>
             <footer id="footer-index" class="navbar navbar-inverse navbar-fixed-bottom">
                 <div class="container">
                     <div>
@@ -426,7 +416,6 @@
         <script src="bootstrap-formhelpers/js/bootstrap-formhelpers-datepicker.js"></script>
         
         <script src="js/chart-original.js"></script>
-        <script src="site_js/LearningObjectReviewInformationTest.js"></script>
         
     </body>
 </html>

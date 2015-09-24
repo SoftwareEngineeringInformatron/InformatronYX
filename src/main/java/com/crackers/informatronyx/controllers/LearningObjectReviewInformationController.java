@@ -57,7 +57,7 @@ public class LearningObjectReviewInformationController {
     public List<LearningObjectReviewInformationDto> getLORIs() throws UnknownHostException {
         List<LearningObjectReviewInformationDto> LORIviews = new ArrayList<LearningObjectReviewInformationDto>();
         try {
-            LORIviews = loriService.getQuizResults(new LearningObjectReviewInformationDto(), "");
+            LORIviews = loriService.getLORIs(new LearningObjectReviewInformationDto(), "");
             if(LORIviews == null)
                 System.out.println("Failed to retrieve");
         } catch(NullPointerException ae) {System.out.println(ae.getMessage());}
@@ -68,7 +68,8 @@ public class LearningObjectReviewInformationController {
     public List<LearningObjectReviewInformationDto> getLORIsbyLOId(@RequestBody LearningObjectReviewInformationDto LORI) throws UnknownHostException {
         List<LearningObjectReviewInformationDto> LORIviews = new ArrayList<LearningObjectReviewInformationDto>();
         try {
-            if(loriService.getQuizResults(LORI, "learningObjectId") == null)
+            LORIviews = loriService.getLORIs(LORI, "learningObjectId");
+            if(LORIviews == null)
                 System.out.println("Failed to retrieve");
         } catch(NullPointerException ae) {System.out.println(ae.getMessage());}
             return LORIviews;
@@ -78,7 +79,8 @@ public class LearningObjectReviewInformationController {
     public List<LearningObjectReviewInformationDto> getLORIsbyReviewId(@RequestBody LearningObjectReviewInformationDto LORI) throws UnknownHostException {
         List<LearningObjectReviewInformationDto> LORIviews = new ArrayList<LearningObjectReviewInformationDto>();
         try {
-            if(loriService.getQuizResults(LORI, "reviewId") == null)
+            LORIviews = loriService.getLORIs(LORI, "reviewId");
+            if(LORIviews == null)
                 System.out.println("Failed to retrieve");
         } catch(NullPointerException ae) {System.out.println(ae.getMessage());}
             return LORIviews;
@@ -88,7 +90,8 @@ public class LearningObjectReviewInformationController {
     public List<LearningObjectReviewInformationDto> getLORIsbyBoth(@RequestBody LearningObjectReviewInformationDto LORI) throws UnknownHostException {
         List<LearningObjectReviewInformationDto> LORIviews = new ArrayList<LearningObjectReviewInformationDto>();
         try {
-            if(loriService.getQuizResults(LORI, "both") == null)
+            LORIviews = loriService.getLORIs(LORI, "both");
+            if(LORIviews == null)
                 System.out.println("Failed to retrieve");
         } catch(NullPointerException ae) {System.out.println(ae.getMessage());}
             return LORIviews;

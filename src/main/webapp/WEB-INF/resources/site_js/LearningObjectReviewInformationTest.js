@@ -64,7 +64,7 @@ var LORIapp = angular.module("LO", []);
         $scope.editReview = function() {
           var LORIJson = {
           "id":null,
-          "evaluation": "This is a test evaluation! EDITED",
+          "evaluation": "This is a test evaluation!EDITED",
           "reviewId": "reviewId",
           "learningObjectId": "LearningObjectId",
           "subject": "math",

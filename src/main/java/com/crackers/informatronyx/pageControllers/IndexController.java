@@ -91,5 +91,10 @@ public class IndexController {
     public ModelAndView accessUniversalAddPage() {
         return new ModelAndView("universalAdd");
     }
+    
+    @RequestMapping("/LORI")
+    public ModelAndView LORITestPage() {
+        return new ModelAndView("MagoTestPages/LORI");
+    }
 }
 
