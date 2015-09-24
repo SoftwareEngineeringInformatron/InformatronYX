@@ -5,6 +5,10 @@
 loModule.factory('loRepository', function($http) {
     return {
         
+        getTest: function() {
+            var url = "/InformatronYX/informatron/LO/testing";
+            return $http.get(url);
+        },
         getMostDownloaded: function() {
             var url = "/InformatronYX/informatron/LO/mostDownloaded";
             return $http.get(url);

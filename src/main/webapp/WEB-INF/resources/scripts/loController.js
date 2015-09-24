@@ -83,7 +83,7 @@ loModule.controller('loController', function($scope, loRepository) {
         loRepository.getLoriTopLOs().success(function(lo) {
             $scope.LOs = lo.toplo;
         });
-    };
+    };    
     
     
     $scope.loUpdate = function() {

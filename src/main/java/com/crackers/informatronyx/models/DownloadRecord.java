@@ -52,5 +52,8 @@ public class DownloadRecord {
         this.dateDownload = dateDownload;
     }
     
-    
+    @Override
+    public String toString() {
+        return "\nID:" + this.id + "\nLO ID: " + this.learningObjectId + "\nUser ID: " + this.userId + "\n";
+    }
 }

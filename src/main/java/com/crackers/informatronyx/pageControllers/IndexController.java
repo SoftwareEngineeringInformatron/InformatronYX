@@ -25,6 +25,10 @@ public class IndexController {
     public ModelAndView accessTestPage() {
         return new ModelAndView("test");
     }
+    @RequestMapping("/testdownloadrecord")
+    public ModelAndView accessTestDownloadRecordPage() {
+        return new ModelAndView("testdownloadrecord");
+    }
     @RequestMapping("/scripts")
     public ModelAndView scriptsPage() {
         return new ModelAndView("scripts");

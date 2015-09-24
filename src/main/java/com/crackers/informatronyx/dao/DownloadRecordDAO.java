@@ -9,6 +9,7 @@ import com.crackers.informatronyx.config.DatabaseManager;
 import com.crackers.informatronyx.models.DownloadRecord;
 import java.net.UnknownHostException;
 import java.util.List;
+import javax.swing.JOptionPane;
 import org.springframework.data.mongodb.core.MongoOperations;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
@@ -57,5 +58,25 @@ public class DownloadRecordDAO {
             mongoOps.remove(query(where("id").is(record.getId()).andOperator(where("learningObjectId").is(record.getLearningObjectId()))), DownloadRecord.class);
             return true;         
         } catch (NullPointerException ex) {System.out.println(ex.getMessage()); return false;}
+    }
+    
+    public static void main(String[] args) throws Exception {
+        DownloadRecord dr = new DownloadRecord();
+        DownloadRecord dr2 = new DownloadRecord();
+        
+        dr.setId("1");
+        dr.setLearningObjectId("1LO");
+        dr.setUserId("U1");
+        DownloadRecordDAO.addDownloadRecord(dr);
+        
+        dr2.setId("2");
+        dr2.setLearningObjectId("2LO");
+        dr2.setUserId("U2");
+        DownloadRecordDAO.addDownloadRecord(dr2);
+        DownloadRecordDAO.removeDownloadRecord(dr2);
+        
+        //JOptionPane.showMessageDialog(null, DownloadRecordDAO.getAllDownloadRecordByLearningObjectID("1LO").toString());
+        JOptionPane.showMessageDialog(null, DownloadRecordDAO.getAllDownloadRecordByUserID("U2").toString());
+        
     }
 }

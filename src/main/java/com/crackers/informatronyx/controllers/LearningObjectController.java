@@ -68,6 +68,17 @@ public class LearningObjectController {
         return null;
     }
     
+    @RequestMapping("/testing")
+    public LearningObjectDto test() {
+        LearningObjectDto dto = new LearningObjectDto();
+        LearningElement le = new LearningElement();
+        le.setTitle("Titulo");
+        le.setId("123");
+        dto.setSequence(new ArrayList<LearningElement>());
+        dto.getSequence().add(le);
+        return dto;
+    }
+    
     @RequestMapping("/upload/avaiableLOs")
     public Boolean uploadAvaiableLearningObjects(@RequestBody LearningObjectDto[] objects) throws UnknownHostException {
         //LearningObjectService service = new LearningObjectService ();
