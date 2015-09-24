@@ -56,7 +56,11 @@
                     <tr ng-repeat="LORI in returnedLORI">
                         <td>{{LORI.learningObjectId}}</td>
                         <td>{{LORI.subject}}</td>
-                        <td>{{LORI.evaluation}}</td>
+                        <td>
+                            <ul>
+                                <li ng-repeat="evaluation in LORI.evaluation">{{evaluation}}</li>
+                            </ul>
+                        </td>
                         <td>{{LORI.reviewId}}</td>
                     </tr>
                 </tbody>

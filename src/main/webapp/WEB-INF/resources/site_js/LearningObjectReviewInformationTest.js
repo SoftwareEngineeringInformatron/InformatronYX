@@ -12,8 +12,11 @@ var LORIapp = angular.module("LO", []);
         $scope.submitReview = function () {
         var LORIJson = {
           "id":null,
-          "evaluation": "This is a test evaluation!",
-          "reviewId": "reviewId",
+          "evaluation": [
+                            "This is a test evaluation!",
+                            "This is another test evaluation!"
+                        ],
+          "reviewerId": "reviewId",
           "learningObjectId": "LearningObjectId",
           "subject": "math",
           "errorList":[]
@@ -39,7 +42,7 @@ var LORIapp = angular.module("LO", []);
           var LORIJson = {
           "id":null,
           "evaluation": "This is a test evaluation!",
-          "reviewId": "reviewId",
+          "reviewerId": "reviewId",
           "learningObjectId": "LearningObjectId",
           "subject": "math",
           "errorList":[]
@@ -65,7 +68,7 @@ var LORIapp = angular.module("LO", []);
           var LORIJson = {
           "id":null,
           "evaluation": "This is a test evaluation!EDITED",
-          "reviewId": "reviewId",
+          "reviewerId": "reviewId",
           "learningObjectId": "LearningObjectId",
           "subject": "math",
           "errorList":[]
