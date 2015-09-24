@@ -21,6 +21,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
     <!--plugins-->
+    
+        <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css" />
         <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css" />
         <link rel="stylesheet" media="screen"  href="bootstrap/css/bootstrap-customize.css" />
         <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />
@@ -40,21 +42,8 @@
 
     <!-- Modal -->
         <link href="bootstrap-modal-master/css/bootstrap-modal.css" rel="stylesheet" type="text/css"/>
-        
-    <%   
-        /*String isid = (String) session.getAttribute("icms_id");
-        
-        if(session.getAttribute("USER") == null) 
-                response.sendRedirect("login.action");
-        else if("icms_guest".equals((String)session.getAttribute("USER")))
-            response.sendRedirect("main.action");
-        else if("icms_user".equals((String)session.getAttribute("USER")))
-            response.sendRedirect("main.action");
-        else if("icms_meteradmin".equals((String)session.getAttribute("USER")))
-            response.sendRedirect("meteradmin.action");*/
-    %>    
     </head>
-    <body ng-controller="adminController">
+    <body >
         <s:url id='url_main' action='main'/>
         
         <!-- New User MASS Action -->
@@ -297,7 +286,7 @@
                         </div>
                     </div>
                 </div>
-                <% if((String)session.getAttribute("USER") == "icms_superadmin") { %>
+                
                 <div class="modal-footer">
                     <div class="row-fluid">
                         <div class="span9 offset2">
@@ -306,7 +295,7 @@
                         </div>
                     </div>
                 </div>
-                <% } %>
+                
                 <div class="modal-footer">
                     <div class="row-fluid">
                         <div class="span9 offset2">
@@ -399,44 +388,23 @@
         </div>
 
         <!-- Informatron layout -->
-        <div class="wrapIt" >
+        <div class="wrapIt"  >
             <header id="header-wrap" >
                 <div class="navbar navbar-inverse">
                         <div class="row-fluid">
                             <div class="span12 header-wrap main">
-                            
-                                <a href="${url_main}" class="brand offset1 header-txt"><i class="icon-download-alt logo"></i> InformatronCMS</a>
-
-                                <div class="account" ng-controller="userController">
-                                    <ul class="nav pull-right">
-                                        <li class="dropdown" id="usermeter">  
-                                            
-                                        </li> 
-                                        <li class="dropdown">
-                                            <a data-toggle="dropdown" class="dropdown-toggle font-up header-txt" href="#"><b class="caret"></b> <span><i class="icon-user"></i></span></a>
-                                            <ul class="dropdown-menu" id="functions" >
-                                                
-                                            </ul>
-                                        </li>                                   
-                                    </ul>
-                                </div>
+                                <a href="home" class="brand offset1 header-txt"><i class="icon-download-alt logo"></i> InformatronCMS</a>
+                                <jsp:include page="includes/ActiveAccount.jsp" /> 
                             </div> 
                         </div>
-
-
                     <div class="navbar-inner search-option">
                         <div class="row-fluid">
                             <div class="span9 header-wrap main one-set1">
-                                <!--                      
-                                <div class="navbar-search search search-account">
-                                        <input name="searchName" type="text" placeholder="Search" class="input" ng-model="searchText"/>
-                                        <a class="btn-index" ><i class="icon-search"></i> </a>
-                                </div> -->
                                 <ul class="nav nav-tabs admin" id="display_account">
-                                    <li class="active"><a href="#" name="all-account">All Accounts</a></li>
-                                    <li><a href="#" name="new-account">New Account Requests</a></li>
-                                    <li><a href="#" name="inactive-account">Inactive Accounts</a></li>
-                                    <li><a href="#" name="blocked-account">Blocked Accounts</a></li>
+                                    <li class="active"><a href="#all-account" name="all-account">All Accounts</a></li>
+                                    <li><a name="new-account">New Account Requests</a></li>
+                                    <li><a name="blocked-account">Blocked Accounts</a></li>
+                                    <li><a name="inactive-account">Inactive Accounts</a></li>
                                 </ul>  
                             </div> 
                         </div>
@@ -445,7 +413,8 @@
                 </div>
             </header>
             <div class="clearfix"></div>
-            <section id="all-account" class="no-display selectedTab">
+            <section class="no-display selectedTab" ng-controller="userController"
+                     ng-init="load()">
                 <div class="content-row">
                     <table my-table="overrideOptions"
                             aa-data="siteuser"
@@ -455,130 +424,24 @@
                             <tr>
                                 <th><input type="checkbox" id="action-checkbox-all" title="Check All" class="" /></th>
                                 <th>Name</th>
+                                <th>Username</th>
                                 <th>Last Login</th>
                                 <th>Last Download</th>
-                                
                             </tr>
                             </thead>
+                            <tbody>
+                                <tr ng-repeat = "user in allUsers">
+                                <th><input type="checkbox" id="action-checkbox-all" title="Check All" class="" /></th>
+                                <th>{{user.firstName}} {{user.lastName}}</th>
+                                <th>{{user.username}}</th>
+                                <th>{{user.lastLogin}}</th>
+                                <th>{{user.lastDownloadDate}}</th>
+                                </tr>
+                            </tbody>
                         </table>
                 </div><br><br>
                 <a href="#" class="btn btn-primary action" id="action-all">ACTION</a>
             </section>
-            <section id="new-account" class="no-display">
-                <div class="content-row"><!--
-                    <table class="table table-hover approve-admin">
-                        <thead>
-                            <tr>
-                                <th><a href="#newUserMassAction" data-toggle="modal" class="">ACTION</a></th>
-                                <th>Name</th>
-                                <th>Email</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <tr ng-repeat="users in newuser.newuser | filter:searchText">
-                                <td><input type="checkbox" id="{{users.newUserID}}" class="approve-user-id"></td>
-                                <td><a href="#newUserAction" data-toggle="modal" ng-click="setID(users.newUserID)">{{users.lName}}, {{users.fName}}</a></td>
-                                <td>{{users.email}}</td>
-                            </tr>
-                        </tbody>
-                    </table>-->
-                    
-                    <table my-table="overrideOptions"
-                            aa-data="newuser"
-                        ao-column-defs="columnDefsNewUser" class="dataTable table table-hover approve-admin" width="100%"
-                            >
-                            <thead>
-                            <tr>
-                                <th><input type="checkbox" id="action-checkbox-new" title="Check All" class="" /></th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                
-                            </tr>
-                            </thead>
-                        </table>
-                    
-                </div><br><br>
-                <a href="#" class="btn btn-primary action" id="action-new" >ACTION</a>
-            </section>
-            <section id="blocked-account" class="no-display">
-                <div class="content-row">
-                    <!--<table class="table table-hover approve-admin">
-                        <thead>
-                            <tr>
-                                <th><a href="#newUserMassAction" data-toggle="modal" class="">ACTION</a></th>
-                                <th>Name</th>
-                                <th>Last Login</th>
-                                <th>Last Download</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <tr ng-repeat="users in blockuser.blockuser | filter:searchText">
-                                <td><input type="checkbox" id="{{users.newUserID}}" class="approve-user-id"></td>
-                                <td><a href="#inactiveAction" data-toggle="modal" ng-click="setID(users.userID)">{{users.lName}}, {{users.fName}}</a></td>
-                                <td>{{users.lastLogin}}</td>
-                                <td>{{users.lastDownload}}</td>
-                            </tr>
-                        </tbody>
-                    </table>-->
-                    <table my-table="overrideOptions"
-                            aa-data="blockuser"
-                        ao-column-defs="columnDefsBlock" class="dataTable table table-hover approve-admin" width="100%"
-                            >
-                            <thead>
-                            <tr>
-                                <th><input type="checkbox" id="action-checkbox-block" title="Check All" class="" /></th>
-                                <th>Name</th>
-                                <th>Last Login</th>
-                                <th>Last Download</th>
-                                
-                            </tr>
-                            </thead>
-                        </table>
-                </div><br><br>
-                <a href="#" class="btn btn-primary action" id="action-block">ACTION</a>
-            </section>
-            <section id="inactive-account" class="no-display">
-                <div class="content-row">
-                    <!--<table class="table table-hover approve-admin">
-                        <thead>
-                            <tr>
-                                <th><a href="#newUserMassAction" data-toggle="modal" class="">ACTION</a></th>
-                                <th>Name</th>
-                                <th>Last Login</th>
-                                <th>Last Download</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <tr ng-repeat="users in inactiveuser.inactiveuser | filter:searchText">
-                                <td><input type="checkbox" id="{{users.newUserID}}" class="approve-user-id"></td>
-                                <td><a href="#blockAction" data-toggle="modal" ng-click="setID(users.userID)">{{users.lName}}, {{users.fName}}</a></td>
-                                <td>{{users.lastLogin}}</td>
-                                <td>{{users.lastDownload}}</td>
-                            </tr>
-                        </tbody>
-                    </table>-->
-                    <table my-table="overrideOptions"
-                            aa-data="inactiveuser"
-                        ao-column-defs="columnDefsInactive" class="dataTable table table-hover approve-admin" width="100%"
-                            >
-                            <thead>
-                            <tr>
-                                <th><input type="checkbox" id="action-checkbox-inactive" title="Check All" class="" /></th>
-                                <th>Name</th>
-                                <th>Last Login</th>
-                                <th>Last Download</th>
-                                
-                            </tr>
-                            </thead>
-                        </table>
-                </div><br><br>
-                <a href="#" class="btn btn-primary action" id="action-inactive">ACTION</a>
-                
-            </section>
-            
             <div class="clearfix"></div>
             
             <footer id="footer-index" class="navbar navbar-inverse navbar-fixed-bottom">
@@ -589,38 +452,21 @@
                 </div>
             </footer>
         </div>
-        <div ng-controller="userController">
-            <input type="hidden" id="usertype" value="<% //out.println(isid); %>" />
-        </div>
+        <jsp:include page="includes/scripts.jsp" /> 
         
-        <script src="bootstrap/js/jquery-1.10.2.min.js"></script>
-        <script src="js/jquery-1.9.0.min.js"></script>
-    	<script src="js/jquery-ui-1.10.3.custom.min.js"></script>
-        
-        <!-- data-table -->
-        <script type="text/javascript" language="javascript" src="bootstrap-table/js/jquery.js"></script>
-        <script type="text/javascript" language="javascript" src="bootstrap-table/js/jquery.dataTables.js"></script>
-        
-        
-    	<script src="js/jquery.ui.touch-punch.min.js"></script>
-    	<script src="js/bootstrap.min.js"></script>
-    	<script src="js/bootstrap-select.js"></script>
-    	<script src="js/bootstrap-switch.js"></script>
-    	<script src="js/flatui-checkbox.js"></script>
-    	<script src="js/flatui-radio.js"></script>
-    	<script src="js/jquery.tagsinput.js"></script>
-    	<script src="js/jquery.placeholder.js"></script>
-    	<script src="js/jquery.stacktable.js"></script>
-    	<script src="js/application.js"></script>
-        
-        
-        
-        <script src="js/original.js"></script>
         <script src="scripts/angular.min.js"></script>
+        <script src="site_js/ngStorage.js"></script>
+        <script src="site_js/admin.js"></script>
+        <script src="site_js/includes/activeAccount.js"></script>
+        <script src="site_js/includes/user.js"></script>
+        <script src="site_js/services/userService.js"></script>
+
+        <!-- 
         <script src="scripts/userController.js"></script>
         <script src="scripts/user-service.js"></script>
         <script src="scripts/adminController.js"></script>
         <script src="scripts/admin-service.js"></script>
+        -->
 
         
     </body>

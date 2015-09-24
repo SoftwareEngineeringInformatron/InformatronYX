@@ -205,7 +205,7 @@
                 </div>
             </footer>
         </div>
-       <jsp:include page="scripts.jsp" /> 
+       <jsp:include page="includes/scripts.jsp" /> 
     </body>
 </html>
 <script src= "site_js/index.js" type="text/javascript"></script>
