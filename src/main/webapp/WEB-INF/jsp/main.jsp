@@ -105,7 +105,7 @@
                     <div class="row-fluid">
                         <div class="">
                             <div class="few-details">
-                                <h5>LO asd</h5> <h5 ng-model="title">{{title}}</h5>
+                                <h5>LO Title:</h5> <h5 ng-model="title">{{title}}</h5>
                                 <h5>LO ID:</h5> <p ng-model="id">{{id}}</p>
                                 <h5>LO Description:</h5> <p ng-model="description">{{description}}</p>
                                 <h5>LO Price:</h5> <p ng-model="price">{{price}}</p>                                
