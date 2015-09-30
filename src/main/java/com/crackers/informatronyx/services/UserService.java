@@ -193,6 +193,7 @@ public class UserService {
     // HELPER FUNCTIONS
     private List<UserDto> modelsToDto(List<User> models){
         List<UserDto> users = new ArrayList<>();
+        if(models!=null)
         for(User model: models){
             UserDto user = new UserDto();
             user.setData(model);

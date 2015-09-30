@@ -18,6 +18,9 @@ app.controller("login_signupController", function($scope,$sessionStorage,userSer
         $scope.errorList = [];
         userService.login($scope.userInfo).success(function (response){
             $sessionStorage.user = response;
+            if($sessionStorage.user.token!=null){
+                window.location.href= "main";
+            }
         });
     };
     $scope.isValidEmail = function (emailAddress) {

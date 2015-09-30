@@ -16,7 +16,7 @@
         <script src="js/jquery.placeholder.js"></script>
         <script src="js/jquery.stacktable.js"></script>
         <script src="js/application.js"></script>
-        <script src="js/original.js"></script>
+        <!--<script src="js/original.js"></script>-->
         
         <!-- slider js plugin -->
         <script type="text/javascript" src="js/jquery.nivo.slider.js"></script>

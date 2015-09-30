@@ -97,8 +97,7 @@
                         </div>
                     </div>
                 </div>
-                <% 
-                if("icms_superadmin".equals((String)session.getAttribute("USER"))) { %>
+                
                 <div class="modal-footer">
                     <div class="row-fluid">
                         <div class="span9 offset2">
@@ -107,7 +106,7 @@
                         </div>
                     </div>
                 </div>
-                <% } %>
+                
                 <div class="modal-footer">
                     <div class="row-fluid">
                         <div class="span9 offset2">
@@ -206,14 +205,8 @@
             </div>
         </div>        
                 
-                
-                
-                
-                
-                
-                
         <!-- Admin Actions -->
-        <div id="message" class="modal hide fade" tabindex="-1" data-width="760">
+        <div id="errorMessage" class="modal hide fade" tabindex="-1" data-width="760">
             <div class="modal-center">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -236,7 +229,6 @@
                 </div>
             </div>
         </div>
-        
 
         <!-- Promote -->
         <div id="promoteAction" class="modal hide fade" tabindex="-1" data-width="760">
@@ -397,14 +389,14 @@
                                 <jsp:include page="includes/ActiveAccount.jsp" /> 
                             </div> 
                         </div>
-                    <div class="navbar-inner search-option">
+                    <div class="navbar-inner search-option" ng-cloak ng-controller="adminNavBarController">
                         <div class="row-fluid">
                             <div class="span9 header-wrap main one-set1">
                                 <ul class="nav nav-tabs admin" id="display_account">
-                                    <li class="active"><a href="#all-account" name="all-account">All Accounts</a></li>
-                                    <li><a name="new-account">New Account Requests</a></li>
-                                    <li><a name="blocked-account">Blocked Accounts</a></li>
-                                    <li><a name="inactive-account">Inactive Accounts</a></li>
+                                    <li class='active' ng-class="isActive('all')"      ><a  ng-click="allAccounts()" href="#all-account" name="all-account">All Accounts</a></li>
+                                    <li ng-class="isActive('new')"      ><a ng-click="newAccounts()" name="new-account">New Account Requests</a></li>
+                                    <li ng-class="isActive('block')"    ><a  ng-click="blockedAccounts()" name="blocked-account">Blocked Accounts</a></li>
+                                    <li ng-class="isActive('inactive')" ><a ng-click="inactiveAccounts()"  name="inactive-account">Inactive Accounts</a></li>
                                 </ul>  
                             </div> 
                         </div>
@@ -413,7 +405,7 @@
                 </div>
             </header>
             <div class="clearfix"></div>
-            <section class="no-display selectedTab" ng-controller="userController"
+            <section class="no-display selectedTab" ng-cloak ng-controller="adminAccountManagementController"
                      ng-init="load()">
                 <div class="content-row">
                     <table my-table="overrideOptions"
@@ -430,17 +422,17 @@
                             </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat = "user in allUsers">
-                                <th><input type="checkbox" id="action-checkbox-all" title="Check All" class="" /></th>
-                                <th>{{user.firstName}} {{user.lastName}}</th>
-                                <th>{{user.username}}</th>
-                                <th>{{user.lastLogin}}</th>
-                                <th>{{user.lastDownloadDate}}</th>
+                                <tr ng-repeat = "user in displayedUsers">
+                                <td><input ng-change="selectedCheck()" type="checkbox" ng-model="selectedUsers[displayedUsers.indexOf(user)]"/></td>
+                                <td>{{user.firstName}} {{user.lastName}}</td>
+                                <td>{{user.username}}</td>
+                                <td>{{user.lastLoginString}}</td>
+                                <td>{{user.lastDownloadDate}}</td>
                                 </tr>
                             </tbody>
                         </table>
                 </div><br><br>
-                <a href="#" class="btn btn-primary action" id="action-all">ACTION</a>
+                <button ng-disabled="enableButton" data-target='{{buttonAction}}' data-toggle="modal" class="btn btn-primary action" id="action-all">ACTION</a>
             </section>
             <div class="clearfix"></div>
             
@@ -458,17 +450,7 @@
         <script src="site_js/ngStorage.js"></script>
         <script src="site_js/admin.js"></script>
         <script src="site_js/includes/activeAccount.js"></script>
-        <script src="site_js/includes/user.js"></script>
         <script src="site_js/services/userService.js"></script>
-
-        <!-- 
-        <script src="scripts/userController.js"></script>
-        <script src="scripts/user-service.js"></script>
-        <script src="scripts/adminController.js"></script>
-        <script src="scripts/admin-service.js"></script>
-        -->
-
-        
     </body>
 </html>
 

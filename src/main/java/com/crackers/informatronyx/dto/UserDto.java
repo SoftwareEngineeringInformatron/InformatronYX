@@ -8,6 +8,7 @@ package com.crackers.informatronyx.dto;
 import com.crackers.informatronyx.models.LearningObject;
 import com.crackers.informatronyx.models.User;
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,6 +26,8 @@ public class UserDto implements Serializable {
     private String lastName;
     private String email;
     private Date lastLogin;
+    private DateFormat format = java.text.DateFormat.getDateInstance(java.text.DateFormat.MEDIUM);
+    private String lastLoginString = " - ";
     private Date lastDownloadDate;
     private String lastDownloadId;
     private List<LearningObject> liableLearningObjects;
@@ -93,6 +96,8 @@ public class UserDto implements Serializable {
 
     public void setLastLogin(Date lastLogin) {
         this.lastLogin = lastLogin;
+        if(this.lastLogin!=null)
+            this.lastLoginString = format.format(lastLogin);
     }
 
     public Date getLastDownloadDate() {
@@ -175,6 +180,9 @@ public class UserDto implements Serializable {
         this.lastName = model.getLastName();
         this.email = model.getEmail();
         this.lastLogin = model.getLastLogin();
+        if(this.lastLogin!=null){
+            this.lastLoginString = format.format(lastLogin);
+        }
         this.lastDownloadDate = model.getLastDownloadDate();
         this.lastDownloadId = model.getLastDownloadId();
         this.liableLearningObjects = model.getLiableLearningObjects();
@@ -192,6 +200,14 @@ public class UserDto implements Serializable {
 
     public void setCredits(float credits) {
         this.credits = credits;
+    }
+
+    public String getLastLoginString() {
+        return lastLoginString;
+    }
+
+    public void setLastLoginString(String lastLoginString) {
+        this.lastLoginString = lastLoginString;
     }
     
     
