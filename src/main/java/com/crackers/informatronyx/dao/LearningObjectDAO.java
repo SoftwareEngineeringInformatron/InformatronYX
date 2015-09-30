@@ -99,16 +99,26 @@ public class LearningObjectDAO {
         lo.setLikes(111);
         lo.setDownloads(666);
         lo.setTitle("Nihingo");
+        lo.setPrice(69.00f);
+        lo.setDescription("We Nihingooooooo!");
+        lo.setId("LO1");
+        System.out.println(lo.getPrice());
         LearningObjectDAO.addLearningObject(lo);
         
         lo2.setLikes(20);
         lo2.setDownloads(153);
         lo2.setTitle("Biboaf");
+        lo2.setPrice(1.50f);
+        lo2.setDescription("Cagot dribbles the ball.. WITH HIS HEAD!");
+        lo2.setId("LO2");
         LearningObjectDAO.addLearningObject(lo2);
         
         lo3.setLikes(9);
         lo3.setDownloads(15);
         lo3.setTitle("Jjjownjii");
+        lo3.setPrice(7.50f);
+        lo3.setDescription("ULTRA KILL!!");
+        lo3.setId("LO3");
         LearningObjectDAO.addLearningObject(lo3);
         
         lo4.setLikes(50);

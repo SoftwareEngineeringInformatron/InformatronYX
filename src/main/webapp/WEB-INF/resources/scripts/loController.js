@@ -85,6 +85,14 @@ loModule.controller('loController', function($scope, loRepository) {
         });
     };    
     
+     $scope.ModalInstance = function(price, title, description, id) {
+        //alert(price);
+        $scope.price = price;
+        $scope.title = title;
+        $scope.description = description;
+        $scope.id = id;
+        
+    };
     
     $scope.loUpdate = function() {
         setInterval(50000);
@@ -137,22 +145,22 @@ loModule.controller('loController', function($scope, loRepository) {
                         "Total"
                     ],
                     datasets : [
-                            {
-                                    fillColor : "rgba(255,128,0,0.5)",
-                                    data : 
-                                            [
-                                        ep.contentQuality, 
-                                        ep.learningGoalAlignment, 
-                                        ep.feedbackAndAdaptation,
-                                        ep.motivation,
-                                        ep.presentationDesign,
-                                        ep.interactionUsability,
-                                        ep.accessibility,
-                                        ep.reusability,
-                                        ep.standardsCompliance,
-                                        ep.total
-                                    ]
-                            }
+                        {
+                            fillColor : "rgba(255,128,0,0.5)",
+                            data : 
+                                    [
+                                ep.contentQuality, 
+                                ep.learningGoalAlignment, 
+                                ep.feedbackAndAdaptation,
+                                ep.motivation,
+                                ep.presentationDesign,
+                                ep.interactionUsability,
+                                ep.accessibility,
+                                ep.reusability,
+                                ep.standardsCompliance,
+                                ep.total
+                            ]
+                        }
                     ]
                 };
                 
@@ -178,7 +186,8 @@ loModule.controller('loController', function($scope, loRepository) {
         
         
         $scope.lori(getURLParameter('loID'));
-        $scope.checkIfDownloaded();
+        $scope.checkIfDownloaded();  
+   
 });
 
 

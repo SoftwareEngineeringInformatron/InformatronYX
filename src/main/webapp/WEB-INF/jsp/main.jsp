@@ -93,6 +93,36 @@
                 </div>
             </div>
         </div>
+        
+        <!--  purchase LO -->
+        <div id="purchase" class="modal hide fade" tabindex="-1" data-width="1000" >
+            <div class="modal-center">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <span class="popup">Purchase LO</span>
+                </div>
+                <div class="modal-body">
+                    <div class="row-fluid">
+                        <div class="">
+                            <div class="few-details">
+                                <h5>LO asd</h5> <h5 ng-model="title">{{title}}</h5>
+                                <h5>LO ID:</h5> <p ng-model="id">{{id}}</p>
+                                <h5>LO Description:</h5> <p ng-model="description">{{description}}</p>
+                                <h5>LO Price:</h5> <p ng-model="price">{{price}}</p>                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="row-fluid">
+                        <div class="span10 offset1">
+                            <button type="button" data-dismiss="modal" class="btn btn-primary">&nbsp;&nbsp;Ok&nbsp;&nbsp;</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     
         <div class="wrapIt">
             <header id="header-wrap" >
@@ -332,7 +362,7 @@
                                 <th>Date Uploaded</th>
                                 <th>Evaluation</th>
                                  <% //if(isession != "icms_guest") { %>
-				<th>Download</th>
+				<th>Purchase</th>
                                 <th>Quiz</th>
                                
                                 <!--<th></th>-->
@@ -352,14 +382,17 @@
                                 <td><a href="#evaluation" class="" data-toggle="modal" ng-click="lori(lo.id)"><img class="lori" src="img/logo2-3.png"></a></td>
                                 <%// if(isession != "icms_guest") { %>
                                 <td>
-                                    <s:form action="download-lo">
+                                    <s:form action="purchase-lo">
                                         <s:hidden name="filename" value="{{lo.filepath}}" />
                                         <s:hidden name="id" value="{{lo.id}}" />
-                                    <button type="submit" title="Download" class="btn-download" ng-click="loUpdate()"><i class="icon-download-alt btn-index"></i> &nbsp;</button>
-                                    </s:form></td>
+                                        <button title="Purchase" class="btn-download" data-toggle="modal" data-target="#purchase" ng-click="ModalInstance(lo.price, lo.title, lo.description, lo.id)"><i class="icon-download-alt btn-index"></i> &nbsp;</button>
+                                    </s:form>
+                                </td>
                                 
-								<td><a href="quiz?loid={{lo.id}}&uid=<% //if( isession == "icms_user" ) out.println(user_id); else out.println("0"); %>"><img src="img/quiz.jpg"></img></a></td>
-				<%// } %>													<!-- gets na  -->
+				<td>
+                                    <a href="quiz?loid={{lo.id}}&uid=<% //if( isession == "icms_user" ) out.println(user_id); else out.println("0"); %>"><img src="img/quiz.jpg"></img></a>
+                                </td>
+				<%// } %><!-- gets na  -->
                             </tr>
                         </tbody>
                     </table>
@@ -429,6 +462,10 @@
             $('#message').modal('show');
         }
             //alert(str);
+    });
+    $(document).on("click", ".purchaseLO", function () {
+        var myID = $(this).data('id');
+        $(".modal-body #ID").val( myID );
     });
     function getURLParameter(name) {
         return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
