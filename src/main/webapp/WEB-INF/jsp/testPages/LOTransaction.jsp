@@ -38,7 +38,7 @@
     <s:url id='url_main' action='main'/>
     
     USER
-    <select ng-model="selectedUser">
+    <select ng-model="userSelected">
         <option ng-repeat="user in users">{{user.id}}</option>
     </select>
     LO

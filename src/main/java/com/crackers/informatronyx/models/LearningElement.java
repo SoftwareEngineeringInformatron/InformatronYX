@@ -14,12 +14,20 @@ import java.util.Date;
 public class LearningElement {
     String Id;
     String title;
+    String type;
     String description;
     Date dateCreated;
 
     public LearningElement() {
     }
     
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
     public String getId() {
         return Id;
     }
