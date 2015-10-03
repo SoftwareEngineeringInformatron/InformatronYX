@@ -44,7 +44,7 @@
         <link href="bootstrap-modal-master/css/bootstrap-modal.css" rel="stylesheet" type="text/css"/>
     </head>
     <body >
-        <s:url id='url_main' action='main'/>
+        <div ng-controller="adminAccountManagementController">
         
         <!-- New User MASS Action -->
         <div id="newUserMassAction" class="modal hide fade" tabindex="-1" data-width="760">
@@ -64,12 +64,12 @@
                     <div class="row-fluid">
                         <div class="span10 offset1">
                             <button type="button" data-dismiss="modal" 
-                                    class="btn btn-primary" ng-click="acceptUsers()">
+                                    class="btn btn-primary" ng-click="approveMass()">
                                 <i class="icon-plus-sign-alt icon-large default"></i> 
                                 Accept
                             </button>
                             <button type="button" data-dismiss="modal" 
-                                    class="btn btn-primary" ng-click="declineUsers()">
+                                    class="btn btn-primary" ng-click="declineMass()">
                                 <i class="icon-minus-sign-alt icon-large default"></i> 
                                 Decline
                             </button>
@@ -110,8 +110,8 @@
                 <div class="modal-footer">
                     <div class="row-fluid">
                         <div class="span9 offset2">
-                            <button type="button" data-dismiss="modal" class="btn btn-primary" ng-click="blockUsers('all-account')"><i class="icon-ban-circle icon-large default"></i> Block Account(s)</button>
-                            <button type="button" data-dismiss="modal" class="btn btn-cancel"></i> Cancel</button>
+                            <button ng-click="blockMass()"   type="button" data-dismiss="modal" class="btn btn-primary"><i class="icon-ban-circle icon-large default"></i> Block Account(s)</button>
+                            <button ng-click="promoteMass()" type="button" data-dismiss="modal" class="btn btn-cancel"></i> Cancel</button>
                             <input type="hidden" id="selectedIndex" name="index" value="0"/>            
                         </div>
                     </div>
@@ -119,7 +119,7 @@
             </div>
         </div>
                 
-        <!-- Promote users -->
+        <!-- Promote mass users -->
         <div id="promoteActions" class="modal hide fade" tabindex="-1" data-width="760">
             <div class="modal-center">
                 <div class="modal-header">
@@ -131,9 +131,9 @@
                         <div class="span10 offset1">
                             <label class="file-action">Please choose a function:
                                 <select ng-model="functiontype">
-                                    <option value="1">Approval functions</option>
-                                    <option value="2">Metering functions</option>
-                                    <option value="3">Super Administrator</option>
+                                    <option value="2">Approval functions</option>
+                                    <option value="3">Metering functions</option>
+                                    <option value="4">Super Administrator</option>
                                 </select>
                             </label>
 
@@ -144,7 +144,7 @@
                 <div class="modal-footer">
                     <div class="row-fluid">
                         <div class="span10 offset1">
-                            <button type="button" data-dismiss="modal" class="btn btn-primary" ng-click="promoteUsers(functiontype)"><i class="icon-plus-sign-alt icon-large default"></i> Promote Now</button>
+                            <button type="button" data-dismiss="modal" class="btn btn-primary" ng-click="promoteMass(functiontype)"><i class="icon-plus-sign-alt icon-large default"></i> Promote Now</button>
                             <button type="button" data-dismiss="modal" class="btn btn-cancel"></i> Cancel</button>
                             <input type="hidden" id="selectedIndex" name="index" value="0"/>
                         </div>
@@ -170,7 +170,7 @@
                 <div class="modal-footer">
                     <div class="row-fluid">
                         <div class="span9 offset2">
-                            <button type="button" data-dismiss="modal" class="btn btn-primary" ng-click="blockUsers('inactive-account')"><i class="icon-ban-circle icon-large default"></i> Block Account(s)</button>
+                            <button type="button" data-dismiss="modal" class="btn btn-primary" ng-click="blockMass()"><i class="icon-ban-circle icon-large default"></i> Block Account(s)</button>
                             <button type="button" data-dismiss="modal" class="btn btn-cancel"></i> Cancel</button>
                             <input type="hidden" id="selectedIndex" name="index" value="0"/>
                         </div>
@@ -196,7 +196,7 @@
                 <div class="modal-footer">
                     <div class="row-fluid">
                         <div class="span9 offset2">
-                            <button type="button" data-dismiss="modal" class="btn btn-primary" ng-click="unblockUsers()"><i class="icon-check icon-large default"></i> Unblock Account(s)</button>
+                            <button type="button" data-dismiss="modal" class="btn btn-primary" ng-click="unblockMass()"><i class="icon-check icon-large default"></i> Unblock Account(s)</button>
                             <button type="button" data-dismiss="modal" class="btn btn-cancel"></i> Cancel</button>
                             <input type="hidden" id="selectedIndex" name="index" value="0"/>
                         </div>
@@ -205,7 +205,7 @@
             </div>
         </div>        
                 
-        <!-- Admin Actions -->
+        <!-- Error Action -->
         <div id="errorMessage" class="modal hide fade" tabindex="-1" data-width="760">
             <div class="modal-center">
                 <div class="modal-header">
@@ -230,7 +230,7 @@
             </div>
         </div>
 
-        <!-- Promote -->
+        <!-- Promote 
         <div id="promoteAction" class="modal hide fade" tabindex="-1" data-width="760">
             <div class="modal-center">
                 <div class="modal-header">
@@ -263,8 +263,8 @@
                 </div>
             </div>
         </div>
-
-        <!-- All Account Action -->
+        -->
+        <!-- All Account Action 
         <div id="allAccountAction" class="modal hide fade" tabindex="-1" data-width="760">
             <div class="modal-center">
                 <div class="modal-header">
@@ -291,7 +291,7 @@
                 <div class="modal-footer">
                     <div class="row-fluid">
                         <div class="span9 offset2">
-                            <button type="button" data-dismiss="modal" class="btn btn-primary" ng-click="blockUser()"><i class="icon-ban-circle icon-large default"></i> Block Account</button>
+                            <button type="button" data-dismiss="modal" class="btn btn-primary" ng-click="blockMass()"><i class="icon-ban-circle icon-large default"></i> Block Account</button>
                             <button type="button" data-dismiss="modal" class="btn btn-cancel"></i> Cancel</button>
                             <input type="hidden" id="selectedIndex" name="index" value="0"/>            
                         </div>
@@ -299,8 +299,8 @@
                 </div>
             </div>
         </div>
-
-        <!-- New User Action -->
+-->
+        <!-- New User Action 
         <div id="newUserAction" class="modal hide fade" tabindex="-1" data-width="760">
             <div class="modal-center">
                 <div class="modal-header">
@@ -317,8 +317,8 @@
                 <div class="modal-footer">
                     <div class="row-fluid">
                         <div class="span10 offset1">
-                            <button type="button" data-dismiss="modal" class="btn btn-primary" ng-click="acceptUser()"><i class="icon-plus-sign-alt icon-large default"></i> Accept</button>
-                            <button type="button" data-dismiss="modal" class="btn btn-primary" ng-click="declineUser()"><i class="icon-minus-sign-alt icon-large default"></i> Decline</button>
+                            <button type="button" data-dismiss="modal" class="btn btn-primary" ng-click="approveMass()"><i class="icon-plus-sign-alt icon-large default"></i> Accept</button>
+                            <button type="button" data-dismiss="modal" class="btn btn-primary" ng-click="declineMass()"><i class="icon-minus-sign-alt icon-large default"></i> Decline</button>
                             <button type="button" data-dismiss="modal" class="btn btn-cancel"></i> Cancel</button>
                             <input type="hidden" id="selectedIndex" name="index" value="0"/>
                         </div>
@@ -326,8 +326,8 @@
                 </div>
             </div>
         </div>
-
-        <!-- Block Account Action for Inactive -->
+-->
+        <!-- Block Account Action for Inactive 
         <div id="inactiveAction" class="modal hide fade" tabindex="-1" data-width="760">
             <div class="modal-center">
                 <div class="modal-header">
@@ -344,7 +344,7 @@
                 <div class="modal-footer">
                     <div class="row-fluid">
                         <div class="span9 offset2">
-                            <button type="button" data-dismiss="modal" class="btn btn-primary" ng-click="blockUser()"><i class="icon-ban-circle icon-large default"></i> Block Account</button>
+                            <button type="button" data-dismiss="modal" class="btn btn-primary" ng-click="blockMass()"><i class="icon-ban-circle icon-large default"></i> Block Account</button>
                             <button type="button" data-dismiss="modal" class="btn btn-cancel"></i> Cancel</button>
                             <input type="hidden" id="selectedIndex" name="index" value="0"/>
                         </div>
@@ -352,8 +352,8 @@
                 </div>
             </div>
         </div>
-
-        <!-- Unblock Account Action for Blocked-->
+        -->
+        <!-- Unblock Account Action for Blocked
         <div id="blockAction" class="modal hide fade" tabindex="-1" data-width="760">
             <div class="modal-center">
                 <div class="modal-header">
@@ -370,7 +370,7 @@
                 <div class="modal-footer">
                     <div class="row-fluid">
                         <div class="span9 offset2">
-                            <button type="button" data-dismiss="modal" class="btn btn-primary" ng-click="unblockUser()"><i class="icon-check icon-large default"></i> Unblock Account</button>
+                            <button type="button" data-dismiss="modal" class="btn btn-primary" ng-click="unblockMass()"><i class="icon-check icon-large default"></i> Unblock Account</button>
                             <button type="button" data-dismiss="modal" class="btn btn-cancel"></i> Cancel</button>
                             <input type="hidden" id="selectedIndex" name="index" value="0"/>
                         </div>
@@ -378,7 +378,8 @@
                 </div>
             </div>
         </div>
-
+        -->
+        </div>
         <!-- Informatron layout -->
         <div class="wrapIt"  >
             <header id="header-wrap" >
@@ -393,10 +394,10 @@
                         <div class="row-fluid">
                             <div class="span9 header-wrap main one-set1">
                                 <ul class="nav nav-tabs admin" id="display_account">
-                                    <li class='active' ng-class="isActive('all')"      ><a  ng-click="allAccounts()" href="#all-account" name="all-account">All Accounts</a></li>
-                                    <li ng-class="isActive('new')"      ><a ng-click="newAccounts()" name="new-account">New Account Requests</a></li>
-                                    <li ng-class="isActive('block')"    ><a  ng-click="blockedAccounts()" name="blocked-account">Blocked Accounts</a></li>
-                                    <li ng-class="isActive('inactive')" ><a ng-click="inactiveAccounts()"  name="inactive-account">Inactive Accounts</a></li>
+                                    <li><a  ng-click="allAccounts()" href="#all-account" name="all-account">All Accounts</a></li>
+                                    <li><a ng-click="newAccounts()" name="new-account">New Account Requests</a></li>
+                                    <li><a  ng-click="blockedAccounts()" name="blocked-account">Blocked Accounts</a></li>
+                                    <li><a ng-click="inactiveAccounts()"  name="inactive-account">Inactive Accounts</a></li>
                                 </ul>  
                             </div> 
                         </div>
@@ -414,11 +415,12 @@
                             >
                             <thead>
                             <tr>
-                                <th><input type="checkbox" id="action-checkbox-all" title="Check All" class="" /></th>
+                                <th><!--<input type="checkbox" id="action-checkbox-all" title="Check All" class="" />--></th>
                                 <th>Name</th>
                                 <th>Username</th>
                                 <th>Last Login</th>
                                 <th>Last Download</th>
+                                <th>Blocked</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -428,6 +430,10 @@
                                 <td>{{user.username}}</td>
                                 <td>{{user.lastLoginString}}</td>
                                 <td>{{user.lastDownloadDate}}</td>
+                                <td>
+                                    <b>{{user.blocked}}</b>
+                                    
+                                </td>
                                 </tr>
                             </tbody>
                         </table>

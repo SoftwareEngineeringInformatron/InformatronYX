@@ -41,10 +41,9 @@
     
     
     </head>
-    <body ng-controller="loController">
+    <body>
    
-    <s:url id='url_advance' action='advancesearch'/>
-    <s:url id='url_main' action='main'/>
+    
     
         <div id="message" class="modal hide fade" tabindex="-1" data-width="760">
             <div class="modal-center">
@@ -69,7 +68,6 @@
                 </div>
             </div>
         </div>
-    
         <!--  evaluation -->
         <div id="evaluation" class="modal hide fade" tabindex="-1" data-width="1000" >
             <div class="modal-center">
@@ -93,32 +91,17 @@
                 </div>
             </div>
         </div>
-    
-        <div class="wrapIt">
+        <div class="wrapIt"  >
             <header id="header-wrap" >
                 <div class="navbar navbar-inverse">
                         <div class="row-fluid">
                             <div class="span12 header-wrap main">
-                            
-                                <a href="${url_main}" class="brand offset1 header-txt"><i class="icon-download-alt logo"></i> InformatronPlus</a>
-
-                                <div class="account" >
-                                    <ul class="nav pull-right">
-                                        <li class="dropdown" id="usermeter">  
-                                            
-                                        </li> 
-                                        <li class="dropdown">
-                                            <a data-toggle="dropdown" class="dropdown-toggle font-up header-txt" href="#"><b class="caret"></b> <span><i class="icon-user"></i></span></a>
-                                            <ul class="dropdown-menu" id="functions" >
-                                                
-                                            </ul>
-                                        </li>                                   
-                                    </ul>
-                                </div>
+                                <a href="home" class="brand offset1 header-txt"><i class="icon-download-alt logo"></i> InformatronCMS</a>
+                                <jsp:include page="includes/ActiveAccount.jsp" /> 
                             </div> 
                         </div>
-
-
+                </div>
+                <div class="navbar navbar-inverse">
                     <div class="navbar-inner search-option">
                         <div class="row-fluid">
                             <div class="span11 header-wrap main">
@@ -154,12 +137,16 @@
                             </div> 
                         </div>
                     </div>
-
+                                
                 </div>
             </header>
-                                
+            <!--
+                TODO:
+                    1.  Imung LO Controller change ang mga variables na common into $rootScope
+                        (para magamit ang variable sa tibuok app)
+                    2.  Reference kay admin.jsp & admin.js
+            -->
             <div class="clearfix"></div>
-            
             <section class="search-accordion">
                 <div class="accordion" id="accordion2">
                     <div class="accordion-group" >
@@ -172,11 +159,6 @@
                                                     <fieldset class="">
                                                         <div class=" advanced-search">
                                                             <div class="well span6">
-                                                                <!--<label class="label-search" for="input01"><i class="icon-search"></i> Search</label>
-                                                                <div class="control-label advanced-search">
-                                                                    <input type="text" ng-model="name" name="searchName" class="input-xlarge" id="input01">
-                                                                </div>-->
-                                                                
                                                                 <label class="checkbox" for="checkbox0">
                                                                     <input name="nameCheck" type="checkbox" checked="checked" id="checkbox0" data-toggle="checkbox" value="option1">
                                                                     Learning Object
@@ -320,24 +302,18 @@
                 </div>
             </section>
             
-            <div class="clearfix"></div>
+            <div class="clearfix" ng-controller="loController"></div><!-- Gi balhin nako ngari ang controller kay mag conflict sila sa AccountController-->
             <section id="learning-objects">
                 <div class="content-row">
                     <table class="table table-hover user">
                         <thead>
                             <tr class="table-header">
-                                
                                 <th>Name</th>
                                 <th>Subject</th>
                                 <th>Date Uploaded</th>
                                 <th>Evaluation</th>
-                                 <% //if(isession != "icms_guest") { %>
-				<th>Download</th>
+                            	<th>Download</th>
                                 <th>Quiz</th>
-                               
-                                <!--<th></th>-->
-								
-                                <% //} %>
                             </tr>
                         </thead>
                         <tbody>
@@ -377,48 +353,23 @@
                 </div>
             </footer>
         </div>
-        <div >
-            <input type="hidden" id="usertype" value="< //% out.println(isid); %>" />
-            
-        </div>
-        
-        
-        
-        <script src="bootstrap/js/jquery-1.10.2.min.js"></script>
-        <script src="js/jquery-1.9.0.min.js"></script>
-    	<script src="js/jquery-ui-1.10.3.custom.min.js"></script>
-    	<script src="js/jquery.ui.touch-punch.min.js"></script>
-        
-        <!-- chart plugin -->
-        <script type="text/javascript" src="js/Chart.min.js"></script>
-        <script type="text/javascript" src="js/chartjs-option.js"></script>
-        
-    	<script src="js/bootstrap.min.js"></script>
-    	<script src="js/bootstrap-select.js"></script>
-    	<script src="js/bootstrap-switch.js"></script>
-    	<script src="js/flatui-checkbox.js"></script>
-    	<script src="js/flatui-radio.js"></script>
-    	<script src="js/jquery.tagsinput.js"></script>
-    	<script src="js/jquery.placeholder.js"></script>
-    	<script src="js/jquery.stacktable.js"></script>
-    	<script src="js/application.js"></script>
-        <script src="js/jquery-scripts.js"></script>
-        <script src="js/original.js"></script>
-        
+        <jsp:include page="includes/scripts.jsp" />
         <script src="scripts/angular.min.js"></script>
+        <script src="site_js/ngStorage.js"></script>
+        <script src="site_js/main.js"></script>
+        <script src="site_js/services/userService.js"></script>
+        <script src="site_js/includes/activeAccount.js"></script>
         <script src="scripts/loController.js"></script>
-        <script src="scripts/lo-service.js"></script>
-        <script src="scripts/userController.js"></script>
-        <script src="scripts/user-service.js"></script>
-        
+        <script src="site_js/services/lo-service.js"></script>
         <!-- datepicker plugin -->
+        <!--
         <script src="bootstrap-formhelpers/js/bootstrap-formhelpers-datepicker.en_US.js"></script>
         <script src="bootstrap-formhelpers/js/bootstrap-formhelpers-datepicker.js"></script>
-        
         <script src="js/chart-original.js"></script>
-        
+        -->
     </body>
 </html>
+<!--
 <script type="text/javascript">
 //alert('working');
     $(document).ready(function() {
@@ -433,4 +384,4 @@
     function getURLParameter(name) {
         return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
     }
-</script>
+</script>-->

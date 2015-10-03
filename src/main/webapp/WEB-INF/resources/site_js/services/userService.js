@@ -39,6 +39,14 @@ app.factory('userService', function($http) {
             var url = "/InformatronYX/informatron/user/admins";
             return $http.get(url);
         },
+        getBlockedUsers: function(){
+            var url = "/InformatronYX/informatron/user/blocked";
+            return $http.get(url);
+        },
+        getInactiveUsers: function(){
+            var url = "/InformatronYX/informatron/user/inactive";
+            return $http.get(url);
+        },
         getAllCommonUsers: function(){
             var url = "/InformatronYX/informatron/user/commonUsers";
             return $http.get(url);
@@ -53,6 +61,10 @@ app.factory('userService', function($http) {
         },
         signup: function(data){
             var url = "/InformatronYX/informatron/user/signup";
+            return $http.post(url,data);
+        },
+        get: function(data){
+            var url = "/InformatronYX/informatron/user/get";
             return $http.post(url,data);
         }
     };    

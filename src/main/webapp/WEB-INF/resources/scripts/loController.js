@@ -1,6 +1,4 @@
-var loModule = angular.module('LO',['User']);
-
-loModule.controller('loController', function($scope, loRepository) {
+app.controller('loController', function($scope, loRepository) {
     /* LOs */
     $scope.errorMessage = '';
     $scope.setAcceptID = -1;

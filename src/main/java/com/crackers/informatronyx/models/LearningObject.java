@@ -98,6 +98,7 @@ public class LearningObject {
     
     @Override
     public String toString() {
-        return "\nID:" + this.id + "\nLOtitle: " + this.title + "\nLikes: " + this.likes + "\nDownloads: " + this.downloads + "\n";
+        return "\nID: " + this.id + "\nLOtitle: " + this.title + "\nLikes: " + this.likes + "\nDownloads: " + this.downloads 
+               + "\nPrice: " + this.price+ "\nDescription: " + this.description;
     }
 }

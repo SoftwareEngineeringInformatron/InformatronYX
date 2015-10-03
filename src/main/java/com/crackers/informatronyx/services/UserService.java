@@ -107,8 +107,8 @@ public class UserService {
             throw new Exception("User does not exist. ");
         return ok;
     }
-    public UserDto promote(String id) throws UnknownHostException, Exception{
-        User model = UserDAO.getUser(id);
+    public UserDto promote(UserDto user) throws UnknownHostException, Exception{
+        User model = UserDAO.getUser(user.getId());
         if(model== null)
             throw new Exception("User does not exist. ");
         else
@@ -117,6 +117,7 @@ public class UserService {
                 throw new Exception("User cannot be promoted anymore.");
             else
             {
+                model.setFunctionType(user.getFunctionType());
                 switch(model.getUserType()){
                     case User.USERTYPE_COMMON : model.setUserType(User.USERTYPE_ADMIN);break;
                     case User.USERTYPE_ADMIN : model.setUserType(User.USERTYPE_SUPERADMIN);break;
@@ -182,6 +183,8 @@ public class UserService {
         User model = UserDAO.getUser(user.getId());
         if(model!= null){
             model.setApproved(true);
+            model.setFunctionType(User.FUNCTION_COMMON);
+            model.setUserType(User.USERTYPE_COMMON);    
             UserDAO.editUser(model);
             ok = true;
         }

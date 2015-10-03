@@ -6,7 +6,7 @@
 
 
 //angular.module("Account",["ngStorage"]).
-app.controller('AccountController',function($scope,$http,$sessionStorage){
+app.controller('AccountController',function($scope,$sessionStorage,userService){
     
     $scope.userInfo = {
         functionType : 0
@@ -24,8 +24,16 @@ app.controller('AccountController',function($scope,$http,$sessionStorage){
         
     ];
     function getUserFromSession(){
-        if($sessionStorage.user!=null)
+        var getPromise = userService.get($sessionStorage.user);
+            getPromise.success(function(response){
+                $sessionStorage.user = response ;
+            });
+            getPromise.error(function(response){
+                $sessionStorage.user = response ;
+            });
+        if($sessionStorage.user!=null){
             $scope.userInfo = $sessionStorage.user;
+        }
         // REDIRECT IF NULL
     }
     function loadFunctions(){
@@ -33,25 +41,27 @@ app.controller('AccountController',function($scope,$http,$sessionStorage){
         {
             case 0: $scope.functions = [
                     {url: 'home',str: 'Home'}
-            ];break; // GUEST
+                    ];break; // GUEST
             case 1: $scope.functions = [
-                    {url: 'home',str: 'Home'},
-                    {url: 'downloads',str: 'My LOs'}
-            ];break; // COMMON
+                    {url: 'downloads',str: 'My LOs'},
+                    
+                    ];break; // COMMON
             case 2: $scope.functions = [
-                    {url: 'home',str: 'Home'},
-                    {url: 'meteradmin',str: 'Metering View'}
-            ];break; // ADMIN METER
+                    {url: 'meteradmin',str: 'Metering View'},
+                    
+                    ];break; // ADMIN METER
             case 3: $scope.functions = [
-                    {url: 'home',str: 'Home'},
-                    {url: 'approveadmin',str: 'Approval View'}
-            ];break; // ADMIN APPROVAL
+                    {url: 'approveadmin',str: 'Approval View'},
+                    
+                    ];break; // ADMIN APPROVAL
             case 4: $scope.functions = [
-                    {url: 'home',str: 'Home'},
-                    {url: 'super',str: 'Supser Admin Mode'}
-            ];break; // SUPER ADMIN
+                    {url: 'super',str: 'Super Admin Mode'},
+                    
+                    ];break; // SUPER ADMIN
         }
     }
     getUserFromSession();
     loadFunctions();
+    setInterval(getUserFromSession(),1000);
+    setInterval(loadFunctions(),1000);
 });

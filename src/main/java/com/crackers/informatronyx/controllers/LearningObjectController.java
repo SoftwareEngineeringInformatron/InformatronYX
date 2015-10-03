@@ -5,9 +5,11 @@
  */
 package com.crackers.informatronyx.controllers;
 
+import com.crackers.informatronyx.dto.LOTransactionDto;
 import com.crackers.informatronyx.dto.LearningObjectDto;
 import com.crackers.informatronyx.models.LearningElement;
 import com.crackers.informatronyx.models.LearningObject;
+import com.crackers.informatronyx.models.LearningObjectTransaction;
 import com.crackers.informatronyx.services.LearningObjectService;
 import com.crackers.informatronyx.services.UserService;
 import java.net.UnknownHostException;
@@ -77,6 +79,12 @@ public class LearningObjectController {
         dto.setSequence(new ArrayList<LearningElement>());
         dto.getSequence().add(le);
         return dto;
+    }
+    
+    public Boolean purchaseLO(LOTransactionDto transact) {
+        LOTransactionDto dto = new LOTransactionDto();
+        dto.getAmount();
+        return true;
     }
     
     @RequestMapping("/upload/avaiableLOs")

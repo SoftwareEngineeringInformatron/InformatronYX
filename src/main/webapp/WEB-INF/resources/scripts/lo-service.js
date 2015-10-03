@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-loModule.factory('loRepository', function($http) {
+app.factory('loRepository', function($http) {
     return {
         
         getTest: function() {

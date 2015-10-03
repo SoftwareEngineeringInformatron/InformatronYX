@@ -26,6 +26,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+    @RequestMapping("/get")
+    public UserDto getUser(@RequestBody UserDto user) throws UnknownHostException{
+        UserService service = new UserService();
+        user = service.getUserInfo(user);
+        return user;
+    }
+    
     
     @RequestMapping("/signup")
     public UserDto signup(@RequestBody UserDto user) throws UnknownHostException
@@ -101,7 +108,7 @@ public class UserController {
         boolean ok = false;
         UserService service = new UserService();
         try {
-            ok  = service.promote(user.getId())!=null;
+            ok  = service.promote(user)!=null;
         } catch (UnknownHostException ex) {
             Logger.getLogger(UserController.class.getName()).log(Level.CONFIG, "MongoDB is not connected");
         } catch (Exception ex) {
