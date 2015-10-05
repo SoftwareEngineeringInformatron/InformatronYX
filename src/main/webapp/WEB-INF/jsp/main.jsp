@@ -14,14 +14,12 @@
 <html ng-app="LO">
     <head>
         <title>Informatron Plus</title>
-        
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
         <meta name="HandheldFriendly" content="True" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
-        
-    <!--plugins-->
+        <!--plugins-->
         <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css" />
         <link rel="stylesheet" media="screen"  href="bootstrap/css/bootstrap-customize.css" />
         <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />
@@ -36,94 +34,9 @@
     <!-- Date Picker -->
         <link href="bootstrap-formhelpers/docs/css/bootstrap-responsive.css" rel="stylesheet" />
         <link href="bootstrap-formhelpers/css/bootstrap-formhelpers.css" rel="stylesheet" />
-   
-    
-    
-    
     </head>
     <body>
-   
-    
-    
-        <div id="message" class="modal hide fade" tabindex="-1" data-width="760">
-            <div class="modal-center">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <span class="popup">Error Message</span>
-                </div>
-                <div class="modal-body">
-                    <div class="row-fluid">
-                        <div class="span10 offset1">
-                            <label class="file-action">
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <div class="row-fluid">
-                        <div class="span10 offset1">
-                            <button type="button" data-dismiss="modal" class="btn btn-primary">&nbsp;&nbsp;Ok&nbsp;&nbsp;</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--  evaluation -->
-        <div id="evaluation" class="modal hide fade" tabindex="-1" data-width="1000" >
-            <div class="modal-center">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <span class="popup">LORI Evaluation</span>
-                </div>
-                <div class="modal-body">
-                    <div class="row-fluid">
-                        <div class="">
-                            <canvas id="myChart" width="900" height="400"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <div class="row-fluid">
-                        <div class="span10 offset1">
-                            <button type="button" data-dismiss="modal" class="btn btn-primary">&nbsp;&nbsp;Ok&nbsp;&nbsp;</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-<!--  purchase LO -->
-        <div id="purchase" class="modal hide fade" tabindex="-1" data-width="1000" >
-            <div class="modal-center">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <span class="popup">Purchase LO</span>
-                </div>
-                <div class="modal-body">
-                    <div class="row-fluid">
-                        <div class="">
-                            <div class="few-details">
-                                <h5>LO Title:</h5> <h5 ng-model="title">{{title}}</h5>
-                                <h5>LO ID:</h5> <p ng-model="id">{{id}}</p>
-                                <h5>LO Description:</h5> <p ng-model="description">{{description}}</p>
-                                <h5>LO Price:</h5> <p ng-model="price">{{price}}</p>                                
-                            </div>
-                            
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <div class="row-fluid">
-                        <div class="span10 offset1">
-                            <button type="button" data-dismiss="modal" class="btn btn-primary">&nbsp;&nbsp;Ok&nbsp;&nbsp;</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    
-        <div class="wrapIt">
->>>>>>> 35c0c3fe0438eb3458167b72cf0519eebb002f7a
-            <header id="header-wrap" >
+        <header id="header-wrap" >
                 <div class="navbar navbar-inverse">
                         <div class="row-fluid">
                             <div class="span12 header-wrap main">
@@ -170,12 +83,94 @@
                     </div>
                                 
                 </div>
-            </header>
+        </header>
+        <div id="message" class="modal hide fade" tabindex="-1" data-width="760">
+            <div class="modal-center">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <span class="popup">Error Message</span>
+                </div>
+                <div class="modal-body">
+                    <div class="row-fluid">
+                        <div class="span10 offset1">
+                            <label class="file-action">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="row-fluid">
+                        <div class="span10 offset1">
+                            <button type="button" data-dismiss="modal" class="btn btn-primary">&nbsp;&nbsp;Ok&nbsp;&nbsp;</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--  evaluation -->
+        <div id="evaluation" class="modal hide fade" tabindex="-1" data-width="1000" >
+            <div class="modal-center">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <span class="popup">LORI Evaluation</span>
+                </div>
+                <div class="modal-body">
+                    <div class="row-fluid">
+                        <div class="">
+                            <canvas id="myChart" width="900" height="400"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="row-fluid">
+                        <div class="span10 offset1">
+                            <button type="button" data-dismiss="modal" class="btn btn-primary">&nbsp;&nbsp;Ok&nbsp;&nbsp;</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--  purchase LO -->
+        <div id="purchase" class="modal hide fade" tabindex="-1" data-width="1000" >
+            <div class="modal-center">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <span class="popup">Purchase LO</span>
+                </div>
+                <div class="modal-body">
+                    <div class="row-fluid">
+                        <div class="">
+                            <div class="few-details">
+                                <h5>LO Title:</h5> <h5 ng-model="title">{{title}}</h5>
+                                <h5>LO ID:</h5> <p ng-model="id">{{id}}</p>
+                                <h5>LO Description:</h5> <p ng-model="description">{{description}}</p>
+                                <h5>LO Price:</h5> <p ng-model="price">{{price}}</p>                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="row-fluid">
+                        <div class="span10 offset1">
+                            <button type="button" data-dismiss="modal" class="btn btn-primary">&nbsp;&nbsp;Ok&nbsp;&nbsp;</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="wrapIt">
             <!--
                 TODO:
-                    1.  Imung LO Controller change ang mga variables na common into $rootScope
-                        (para magamit ang variable sa tibuok app)
-                    2.  Reference kay admin.jsp & admin.js
+                    1. Page create of site_js/page/main.js mao ni iyahang page controller
+                        adto ka mag initialize sa app og mga controllers
+                    2. Sugod sa Line Number #61 kay imuhang search controls so mag himu kag 2 ka Controllers
+                        a. NavBar controller  - para ni sa navbar ig click niya sa All,Most Download and etc
+                        b. LO Controller      - para ni sa Table na mamanipulate
+                    3. Para ma connect nimu ang duha kay pag gamit og $rootScope
+                            ex.    app.controller(function($scope,$rootScope,LOService){....});
+                       Ang rootscope mao na ang scope sa app so magamit na sa tanan controllers ana nga app.
             -->
             <div class="clearfix"></div>
             <section class="search-accordion">
@@ -343,12 +338,7 @@
                                 <th>Subject</th>
                                 <th>Date Uploaded</th>
                                 <th>Evaluation</th>
-<<<<<<< HEAD
-                            	<th>Download</th>
-=======
-                                 <% //if(isession != "icms_guest") { %>
 				<th>Purchase</th>
->>>>>>> 35c0c3fe0438eb3458167b72cf0519eebb002f7a
                                 <th>Quiz</th>
                             </tr>
                         </thead>
