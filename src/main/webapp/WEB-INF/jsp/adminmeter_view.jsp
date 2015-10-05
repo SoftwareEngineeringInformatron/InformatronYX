@@ -186,7 +186,7 @@
 
         <script src="js/angular.js"></script>
         <script src="site_js/ngStorage.js"></script>
-        <script src="site_js/adminMeter.js"></script>
+        <script src="site_js/page/adminMeter.js"></script>
         <script src="site_js/services/creditService.js"></script>
         <script src="site_js/services/userService.js"></script>
     </body>

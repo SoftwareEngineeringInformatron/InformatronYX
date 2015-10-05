@@ -208,4 +208,4 @@
        <jsp:include page="includes/scripts.jsp" /> 
     </body>
 </html>
-<script src= "site_js/index.js" type="text/javascript"></script>
+<script src= "site_js/page/index.js" type="text/javascript"></script>

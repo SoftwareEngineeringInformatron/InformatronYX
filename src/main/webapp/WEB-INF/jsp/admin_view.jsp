@@ -454,7 +454,7 @@
         
         <script src="scripts/angular.min.js"></script>
         <script src="site_js/ngStorage.js"></script>
-        <script src="site_js/admin.js"></script>
+        <script src="site_js/page/admin.js"></script>
         <script src="site_js/includes/activeAccount.js"></script>
         <script src="site_js/services/userService.js"></script>
     </body>

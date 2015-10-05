@@ -172,7 +172,7 @@
 </html>
 <script src="js/angular.js"> </script> 
 <script src="site_js/ngStorage.js" type="text/javascript"></script>
-<script src="site_js/login_signup.js" type="text/javascript"></script>
+<script src="site_js/page/login_signup.js" type="text/javascript"></script>
 <script src="site_js/services/userService.js" type="text/javascript"></script>
 
 

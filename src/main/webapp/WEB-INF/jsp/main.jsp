@@ -91,11 +91,7 @@
                 </div>
             </div>
         </div>
-<<<<<<< HEAD
-        <div class="wrapIt"  >
-=======
-        
-        <!--  purchase LO -->
+<!--  purchase LO -->
         <div id="purchase" class="modal hide fade" tabindex="-1" data-width="1000" >
             <div class="modal-center">
                 <div class="modal-header">
@@ -399,7 +395,7 @@
         <jsp:include page="includes/scripts.jsp" />
         <script src="scripts/angular.min.js"></script>
         <script src="site_js/ngStorage.js"></script>
-        <script src="site_js/main.js"></script>
+        <script src="site_js/page/main.js"></script>
         <script src="site_js/services/userService.js"></script>
         <script src="site_js/includes/activeAccount.js"></script>
         <script src="scripts/loController.js"></script>
