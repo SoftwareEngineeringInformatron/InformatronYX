@@ -31,7 +31,7 @@
         <link rel="stylesheet" type="text/css" href="css/media.css" />
         <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css" />
     </head>
-    <body ng-controller="meterController">
+    <body >
         <div id="message" class="modal hide fade" tabindex="-1" data-width="760">
             <div class="modal-center">
                 <div class="modal-header">
@@ -41,7 +41,7 @@
                 <div class="modal-body">
                     <div class="row-fluid">
                         <div class="span10 offset1">
-                            <label class="file-action">
+                            <label class="file-action" id="errorMessage">
                             </label>
                         </div>
                     </div>
@@ -55,62 +55,13 @@
                 </div>
             </div>
         </div>
-        
-        
-        <!-- Metering Action -->
-        <div id="payCharges" class="modal hide fade" tabindex="-1" data-width="760">
-            <form name="metering">
-                <div class="modal-center">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <span class="popup">Metering Action</span>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row-fluid">
-                            <div class="span10 offset1">
-                                <label class="file-action">
-                                    <div>{{setName}}</div>
-                                    <div>Amount to pay: Php {{setBalance}}.00</div><br/>
-                                    <input type="text" size="20" placeholder="Amount paid"  required/>
-                                    <input type="text" size="20" placeholder="O.R. number"  required/>
-                                </label>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <div class="row-fluid">
-                            <div class="span10 offset1">
-                                <button type="button" data-dismiss="modal" class="btn btn-primary" ><i class="icon-plus-sign-alt icon-large default"></i> Submit</button>
-                                <button type="button" data-dismiss="modal" class="btn btn-cancel"></i> Cancel</button>
-                                <input type="hidden" id="selectedIndex" name="index" value="0"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
         <div class="wrapIt">
             <header id="header-wrap" >
                 <div class="navbar navbar-inverse">
                         <div class="row-fluid">
                             <div class="span12 header-wrap main">
-                            
                                 <a href="${url_main}" class="brand offset1 header-txt"><i class="icon-download-alt logo"></i> InformatronCMS</a>
-
-                                <div class="account">
-                                    <ul class="nav pull-right">
-                                        <li class="dropdown" id="usermeter">  
-                                            
-                                        </li> 
-                                        <li class="dropdown">
-                                            <a data-toggle="dropdown" class="dropdown-toggle font-up header-txt" href="#"><b class="caret"></b> <span><i class="icon-user"></i></span></a>
-                                            <ul class="dropdown-menu" id="functions" >
-                                                
-                                            </ul>
-                                        </li>                                   
-                                    </ul>
-                                </div>
+                                <jsp:include page="includes/ActiveAccount.jsp" /> 
                             </div> 
                         </div>
 
@@ -134,8 +85,8 @@
 
                 </div>
             </header>
-            <div class="clearfix"></div>
-            <section id="user-charges" >
+            <div class="clearfix" ></div>
+            <section id="user-charges" ng-controller="meterController" >
                 <div class="content-row">
                     <table class="table table-hover meter-admin ">
                         <thead>
@@ -150,7 +101,7 @@
                         </thead>
 
                         <tbody>
-                            <tr ng-repeat="trans in creditTransactions">
+                            <tr ng-repeat="trans in transactions">
                                 <td></td>
                                 <td><a href="#payCharges" data-toggle="modal">{{getUserNameById(trans.u_ID)}}</a></td>
                                 <td>{{trans.amnt}}</td>
@@ -158,8 +109,8 @@
                                 <td>
                                     <div ng-switch on="trans.ok" class="text-center">
                                         <div ng-switch-when="false" ">
-                                            <button  class="btn" data-toggle="modal" data-target="#payCharges"> Approve </button>
-                                        <button  class="btn" data-toggle="modal" data-target="#payCharges"> Decline </button>
+                                            <button  ng-click="loadTransaction(trans)" class="btn" data-toggle="modal" data-target="#approveAction"> Approve </button>
+                                            <button  ng-click="loadTransaction(trans)" class="btn" data-toggle="modal" data-target="#declineAction"> Decline </button>
                                         </div>
                                         <h4 ng-switch-when="true"> Approved</h4>
                                     </div>
@@ -168,6 +119,58 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+                <!-- Approve Action -->
+                <div id="approveAction" class="modal hide fade" tabindex="-1" data-width="760">
+                    <div class="modal-center">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <span class="popup">Approve Transaction</span>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row-fluid">
+                                <div class="span10 offset1">
+                                    <label class="file-action">
+                                        Are you sure you want to <b>approve</b> this transaction?
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="row-fluid">
+                                <div class="span10 offset1">
+                                    <button ng-click="approveTransaction(currentTransaction)" type="button"  class="btn btn-success">&nbsp;&nbsp;CONFIRM&nbsp;&nbsp;</button>
+                                    <button type="button" data-dismiss="modal" class="btn btn-danger">&nbsp;&nbsp;DECLINE&nbsp;&nbsp;</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Decline Action -->
+                <div id="declineAction" class="modal hide fade" tabindex="-1" data-width="760">
+                    <div class="modal-center">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <span class="popup">Decline Transaction</span>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row-fluid">
+                                <div class="span10 offset1">
+                                    <label class="file-action">
+                                        Are you sure you want to <b>decline</b> this transaction?
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="row-fluid">
+                                <div class="span10 offset1">
+                                    <button ng-click="declineTransaction(currentTransaction)" type="button"  class="btn btn-success">&nbsp;&nbsp;CONFIRM&nbsp;&nbsp;</button>
+                                    <button type="button" data-dismiss="modal" class="btn btn-danger">&nbsp;&nbsp;DECLINE&nbsp;&nbsp;</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
             <div class="clearfix"></div>
@@ -187,6 +190,7 @@
         <script src="js/angular.js"></script>
         <script src="site_js/ngStorage.js"></script>
         <script src="site_js/page/adminMeter.js"></script>
+        <script src="site_js/includes/activeAccount.js"></script>
         <script src="site_js/services/creditService.js"></script>
         <script src="site_js/services/userService.js"></script>
     </body>

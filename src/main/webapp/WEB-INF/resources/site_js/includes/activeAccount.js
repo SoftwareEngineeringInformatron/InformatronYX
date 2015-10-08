@@ -47,8 +47,9 @@ app.controller('AccountController',function($scope,$sessionStorage,userService){
                     
                     ];break; // COMMON
             case 2: $scope.functions = [
-                    {url: 'meteradmin',str: 'Metering View'},
-                    
+                    {url: 'main',str: 'Main'},
+                    {url: 'admin_meter',str: 'Metering View'},
+                    {url: 'admin_history',str: 'Metering History'},
                     ];break; // ADMIN METER
             case 3: $scope.functions = [
                     {url: 'approveadmin',str: 'Approval View'},

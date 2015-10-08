@@ -5,11 +5,13 @@
  */
 var app = angular.module("Admin",['ngStorage']);
 
-app.controller("meterController",function($scope,creditService,userService){
-    $scope.creditTransactions = [];
+app.controller("meterController",function($scope,$rootScope,creditService,userService){
+    $scope.transactions = [];
     $scope.users = [];
+    $scope.currentTransaction = {};
     function load(){
         userService.getAllUsers().success(function(response){
+            $scope.transactions = [];
             $scope.users  = response;
             for(var i=0;i<$scope.users.length;i++){
                 loadCreditTransaction($scope.users[i]);
@@ -20,7 +22,7 @@ app.controller("meterController",function($scope,creditService,userService){
         
             creditService.getTransactionHistoryOfUser(user).success(function(response){
                 for(var i=0; i < response.length;i++)
-                    $scope.creditTransactions.push(response[i]);
+                    $scope.transactions.push(response[i]);
                 console.log("credit transactions loaded");
             });
     }
@@ -31,6 +33,38 @@ app.controller("meterController",function($scope,creditService,userService){
             }
         return "";
     }
+    $scope.approveTransaction = function(transaction){
+        var transactionPOST = creditService.approveTransaction(transaction);
+        transactionPOST.success(function (response){
+            if(response=='true'){
+                load();
+                console.log("LOG:   Approval of transactiond #"+transaction.id);
+            }
+        });
+        transactionPOST.error(function (response){
+            $("#message").toggle();
+            $("#errorMessage").html("Error occurred upon the process of approving transaction #"+transaction.id);
+        });
+        $('#approveAction').toggle();
+    };
+    $scope.declineTransaction = function(transaction){
+        var transactionPOST = creditService.removeTransaction(transaction);
+        transactionPOST.success(function (response){
+            if(response=='true'){
+                load();
+                console.log("LOG:   Removal of transactiond #"+transaction.id);
+            }
+        });
+        transactionPOST.error(function (response){
+            $("#message").toggle();
+            $("#errorMessage").html("Error occurred upon the process of approving transaction #"+transaction.id);
+        });
+        $('#declineAction').toggle();
+    };
+    $scope.loadTransaction = function(transaction){
+      $scope.currentTransaction = transaction;
+    };
+    
     load();
 });
 

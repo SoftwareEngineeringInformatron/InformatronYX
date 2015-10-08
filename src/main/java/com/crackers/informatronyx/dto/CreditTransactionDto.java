@@ -6,7 +6,7 @@
 package com.crackers.informatronyx.dto;
 
 import com.crackers.informatronyx.models.CreditTransaction;
-import com.crackers.informatronyx.models.Transaction;
+import java.text.DateFormat;
 import java.util.Date;
 
 /**
@@ -20,6 +20,7 @@ public class CreditTransactionDto {
     private String or = null;
     private float amnt = 0.0f;
     private Date dot = null;
+    private String date = null;
     private boolean ok = false;
     private String appBy = null;
     
@@ -62,6 +63,7 @@ public class CreditTransactionDto {
 
     public void setDot(Date dot) {
         this.dot = dot;
+        this.date = DateFormat.getDateInstance(DateFormat.MEDIUM).format(dot);
     }
 
     public boolean isOk() {
@@ -77,7 +79,7 @@ public class CreditTransactionDto {
         this.u_ID = model.getUser_Id();
         this.ok = model.isFinished();
         this.amnt = model.getAmount();
-        this.dot = model.getDateOfTransaction();
+        this.setDot(model.getDateOfTransaction());
         this.or = model.getOfficialReceipt();
     }
 
@@ -87,6 +89,14 @@ public class CreditTransactionDto {
 
     public void setAppBy(String appBy) {
         this.appBy = appBy;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
     
 }

@@ -5,6 +5,7 @@
  */
 package com.crackers.informatronyx.pageControllers;
 
+import com.crackers.informatronyx.models.Quiz;
 import com.crackers.informatronyx.models.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
