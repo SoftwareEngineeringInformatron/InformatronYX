@@ -29,12 +29,12 @@ public class DatabaseManager {
              try {
                 instanceMongo = b.getObject();//new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port);
                 List<String> str = instanceMongo.getDatabaseNames();
-                instance = new MongoTemplate(instanceMongo,databaseName);
              } catch (Exception ex) {
                  ex.printStackTrace(System.out);
              }
          }
          
+        instance = new MongoTemplate(instanceMongo,databaseName);
         return instance;
     }
 }

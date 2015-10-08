@@ -60,7 +60,7 @@
                 <div class="navbar navbar-inverse">
                         <div class="row-fluid">
                             <div class="span12 header-wrap main">
-                                <a href="${url_main}" class="brand offset1 header-txt"><i class="icon-download-alt logo"></i> InformatronCMS</a>
+                                <a href="${url_main}" class="brand offset1 header-txt"><i class="icon-download-alt logo"></i> InformatronYX</a>
                                 <jsp:include page="includes/ActiveAccount.jsp" /> 
                             </div> 
                         </div>
@@ -74,20 +74,20 @@
                                         <input name="searchName" type="text" placeholder="Search" class="input" ng-model="searchText"/>
                                         <a class="btn-index" ><i class="icon-search"></i> </a>
                                 </div>
-                                <div class="span3" >
-                                    <a href="#" class="btn-index span4" >CREDIT</a>
-                                    <a href="#" class="btn-index span8" >Learning Object</a>
+                                <div class="span3" ng-controller="viewController">
+                                    <a ng-href="#" class="btn-index span4" ng-click="switchOn()">CREDIT</a>
+                                    <a ng-href="#" class="btn-index span8" ng-click="switchOff()">Learning Object</a>
                                 </div>
                                 
                             </div> 
                         </div>
                     </div>
-
+ 
                 </div>
             </header>
             <div class="clearfix" ></div>
             <section id="user-charges" ng-controller="meterController" >
-                <div class="content-row">
+                <div class="content-row" ng-show="switchView" >
                     <table class="table table-hover meter-admin ">
                         <thead>
                             <tr>
@@ -108,13 +108,38 @@
                                 <td>{{trans.or}}</td>
                                 <td>
                                     <div ng-switch on="trans.ok" class="text-center">
-                                        <div ng-switch-when="false" ">
+                                        <div ng-switch-when="false">
                                             <button  ng-click="loadTransaction(trans)" class="btn" data-toggle="modal" data-target="#approveAction"> Approve </button>
                                             <button  ng-click="loadTransaction(trans)" class="btn" data-toggle="modal" data-target="#declineAction"> Decline </button>
                                         </div>
                                         <h4 ng-switch-when="true"> Approved</h4>
                                     </div>
                                 </td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- LOs view -->
+                <div class="content-row" ng-hide="switchView" >
+                    <table class="table table-hover meter-admin" >
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>UserName</th>
+                                <th>LO</th>
+                                <th>Amount</th>
+                                <th>Date Purchased</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="trans in lotransactions">
+                                <td></td>
+                                <td><a href="#payCharges" data-toggle="modal">{{getUserNameById(trans.u_Id)}}</a></td>
+                                <td>{{getLOById(trans.lo_id)}}</td>
+                                <td>{{trans.amount}}</td>
+                                <td>{{trans.dateOfTransaction | date: "MMMM d yyyy"}}</td>
                                 <td></td>
                             </tr>
                         </tbody>
@@ -193,5 +218,7 @@
         <script src="site_js/includes/activeAccount.js"></script>
         <script src="site_js/services/creditService.js"></script>
         <script src="site_js/services/userService.js"></script>
+        <script src="site_js/services/loTransactionService.js"></script>
+        <script src="site_js/services/lo-service.js"></script>
     </body>
 </html>
