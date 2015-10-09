@@ -66,7 +66,9 @@
                         <div class="row-fluid">
                             <div class="span10 header-wrap main one-set">      
                                 <div class="span8"><h5>Transactions and History View</h5></div>                                                            
-                                <div class="span4" ><a href="${url_meteradmin}" class="btn-index span9" >BACK TO METERING</a></div>
+                                <div class="span4" >
+                                    <a href="admin_meter" class="btn-index span9" >BACK TO METERING</a>
+                                </div>
                             </div> 
                         </div>
                     </div>
@@ -79,16 +81,17 @@
                     
                     
                     
-                    <div class="content-row" ng-controller="creditHistory">
-                        <br><h4 >Credit Transaction Log</h4>
-                        <h6>Show List by :
-                        <select  ng-model="increment" class="input-control" ng-change="showPopulationChanged()">
-                            <option type="number" value=3 >3</option>
-                            <option type="number" value=5 >5</option>
-                            <option type="number" value=10>10</option>
-                        </select>
-                        </h6>
-                        <div  >
+                    <div class="content-row" >
+                        
+                        <div  ng-controller="creditHistory">
+                            <br><h4 >Credit Transaction Log</h4>
+                            <h6>Show List by :
+                            <select  ng-model="increment" class="input-control" ng-change="showPopulationChanged()">
+                                <option type="number" value=3 >3</option>
+                                <option type="number" value=5 >5</option>
+                                <option type="number" value=10>10</option>
+                            </select>
+                            </h6>
                             <table class="table table-striped table-bordered" width="100%"
                                 >
                                 <thead>
@@ -102,7 +105,7 @@
                                     <th>Approved By</th>
                                 </tr>
                                 </thead>
-                                <tr ng-if='creditTransactions.length<5'>
+                                <tr ng-if='creditTransactions.length==0'>
                                     <td colspan="7"><b>No credit transaction history.</b></td>
                                 </tr>
                                 <tr ng-repeat="trans in creditTransactions" 
@@ -113,7 +116,11 @@
                                     <td>{{trans.amnt}}</td>
                                     <td>{{trans.date}}</td>
                                     <td>{{trans.or}}</td>
-                                    <td>{{getUserNameById(trans.appBy)}}</td>
+                                    <td>
+                                        <div ng-if="getUserById(trans.appBy)!=null">
+                                            {{getUserById(trans.appBy).username}}(<i>{{getUserById(trans.appBy).userType}}</i>)
+                                        </div>
+                                    </td>
                                 </tr>
                             </table>
                             <button class="btn btn-primary" ng-click="previous()">Previous</button>
@@ -132,8 +139,7 @@
                                 <option type="number" value=10>10</option>
                             </select>
                             </h6>
-                            <table class="table table-striped table-bordered"
-                                >
+                            <table class="table table-striped table-bordered">
                                 <thead>
                                 <tr class="table-header">
                                     <th>User&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
@@ -142,13 +148,17 @@
                                     <th>Date of Purchase</th>
                                 </tr>
                                 </thead>
-                                <tr ng-repeat="trans in loTransaction">
-                                    <td>{{getUserNameById(trans.u_Id)}}</td>
-                                    <td>TEST</td>
+                                <tr ng-repeat="trans in loTransaction"
+                                    ng-if='loTransaction.indexOf(trans) <= stop && loTransaction.indexOf(trans)>=start'>
+                                    <td>{{getUserById(trans.u_Id).username}}</td>
+                                    <td>{{trans.lo_id}}</td>
                                     <td></td>
-                                    <td></td>
+                                    <td>{{trans.dot_str}}</td>
                                 </tr>
                             </table>
+                            <button class="btn btn-primary" ng-click="previous()">Previous</button>
+                            <button class="btn btn-primary" ng-click="next()">Next</button>
+                            <h6>Showing {{start+1}} to {{stop+1}} (<i>out of {{creditTransactions.length}}</i>)</h6>
                         </div>
                         
                         <br>

@@ -53,7 +53,7 @@ public class LOTransactionDAO {
     {
         try {
             Query query = new Query();
-            query.addCriteria(where("user_Id").is(id));
+            query.addCriteria(where("user_id").is(id));
             return DatabaseManager.getMongoOpsInstance(AppConfig.DATABASE_TRANSACTION).find(query, LearningObjectTransaction.class);
         } catch (UnknownHostException ex) {
             return null;

@@ -52,6 +52,7 @@ public class TransactionService {
     public boolean approveCreditTransaction(CreditTransactionDto trans) throws UnknownHostException{
         boolean ok = false;
         CreditTransaction obj = CreditTransactionDAO.getCreditTransactionById(trans.getId());
+        obj.setApproveBy(trans.getAppBy());
         obj.setFinished(true);
         User user = UserDAO.getUser(obj.getUser_Id());
         user.setCredits(user.getCredits() + obj.getAmount());

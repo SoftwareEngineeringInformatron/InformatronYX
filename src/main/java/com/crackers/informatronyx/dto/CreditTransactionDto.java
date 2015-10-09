@@ -81,6 +81,7 @@ public class CreditTransactionDto {
         this.amnt = model.getAmount();
         this.setDot(model.getDateOfTransaction());
         this.or = model.getOfficialReceipt();
+        this.appBy = model.getApproveBy();
     }
 
     public String getAppBy() {

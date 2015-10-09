@@ -7,6 +7,7 @@ package com.crackers.informatronyx.dto;
 
 import com.crackers.informatronyx.models.LearningObjectTransaction;
 import com.crackers.informatronyx.models.Transaction;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,7 @@ public class LOTransactionDto extends Transaction{
     
     private String lo_id;
     private String u_Id;
+    private String dot_str;
     private List<String> errorList = new ArrayList<>();
 
     public String getLo_id() {
@@ -50,8 +52,18 @@ public class LOTransactionDto extends Transaction{
         this.setLo_id(transaction.getLearningObjectId());
         this.setAmount(transaction.getAmount());
         this.setDateOfTransaction(transaction.getDateOfTransaction());
+        this.setDot_str(DateFormat.getDateInstance(DateFormat.MEDIUM).format(this.getDateOfTransaction()));
         this.setFinished(transaction.isFinished());
         this.setOfficialReceipt(transaction.getOfficialReceipt());
+        
+    }
+
+    public String getDot_str() {
+        return dot_str;
+    }
+
+    public void setDot_str(String dot_str) {
+        this.dot_str = dot_str;
     }
     
     

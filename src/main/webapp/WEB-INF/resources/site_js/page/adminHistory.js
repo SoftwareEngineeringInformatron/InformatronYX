@@ -41,12 +41,12 @@ app.controller("creditHistory",function($rootScope,$scope,userService,creditServ
                 console.log("credit transactions loaded");
             });
     }
-    $rootScope.getUserNameById = function(id){
+    $rootScope.getUserById = function(id){
         for(var i=0;i<$rootScope.allUsers.length;i++){
                 if($rootScope.allUsers[i].id = id)
-                    return $rootScope.allUsers[i].username;
+                    return $rootScope.allUsers[i];
             }
-        return "";
+        return null;
     }
     $scope.loadPage = function(){
         var length = $scope.creditTransactions.length;
