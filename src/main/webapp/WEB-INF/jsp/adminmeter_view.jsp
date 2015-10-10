@@ -101,18 +101,18 @@
                         </thead>
 
                         <tbody>
-                            <tr ng-repeat="trans in transactions">
+                            <tr ng-if="transactions.length == 0">
+                                <td><h3>There no pending credit transactions that needs approval.</h3></td>
+                            </tr>
+                            <tr ng-repeat="trans in transactions" ng-if="trans.ok == false">
                                 <td></td>
                                 <td><a href="#payCharges" data-toggle="modal">{{getUserNameById(trans.u_ID)}}</a></td>
                                 <td>{{trans.amnt}}</td>
                                 <td>{{trans.or}}</td>
                                 <td>
-                                    <div ng-switch on="trans.ok" class="text-center">
-                                        <div ng-switch-when="false">
-                                            <button  ng-click="loadTransaction(trans)" class="btn" data-toggle="modal" data-target="#approveAction"> Approve </button>
-                                            <button  ng-click="loadTransaction(trans)" class="btn" data-toggle="modal" data-target="#declineAction"> Decline </button>
-                                        </div>
-                                        <h4 ng-switch-when="true"> Approved</h4>
+                                    <div class="text-center">
+                                        <button  ng-click="loadTransaction(trans)" class="btn" data-toggle="modal" data-target="#approveAction"> Approve </button>
+                                        <button  ng-click="loadTransaction(trans)" class="btn" data-toggle="modal" data-target="#declineAction"> Decline </button>
                                     </div>
                                 </td>
                                 <td></td>

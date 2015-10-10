@@ -158,7 +158,7 @@
                             </table>
                             <button class="btn btn-primary" ng-click="previous()">Previous</button>
                             <button class="btn btn-primary" ng-click="next()">Next</button>
-                            <h6>Showing {{start+1}} to {{stop+1}} (<i>out of {{creditTransactions.length}}</i>)</h6>
+                            <h6>Showing {{start+1}} to {{stop+1}} (<i>out of {{loTransaction.length}}</i>)</h6>
                         </div>
                         
                         <br>

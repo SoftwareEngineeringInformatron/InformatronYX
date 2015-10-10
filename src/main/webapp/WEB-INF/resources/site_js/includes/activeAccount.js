@@ -40,23 +40,32 @@ app.controller('AccountController',function($scope,$sessionStorage,userService){
         switch($scope.userInfo.functionType)
         {
             case 0: $scope.functions = [
-                    {url: 'home',str: 'Home'}
+                    {url: 'home',str: 'Home'},
+                    {url: 'main',str: 'Store'}
                     ];break; // GUEST
             case 1: $scope.functions = [
+                    {url: 'main',str: 'Store'},
                     {url: 'downloads',str: 'My LOs'},
-                    
+                    {url: 'logout',str: 'Sign Out'}
                     ];break; // COMMON
             case 2: $scope.functions = [
-                    {url: 'main',str: 'Main'},
+                    {url: 'main',str: 'Store'},
+                    {url: 'downloads',str: 'My LOs'},
                     {url: 'admin_meter',str: 'Metering View'},
                     {url: 'admin_history',str: 'Metering History'},
+                    {url: 'logout',str: 'Sign Out'}
                     ];break; // ADMIN METER
             case 3: $scope.functions = [
+                    {url: 'main',str: 'Store'},
                     {url: 'approveadmin',str: 'Approval View'},
-                    
+                    {url: 'logout',str: 'Sign Out'},                    
                     ];break; // ADMIN APPROVAL
             case 4: $scope.functions = [
-                    {url: 'super',str: 'Super Admin Mode'},
+                    {url: 'main',str: 'Store'},
+                    {url: 'admin_meter',str: 'Metering View'},
+                    {url: 'admin_history',str: 'Metering History'},
+                    {url: 'approveadmin',str: 'Approval View'},
+                    {url: 'logout',str: 'Sign Out'}
                     
                     ];break; // SUPER ADMIN
         }

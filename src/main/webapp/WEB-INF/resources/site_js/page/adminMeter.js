@@ -5,7 +5,7 @@
  */
 var app = angular.module("Admin",['ngStorage']);
 
-app.controller("meterController",function($scope,$rootScope,creditService,userService,loTransactionService,loRepository){
+app.controller("meterController",function($sessionStorage,$scope,$rootScope,creditService,userService,loTransactionService,loRepository){
     $scope.transactions = [];
     $scope.lotransactions = [];
     $scope.users = [];
@@ -66,6 +66,8 @@ app.controller("meterController",function($scope,$rootScope,creditService,userSe
     }
     
     $scope.approveTransaction = function(transaction){
+        if($sessionStorage.user!=null)
+            transaction.appBy = $sessionStorage.user.id;
         var transactionPOST = creditService.approveTransaction(transaction);
         transactionPOST.success(function (response){
             if(response=='true'){

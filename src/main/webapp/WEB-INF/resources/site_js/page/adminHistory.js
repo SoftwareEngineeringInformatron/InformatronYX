@@ -75,7 +75,6 @@ app.controller("creditHistory",function($rootScope,$scope,userService,creditServ
      $scope.load();
 });
 app.controller("loTransactionHistory",function($rootScope,$scope,userService,loTransactionService,loRepository){
-    $scope.allUsers = [];
     $scope.loTransaction = [];
     $scope.los = [];
     $scope.start = 0;
@@ -86,7 +85,7 @@ app.controller("loTransactionHistory",function($rootScope,$scope,userService,loT
     $scope.load = function(){
         var commonPromise = userService.getAllUsers();
         commonPromise.success(function(response){
-            $scope.allUsers = response;
+            $rootScope.allUsers = response;
             loRepository.getAllLO().success(function(response){
                 $scope.los = response;
             });
@@ -112,7 +111,7 @@ app.controller("loTransactionHistory",function($rootScope,$scope,userService,loT
             $scope.stop = $scope.creditTransactions.length;
     };
     $scope.loadPage = function(){
-        var length = $scope.creditTransactions.length;
+        var length = $scope.loTransaction.length;
         
             $scope.start = $scope.pageNumber * $scope.increment;
             $scope.stop  = $scope.start + ($scope.increment - 1);
@@ -122,7 +121,7 @@ app.controller("loTransactionHistory",function($rootScope,$scope,userService,loT
     }
     $scope.next = function(){
         var page = $scope.pageNumber + 1;
-        if(($scope.creditTransactions.length>= (page*$scope.increment))){
+        if(($scope.loTransaction.length>= (page*$scope.increment))){
             $scope.pageNumber = page;
             $scope.loadPage();
         }

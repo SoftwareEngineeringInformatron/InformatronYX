@@ -18,11 +18,6 @@
                     {{function.str}}
                     </a>
                 </li>
-                <li ng-if="userInfo.functionType>0">
-                    <a href="/logout" >
-                        Logout
-                    </a>
-                </li>
             </ul>
         </li>                                   
     </ul>
