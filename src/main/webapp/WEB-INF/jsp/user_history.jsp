@@ -12,7 +12,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
-<html ng-app="tableExample">
+<html ng-app="UserHistory">
     <head>
         <title>Informatron Plus</title> 
         
@@ -63,19 +63,7 @@
                         <div class="span12 header-wrap main">
                             
                             <a href="${url_main}" class="brand offset1 header-txt"><i class="icon-download-alt logo"></i> InformatronCMS</a>
-
-                            <div class="account" ng-controller="userController">
-                                <ul class="nav pull-right">
-                                    <li class="dropdown" id="usermeter">  
-
-                                    </li> 
-                                    <li class="dropdown">
-                                        <a data-toggle="dropdown" class="dropdown-toggle font-up header-txt" href="#"><b class="caret"></b> <span><i class="icon-user"></i></span></a>
-                                        <ul class="dropdown-menu" id="functions" >
-
-                                        </ul>
-                                    </li>                                   
-                                </ul>
+                                        <jsp:include page="includes/ActiveAccount.jsp" /> 
                             </div>
                         </div> 
                     </div>
@@ -93,11 +81,11 @@
                 </div>
             </header>
             <div class="clearfix"></div>
-            <section id="user-charges">
+            <section id="user-charges" ng-controller="userHistory">
                 <div class="container">
                     <div class="content-row">
                         <br><h5>Transaction Log</h5>
-                        <div ng-controller="transactionController" class="css-history">
+                        <div class="css-history">
                             <table my-table="overrideOptions" aa-data="transaction"
                             ao-column-defs="columnDefs" class="dataTable" width="100%"
                                 >
@@ -110,11 +98,21 @@
                                     <th>O.R. number</th>
                                 </tr>
                                 </thead>
+                                <tbody>
+                                    <tr ng-if="lotransactions == 0"><td>User has no transactions!<td></tr>
+                                    <tr ng-repeat="trans in lotransactions">
+                                        <td>{{trans.lo_id}}</td>
+                                        <td>{{trans.u_Id}}</td>
+                                        <td>{{trans.amount}}</td>
+                                        <td>{{trans.dateOfTransaction | date: "MMMM d yyyy"}}</td>
+                                        <td>{{trans.officialReceipt}}</td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </div>
                         <br><br>
                         <h5>History of All Downloads</h5>
-                        <div ng-controller="Ctrl" class="css-history">
+                        <div class="css-history">
                             <table my-table="overrideOptions" aa-data="summaryall"
                             ao-column-defs="columnDefs" class="dataTable" width="100%"
                                 >
@@ -124,7 +122,15 @@
                                     <th>Subject</th>
                                     <th>Date Downloaded</th>
                                 </tr>
-                                </thead>
+                                </thead
+                                <tbody>
+                                    <tr ng-if="userdownloads == 0"><td>User has no downloads!<td></tr>
+                                    <tr ng-repeat="trans in userdownloads">
+                                        <td>{{getLOTitleById(trans.learningObjectId)}}</td>
+                                        <td>{{getLOSubjectById(trans.learningObjectId)}}</td>
+                                        <td>{{trans.dateDownload | date: "MMMM d yyyy"}}</td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </div>
                         
@@ -141,10 +147,13 @@
                 </div>
             </footer>
         </div>
-        <div ng-controller="userController">
+        <div >
             <input type="hidden" id="usertype" value="<% //out.println(isid); %>" />
         </div>
         
+                
+        <jsp:include page="includes/scripts.jsp" /> 
+        <!--
         <script src="bootstrap/js/jquery-1.10.2.min.js"></script>
         <script src="js/jquery-1.9.0.min.js"></script>
     	<script src="js/jquery-ui-1.10.3.custom.min.js"></script>
@@ -162,14 +171,18 @@
     	<script src="js/jquery.stacktable.js"></script>
     	<script src="js/application.js"></script>
         <script src="js/original.js"></script>
-    <!-- data-table -->
+    <!-- data-table
         <script type="text/javascript" language="javascript" src="bootstrap-table/js/jquery.js"></script>
         <script type="text/javascript" language="javascript" src="bootstrap-table/js/jquery.dataTables.js"></script>
-                
-        <script src="scripts/angular.min.js"></script>
-        <script src="scripts/summaryController.js"></script>
-        <script src="scripts/summary-service.js"></script>
-        <script src="scripts/userController.js"></script>
-        <script src="scripts/user-service.js"></script>
+        -->
+
+        <script src="js/angular.js"></script>
+        <script src="site_js/ngStorage.js"></script>
+        <script src="site_js/page/userHistory.js"></script>
+        <script src="site_js/includes/activeAccount.js"></script>
+        <script src="site_js/services/userService.js"></script>
+        <script src="site_js/services/loTransactionService.js"></script>
+        <script src="site_js/services/lo-service.js"></script>
+        <script src="site_js/services/downloadRecordService.js"></script>
     </body>
 </html>

@@ -21,18 +21,18 @@ import org.springframework.data.mongodb.core.query.Update;
  */
 public class DownloadRecordDAO {
     public static List<DownloadRecord> getAllDownloadRecordByUserID(String id) throws UnknownHostException {
-        MongoOperations mongoOps = DatabaseManager.getMongoOpsInstance("database");
+        MongoOperations mongoOps = DatabaseManager.getMongoOpsInstance("downloadRecord");
         return mongoOps.find(query(where("userId").is(id)), DownloadRecord.class);
     }
     
     public static List<DownloadRecord> getAllDownloadRecordByLearningObjectID(String objectID) throws UnknownHostException {
-        MongoOperations mongoOps = DatabaseManager.getMongoOpsInstance("database");
+        MongoOperations mongoOps = DatabaseManager.getMongoOpsInstance("downloadRecord");
         return mongoOps.find(query(where("learningObjectId").is(objectID)), DownloadRecord.class);
     }
     
     public static boolean addDownloadRecord(DownloadRecord record) throws UnknownHostException {
         try {
-            MongoOperations mongoOps = DatabaseManager.getMongoOpsInstance("database");
+            MongoOperations mongoOps = DatabaseManager.getMongoOpsInstance("downloadRecord");
             mongoOps.insert(record);
             return true;         
         } catch (NullPointerException ex) {System.out.println(ex.getMessage()); return false;}
@@ -40,7 +40,7 @@ public class DownloadRecordDAO {
     
     public static boolean editDownloadRecord(DownloadRecord record) throws UnknownHostException {
         try {
-            MongoOperations mongoOps = DatabaseManager.getMongoOpsInstance("database");
+            MongoOperations mongoOps = DatabaseManager.getMongoOpsInstance("downloadRecord");
             Update updateDownloadRecord = new Update();
             updateDownloadRecord.set("id",record.getId());
             updateDownloadRecord.set("userId", record.getUserId());
@@ -54,7 +54,7 @@ public class DownloadRecordDAO {
     
     public static boolean removeDownloadRecord(DownloadRecord record) throws UnknownHostException {
         try {
-            MongoOperations mongoOps = DatabaseManager.getMongoOpsInstance("database");
+            MongoOperations mongoOps = DatabaseManager.getMongoOpsInstance("downloadRecord");
             mongoOps.remove(query(where("id").is(record.getId()).andOperator(where("learningObjectId").is(record.getLearningObjectId()))), DownloadRecord.class);
             return true;         
         } catch (NullPointerException ex) {System.out.println(ex.getMessage()); return false;}
@@ -65,15 +65,9 @@ public class DownloadRecordDAO {
         DownloadRecord dr2 = new DownloadRecord();
         
         dr.setId("1");
-        dr.setLearningObjectId("1LO");
-        dr.setUserId("U1");
+        dr.setLearningObjectId("LO1");
+        dr.setUserId("5614ec1bc73542aa486b7885");
         DownloadRecordDAO.addDownloadRecord(dr);
-        
-        dr2.setId("2");
-        dr2.setLearningObjectId("2LO");
-        dr2.setUserId("U2");
-        DownloadRecordDAO.addDownloadRecord(dr2);
-        DownloadRecordDAO.removeDownloadRecord(dr2);
         
         //JOptionPane.showMessageDialog(null, DownloadRecordDAO.getAllDownloadRecordByLearningObjectID("1LO").toString());
         JOptionPane.showMessageDialog(null, DownloadRecordDAO.getAllDownloadRecordByUserID("U2").toString());
