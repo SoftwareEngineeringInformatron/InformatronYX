@@ -11,7 +11,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
-<html ng-app="User">
+<html ng-app="Settings">
     <head>
         <title>Informatron Plus</title>
         
@@ -29,140 +29,8 @@
         <link rel="stylesheet" type="text/css" href="css/940grid.css" />
         <link rel="stylesheet" type="text/css" href="css/media.css" />
         <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css" />
-    
-    <%   /*
-        String isid = (String) session.getAttribute("icms_id");
-        
-        if(session.getAttribute("USER") == null) 
-                response.sendRedirect("login.action");
-        else if("icms_guest".equals((String)session.getAttribute("USER")))
-            response.sendRedirect("main.action");
-            */
-        
-    %>  
     </head>
-    <body ng-controller="userController">
-    <s:url id='url_main' action='main'/>
-    
-        <!-- ErrorMessage -->
-        <div id="message" class="modal hide fade" tabindex="-1" data-width="760">
-            <div class="modal-center">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <span class="popup">Message</span>
-                </div>
-                <div class="modal-body">
-                    <div class="row-fluid">
-                        <div class="span10 offset1">
-                            <label class="file-action">
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <div class="row-fluid">
-                        <div class="span10 offset1">
-                            <button type="button" data-dismiss="modal" class="btn btn-primary">&nbsp;&nbsp;Ok&nbsp;&nbsp;</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    
-        <!-- Edit Password -->
-        <div id="editPassword" class="modal hide fade" tabindex="-1" data-width="760">
-            <form name="editPass">
-                <div class="modal-center">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <span class="popup">Edit Password</span>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row-fluid">
-                            <div class="span10 offset1">
-                                <label class="file-action">
-                                <br><input type="password" size="20" placeholder="Old Password" required ng-model="password">
-                                <br><input type="password" size="20" placeholder="New Password" required ng-model="newpass">
-                                <br><input type="password" size="20" placeholder="Confirm Password" required ng-model="conpass">
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <div class="row-fluid">
-                            <div class="span10 offset1">
-                                <button ng-disabled="editPass.$invalid" type="button" class="btn btn-primary" onclick="" data-dismiss="modal" ng-click="updatePassword(password, newpass, conpass)"><i class="icon-plus-sign-alt icon-large default"></i> Save Now</button>
-                                <button type="button" data-dismiss="modal" class="btn btn-cancel"></i> Cancel</button>
-                                <input type="hidden" id="selectedIndex" name="index" value="0"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-
-        <!-- Save Action -->
-        <div id="saveAction" class="modal hide fade" tabindex="-1" data-width="760">
-            <form name="saveData">
-                <div class="modal-center">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <span class="popup">Settings</span>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row-fluid">
-                            <div class="span10 offset1">
-                                <label class="file-action">Please input username and password for authentication<br>
-                                <br><input type="text" size="20" placeholder="Username" ng-model="a_username" required>
-                                <br><input type="password" size="20" placeholder="Password" ng-model="a_password" required>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <div class="row-fluid">
-                            <div class="span10 offset1">
-                                <button ng-disabled="saveData.$invalid" type="reset" class="btn btn-primary" ng-click="saveAccount(a_username, a_password)" data-dismiss="modal"><i class="icon-plus-sign-alt icon-large default"></i> Save Now</button>
-                                <button type="button" data-dismiss="modal" class="btn btn-cancel" ng-click="cancelAccount()"></i> Cancel</button>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-        
-        <!-- Save Action1 -->
-        <div id="saveAction1" class="modal hide fade" tabindex="-1" data-width="760">
-            <form name="saveUser">
-                <div class="modal-center">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <span class="popup">Settings</span>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row-fluid">
-                            <div class="span10 offset1">
-                                <label class="file-action">Please input old username and password for authentication<br>
-                                <br><input type="text" size="20" placeholder="Username" ng-model="u_username" required>
-                                <br><input type="password" size="20" placeholder="Password" ng-model="u_password" required>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <div class="row-fluid">
-                            <div class="span10 offset1">
-                                <button ng-disabled="saveUser.$invalid" type="reset" class="btn btn-primary"  data-dismiss="modal" ng-click="saveUsername(u_username, u_password)"><i class="icon-plus-sign-alt icon-large default"></i> Save Now</button>
-                                <button type="button" data-dismiss="modal" class="btn btn-cancel" ng-click="cancelAccount()"></i> Cancel</button>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-
+    <body >
         <div class="wrapIt">
             <header id="header-wrap" >
                 <div class="navbar navbar-inverse">
@@ -170,20 +38,8 @@
                             <div class="span12 header-wrap main">
                                 
                                 <a href="${url_main}" class="brand offset1 header-txt"><i class="icon-download-alt logo"></i> InformatronCMS</a>
-
-                                <div class="account" ng-controller="userController">
-                                    <ul class="nav pull-right">
-                                        <li class="dropdown" id="usermeter">  
-                                            
-                                        </li> 
-                                        <li class="dropdown">
-                                            <a data-toggle="dropdown" class="dropdown-toggle font-up header-txt" href="#"><b class="caret"></b> <span><i class="icon-user"></i></span></a>
-                                            <ul class="dropdown-menu" id="functions" >
-                                                
-                                            </ul>
-                                        </li>                                   
-                                    </ul>
-                                </div>
+                                <jsp:include page="includes/ActiveAccount.jsp" /> 
+                                
                             </div> 
                         </div>
 
@@ -200,35 +56,165 @@
                 </div>
             </header>
             <div class="clearfix"></div>
-            <section id="user-charges">
+            <section id="user-charges" ng-controller="UpdateController">
+                <!-- ErrorMessage -->
+                <div id="error" class="modal  fade" tabindex="-1" data-width="760">
+                    <form name="saveData">
+                        <div class="modal-center">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <span class="popup">Message</span>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row-fluid">
+                                    <div class="row-fluid">
+                                        <div class="span10 offset1">
+                                            <label class="file-action" id="errorMessage">
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <div class="row-fluid">
+                                    <div class="span10 offset1">
+                                        <button type="button" data-dismiss="modal" class="btn btn-primary">&nbsp;&nbsp;Ok&nbsp;&nbsp;</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- Edit Password -->
+                <div id="editPassword" class="modal hide fade" tabindex="-1" data-width="760">
+                    <form name="editPass">
+                        <div class="modal-center">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <span class="popup">Edit Password</span>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row-fluid">
+                                    <div class="span10 offset1">
+                                        <label class="file-action">
+                                        <br><input type="password" size="20" placeholder="Old Password" required ng-model="password">
+                                        <br><input type="password" size="20" placeholder="New Password" required ng-model="newpass">
+                                        <br><input type="password" size="20" placeholder="Confirm Password" required ng-model="conpass">
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <div class="row-fluid">
+                                    <div class="span10 offset1">
+                                        <button ng-disabled="editPass.$invalid" type="button" class="btn btn-primary" data-dismiss="modal" ng-click="changePassword(password, newpass, conpass)"><i class="icon-plus-sign-alt icon-large default"></i> Save Now</button>
+                                        <button type="button" data-dismiss="modal" class="btn btn-cancel"></i> Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Save Action 1-->
+                <div id="saveAction1" class="modal hide fade" tabindex="-1" data-width="760">
+                    <form name="saveData">
+                        <div class="modal-center">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <span class="popup">Settings</span>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row-fluid">
+                                    <div class="span10 offset1">
+                                        <label class="text-info">Number of tries left {{numTries}}</label>
+                                        <label class="file-action">Please input old username and old password for authentication<br>
+                                        <br><input ng-disabled="numTries == 0" type="text" size="20" placeholder="Username" ng-model="a_username" required>
+                                        <br><input ng-disabled="numTries == 0" type="password" size="20" placeholder="Password" ng-model="a_password" required>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <div class="row-fluid">
+                                    <div class="span10 offset1">
+                                        <button ng-click="saveAccount(a_username,a_password)" ng-disabled="numTries == 0" type="submit" class="btn btn-primary" ng-click="saveAccount(a_username, a_password)" data-dismiss="modal"><i class="icon-plus-sign-alt icon-large default"></i> Save Now</button>
+                                        <button type="reset" data-dismiss="modal" class="btn btn-cancel" ng-click="cancelAccount()"></i> Cancel</button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div id="saveAction" class="modal hide fade" tabindex="-1" data-width="760">
+                    <form name="saveData">
+                        <div class="modal-center">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <span class="popup">Settings</span>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row-fluid">
+                                    <div class="span10 offset1">
+                                        <label class="text-info">Number of tries left {{numTries}}</label>
+                                        <label class="file-action">Please input username and password for authentication<br>
+                                        <br><input ng-disabled="numTries == 0" type="text" size="20" placeholder="Username" ng-model="a_username" required>
+                                        <br><input ng-disabled="numTries == 0" type="password" size="20" placeholder="Password" ng-model="a_password" required>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <div class="row-fluid">
+                                    <div class="span10 offset1">
+                                        <button ng-disabled="numTries == 0" type="submit" class="btn btn-primary" ng-click="saveAccount(a_username, a_password)" data-dismiss="modal"><i class="icon-plus-sign-alt icon-large default"></i> Save Now</button>
+                                        <button type="reset" data-dismiss="modal" class="btn btn-cancel" ng-click="cancelAccount()"></i> Cancel</button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
                 <div class="container">
                     <div class="setting span6 offset3">
-                        &nbsp;&nbsp;&nbsp;<h5>{{errorsettings}}</h5>
-                        <div class="account-setting name-setting txt-disabled" ng-repeat="acc in account">
+                        <div class="account-setting name-setting " >
+                            <div class="bg-info">
+                                <p ng-if="errorList.length > 0">Error(s):</p>
+                                <ul >
+                                    <li class="text-error" ng-repeat="error in errorList">{{error}}</li>
+                                </ul>
+                            </div>
                             <form name="accountEdit">
-                                <div class="edit name-setting"><button class="btn btn-index btn-edit" ng-click="editAccount('name-setting')"><i class="icon-edit icon-large default"></i> Edit</button></div>
-                                <div class="input-label">First Name</div>
-                                <div><input type="text" ng-model="acc.fName" size="20" disabled required></div>
-                                <div class="input-label">Last Name</div>
-                                <div><input type="text" ng-model="acc.lName" size="20" disabled required></div>
-                                <div class="input-label">Email Address</div>
-                                <div><input type="text" ng-model="acc.email" size="20" disabled required></div>
-                                <input type="hidden" ng-model="str" value="name-setting">
-
-                                <div class="setting-action offset3">
-                                    <button ng-disabled="accountEdit.$invalid" class="btn btn-approve" href="#saveAction" ng-click="upateAccount(acc.fName, acc.lName, acc.email)">Save</button>
-                                    <button type="button" class="btn btn-cancel btn-edit-cancel" ng-click="cancelAccount()">Cancel</button>
+                                <h4>User Information</h4><hr>
+                                <label for="firstName" class="input-label">First Name</label>
+                                <input type="text" ng-change="change()" ng-model="displayUser.firstName" size="30" required id="firstName">
+                                <p ng-if="firstNameChanged" class="text-warning"><i>Changed</i></p>
+                                
+                                <label for="lastName" class="input-label">Last Name</label>
+                                <input type="text" ng-change="change()" ng-model="displayUser.lastName" size="30" required id="lastName">
+                                <p ng-if="lastNameChanged" class="text-warning"><i>Changed</i></p>
+                                
+                                <label for="emailAddress" class="input-label">Email Address</label>
+                                <div><input type="email" ng-change="change()" ng-model="displayUser.email" size="30" required id="emailAddress"></div>
+                                <p ng-if="emailChanged" class="text-warning"><i>Changed</i></p>
+                                <hr>
+                                <div class="setting-action offset4">
+                                    <button type="submit" ng-disabled="!enableSave()" class="btn btn-approve" href="#saveAction" data-toggle="modal">Save</button>
                                 </div>
                             </form>
                         </div>
-                        <div class="account-setting user-setting txt-disabled" ng-repeat="acc in account">     
+                        <div class="account-setting user-setting" >     
+                            <h4>Login Information</h4><hr>
                             <form name="usernameEdit">
-                                <div class="edit user-setting"><button class="btn btn-index btn-edit" ng-click="editAccount('user-setting')"><i class="icon-edit icon-large default"></i> Edit</button></div>                 
                                 <div class="input-label">Username</div>
-                                <div><input type="text" size="20" ng-model="acc.username" disabled required></div>
+                                <div><input ng-change="change()" type="text" size="20" ng-model="displayUser.username" required>
+                                </div>
                                 <div class=""><button class="btn btn-approve" href="#editPassword" data-toggle="modal"><i class="icon-edit icon-large default" ></i> Edit Password</button></div>
+                                <hr>
                                 <div class="setting-action offset3">
-                                    <button ng-disabled="usernameEdit.$invalid" class="btn btn-approve" href="#saveAction" ng-click="updateUsername(acc.username)">Save</button>
+                                    <button ng-disabled="!enableSave2()" class="btn btn-approve" href="#saveAction1" data-toggle="modal">Save</button>
                                     <button class="btn btn-cancel btn-edit-cancel" ng-click="cancelAccount()">Cancel</button>
                                 </div>
                             </form>
@@ -246,28 +232,14 @@
                 </div>
             </footer>
         </div>
-        <div ng-controller="userController">
-            <input type="hidden" id="usertype" value="<% //out.println(isid); %>" />
-        </div>
         
-        <script src="bootstrap/js/jquery-1.10.2.min.js"></script>
-        <script src="js/jquery-1.9.0.min.js"></script>
-    	<script src="js/jquery-ui-1.10.3.custom.min.js"></script>
-    	<script src="js/jquery.ui.touch-punch.min.js"></script>
-    	<script src="js/bootstrap.min.js"></script>
-    	<script src="js/bootstrap-select.js"></script>
-    	<script src="js/bootstrap-switch.js"></script>
-    	<script src="js/flatui-checkbox.js"></script>
-    	<script src="js/flatui-radio.js"></script>
-    	<script src="js/jquery.tagsinput.js"></script>
-    	<script src="js/jquery.placeholder.js"></script>
-    	<script src="js/jquery.stacktable.js"></script>
-    	<script src="js/application.js"></script>
-        <script src="js/original.js"></script>
+        <jsp:include page="includes/scripts.jsp" /> 
         
         <script src="scripts/angular.min.js"></script>
-        <script src="scripts/userController.js"></script>
-        <script src="scripts/user-service.js"></script>
+        <script src="site_js/ngStorage.js"></script>
+        <script src="site_js/page/settings.js"></script>
+        <script src="site_js/includes/activeAccount.js"></script>
+        <script src="site_js/services/userService.js"></script>
     </body>
 </html>
 

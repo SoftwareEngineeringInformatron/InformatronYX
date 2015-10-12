@@ -94,7 +94,7 @@
                 <div class="container-fluid">
                     <button class="btn btn-primary" id="action-all" data-target="{{action}}Mass" data-toggle="modal">ACTION</button>
                     <div>
-                        <h5><b>{{displayedUsers.length}} <u>Admin</u> users.</b></h5>
+                        <h5><b>{{displayedUsers.length}} <u>Admin</u> user/s.</b></h5>
                     </div>
                 </div>
                 <jsp:include page="includes/superAdminModals.jsp" /> 

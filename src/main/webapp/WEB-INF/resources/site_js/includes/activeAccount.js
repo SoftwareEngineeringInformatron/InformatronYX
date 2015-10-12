@@ -46,6 +46,7 @@ app.controller('AccountController',function($scope,$sessionStorage,userService){
             case 1: $scope.functions = [
                     {url: 'main',str: 'Store'},
                     {url: 'downloads',str: 'My LOs'},
+                    {url: 'setting',str: 'Account Settings'},
                     {url: 'logout',str: 'Sign Out'}
                     ];break; // COMMON
             case 2: $scope.functions = [
@@ -53,13 +54,15 @@ app.controller('AccountController',function($scope,$sessionStorage,userService){
                     {url: 'downloads',str: 'My LOs'},
                     {url: 'admin_meter',str: 'Metering'},
                     {url: 'admin_history',str: 'Metering History'},
+                    {url: 'setting',str: 'Account Settings'},
                     {url: 'logout',str: 'Sign Out'}
                     ];break; // ADMIN METER
             case 3: $scope.functions = [
                     {url: 'main',str: 'Store'},
                     {url: 'downloads',str: 'My LOs'},
                     {url: 'approveadmin',str: 'Admin View'},
-                    {url: 'logout',str: 'Sign Out'},                    
+                    {url: 'setting',str: 'Account Settings'},
+                    {url: 'logout',str: 'Sign Out'}                    
                     ];break; // ADMIN APPROVAL
             case 4: $scope.functions = [
                     {url: 'main',str: 'Store'},
@@ -67,8 +70,8 @@ app.controller('AccountController',function($scope,$sessionStorage,userService){
                     {url: 'super_admin',str: 'Super Admin View'},
                     {url: 'admin_meter',str: 'Metering'},
                     {url: 'admin_history',str: 'Metering History'},
+                    {url: 'setting',str: 'Account Settings'},
                     {url: 'logout',str: 'Sign Out'}
-                    
                     ];break; // SUPER ADMIN
         }
     }
