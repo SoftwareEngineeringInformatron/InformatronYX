@@ -96,6 +96,11 @@ public class IndexController {
     public ModelAndView accessUniversalAddPage() {
         return new ModelAndView("universalAdd");
     }
+    
+    @RequestMapping("/mylos")
+    public ModelAndView accessMyLOs() {
+        return new ModelAndView("MyLOs");
+    }
     // TEST
     @RequestMapping("/credit")
     public ModelAndView accessCreditPage() {
