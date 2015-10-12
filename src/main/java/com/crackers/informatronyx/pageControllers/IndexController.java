@@ -96,11 +96,6 @@ public class IndexController {
     public ModelAndView accessUniversalAddPage() {
         return new ModelAndView("universalAdd");
     }
-    
-    @RequestMapping("/LORI")
-    public ModelAndView LORITestPage() {
-        return new ModelAndView("MagoTestPages/LORI");
-    }
     // TEST
     @RequestMapping("/credit")
     public ModelAndView accessCreditPage() {
@@ -113,6 +108,11 @@ public class IndexController {
     @RequestMapping("/loTransaction")
     public ModelAndView accessLOTransaction() {
         return new ModelAndView("testPages/LOTransaction");
+    }
+    
+    @RequestMapping("/LORI")
+    public ModelAndView LORITestPage() {
+        return new ModelAndView("testPages/LORI");
     }
 }
 

@@ -29,12 +29,12 @@ import static org.springframework.data.mongodb.core.query.Query.query;
 public class LearningObjectDAO {
     
     public static List<LearningObject> getList() throws UnknownHostException {
-       MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"database");
+       MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"learningObject");
         return mongoOps.findAll(LearningObject.class);
     }
     
     public static boolean exists(String id) throws UnknownHostException {
-        MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port), "database");
+        MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port), "learningObject");
         boolean ok = false;
         Query query = new Query();
         query.addCriteria(where("id").is(id));
@@ -43,7 +43,7 @@ public class LearningObjectDAO {
     }
     
     public static List<LearningObject> getMostLikedList() throws UnknownHostException {
-       MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"database");
+       MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"learningObject");
        Query query = new Query();
        //query.with(new Sort(Sort.Direction.DESC, "likes"));
        query.with(new Sort(new Order(Direction.DESC, "likes")));
@@ -51,7 +51,7 @@ public class LearningObjectDAO {
     }
     
     public static List<LearningObject> getMostDownloadedList() throws UnknownHostException {
-       MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"database");
+       MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"learningObject");
        Query query = new Query();
        query.with(new Sort(new Order(Direction.DESC, "downloads")));
        return mongoOps.find(query, LearningObject.class);
@@ -60,7 +60,7 @@ public class LearningObjectDAO {
     //Clears the list then Adds the available LOs
     public static boolean updateList(LearningObject object) throws UnknownHostException {
         try {
-         MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"database");
+         MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"learningObject");
          //Clear LO list
          //Add Available LOs         
          mongoOps.insert(object);
@@ -73,17 +73,17 @@ public class LearningObjectDAO {
     }
     
     public static void addLearningObject(LearningObject object) throws UnknownHostException {
-         MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"database");
+         MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"learningObject");
          mongoOps.insert(object);
     }
     
     public static void addLearningObjects(List<LearningObject> objects) throws UnknownHostException {
-         MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"database");
+         MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"learningObject");
          mongoOps.insert(objects);
     }
     
     public static List<LearningObject> getAllLearningObjectByDateUpload(Date date) throws UnknownHostException {
-        MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"database");
+        MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"learningObject");
         return mongoOps.find(query(where("uploadDate").is(date)), LearningObject.class);
     }
     
