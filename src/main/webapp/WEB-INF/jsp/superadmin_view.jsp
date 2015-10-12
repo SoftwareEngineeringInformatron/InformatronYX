@@ -127,7 +127,7 @@
                             <tr ng-repeat="user in displayedUsers">
                                 <td><input type="checkbox"></td>
                                 <td>{{user.username}}</td>
-                                <td>{{user.lastLogin}}</td>
+                                <td>{{toStringDate(user.lastLogin)}}</td>
                                 <td>{{user.functionType}}</td>
                                 <td>{{user.userType}}</td>
                             </tr>

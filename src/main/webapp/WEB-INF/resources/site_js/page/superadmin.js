@@ -7,16 +7,26 @@
 
 var app = angular.module("SuperAdmin",['ngStorage']);
 app.controller("userController",function($rootScope,$scope,userService){
+    $scope.allUsers = [];
     $scope.displayedUsers = [];
     $scope.confirmPassword = "TEST";
     $scope.errorList = [];
     
-    
+    $scope.toStringDate = function(time){
+        if(time== null)
+            return "";
+        var date = new Date(time);
+        return date.getMonth()+"/"+
+                date.getDate()+"/"+
+                date.getUTCFullYear()+" "+
+                date.getHours()+":"+
+                date.getMinutes()+":"+
+                date.getSeconds();
+    };
     $rootScope.loadAllUsers = function(){
         var allUserPromise = userService.getAllAdminUsers();
         allUserPromise.success(function(response){
-            //$rootScope.allUsers = response;
-            //$scope.displayedUsers = $rootScope.allUsers;
+            $scope.allUsers = response;
             $scope.displayedUsers = response;
         });
         allUserPromise.error(function(response){
@@ -24,11 +34,28 @@ app.controller("userController",function($rootScope,$scope,userService){
             
         });
     };
+    $rootScope.loadBlockedUsers = function(){
+        $scope.displayedUsers = [];
+        userService.getBlockedUsers().success(function(response){
+            for(var i=0;i<response.length;i++)
+                if(response[i].userType == "Admin" || response[i].userType == "Super Admin")
+                    $scope.displayedUsers.push(response[i]);
+        });
+    };
+    $rootScope.loadInactiveUsers = function(){
+        $scope.displayedUsers = [];
+        userService.getInactiveUsers().success(function(response){
+            for(var i=0;i<response.length;i++)
+                if(response[i].userType == "Admin" || response[i].userType == "Super Admin")
+                    $scope.displayedUsers.push(response[i]);
+        });
+    };
+    
     // INITIALIZE
     $rootScope.loadAllUsers();
 });
 
-app.controller("navBarController",function($scope){
+app.controller("navBarController",function($scope,$rootScope){
     
     $scope.setActive = function(selector){
       $("#display_account").children().removeClass("active");
@@ -36,14 +63,17 @@ app.controller("navBarController",function($scope){
     };
     
     $scope.loadAll = function(){
+        $rootScope.loadAllUsers();
         $scope.setActive("all");
         
     };
     $scope.loadInactive = function(){
+        $rootScope.loadInactiveUsers();
         $scope.setActive("inactive");
         
     };
     $scope.loadBlocked = function(){
+        $rootScope.loadBlockedUsers();
         $scope.setActive("blocked");
         
     };

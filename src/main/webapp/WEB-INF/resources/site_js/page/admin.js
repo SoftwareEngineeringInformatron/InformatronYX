@@ -39,7 +39,8 @@ app.controller("adminAccountManagementController",function($scope,$rootScope,use
         $scope.enableButton = count <= 0;
     }
     $rootScope.allAccounts = function (){
-        userService.getAllUsers().success(function(response){
+        userService.getAllCommonUsers().success(function(response){
+        //userService.getAllUsers().success(function(response){
             $rootScope.selectedUsers = [];
             $scope.allUsers = response;
             $rootScope.displayedUsers = response;
@@ -60,19 +61,29 @@ app.controller("adminAccountManagementController",function($scope,$rootScope,use
     $rootScope.blockedAccounts = function (){
         userService.getBlockedUsers().success(function(response){
             $rootScope.selectedUsers = [];
-            $rootScope.displayedUsers = response;
+            $rootScope.displayedUsers = [];
+            //$rootScope.displayedUsers = response;
             $scope.buttonAction = '#'+$rootScope.actions[3];
-            for(var i=0;i<response.length;i++)
-                $rootScope.selectedUsers.push(false);
+            for(var i=0;i<response.length;i++){
+                    if(response[i].userType == "Common"){
+                        $rootScope.displayedUsers.push(response[i]);
+                        $rootScope.selectedUsers.push(false);
+                     }
+            }
         });
     };
     $rootScope.inactiveAccounts = function (){
         userService.getInactiveUsers().success(function(response){
             $rootScope.selectedUsers = [];
-            $rootScope.displayedUsers = response;
+            $rootScope.displayedUsers = [];
+            //$rootScope.displayedUsers = response;
             $scope.buttonAction = '#'+$rootScope.actions[2];
-            for(var i=0;i<response.length;i++)
-                $rootScope.selectedUsers.push(false);
+            for(var i=0;i<response.length;i++){
+                if(response[i].userType == "Common"){
+                   $rootScope.displayedUsers.push(response[i]);
+                   $rootScope.selectedUsers.push(false);
+                }
+            }
         });
     };
     $rootScope.allAccounts();
