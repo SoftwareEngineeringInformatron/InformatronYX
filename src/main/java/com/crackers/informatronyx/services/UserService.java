@@ -148,8 +148,8 @@ public class UserService {
         }
         return dto;
     }
-    public UserDto demote(String id) throws UnknownHostException, Exception{
-        User model = UserDAO.getUser(id);
+    public UserDto demote(UserDto user) throws UnknownHostException, Exception{
+        User model = UserDAO.getUser(user.getId());
         if(model== null)
             throw new Exception("User does not exist. ");
         else
@@ -158,6 +158,8 @@ public class UserService {
                 throw new Exception("User cannot be demoted anymore.");
             else
             {
+                model.setFunctionType(user.getFunctionType());
+                model = determineUserType(model);
                 switch(model.getUserType()){
                     case User.USERTYPE_ADMIN : model.setUserType(User.USERTYPE_COMMON);break;
                 }

@@ -122,7 +122,7 @@ public class UserController {
         boolean ok = false;
         UserService service = new UserService();
         try {
-            ok  = service.demote(user.getId())!=null;
+            ok  = service.demote(user)!=null;
         } catch (UnknownHostException ex) {
             Logger.getLogger(UserController.class.getName()).log(Level.CONFIG, "MongoDB is not connected");
         } catch (Exception ex) {
