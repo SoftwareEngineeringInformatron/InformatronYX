@@ -78,8 +78,8 @@
                         </div>
                     </div>
 
-                </div>
             </header>
+                </div>
             <div class="clearfix"></div>
             <section id="user-charges" ng-controller="userHistory">
                 <div class="container">
@@ -146,7 +146,6 @@
                     </div>
                 </div>
             </footer>
-        </div>
         <div >
             <input type="hidden" id="usertype" value="<% //out.println(isid); %>" />
         </div>
