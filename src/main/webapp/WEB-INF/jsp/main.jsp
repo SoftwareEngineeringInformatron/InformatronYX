@@ -35,7 +35,9 @@
         <link href="bootstrap-formhelpers/docs/css/bootstrap-responsive.css" rel="stylesheet" />
         <link href="bootstrap-formhelpers/css/bootstrap-formhelpers.css" rel="stylesheet" />
     </head>
+    
     <body>
+        <div ng-controller="LOController">
         <header id="header-wrap" >
                 <div class="navbar navbar-inverse">
                         <div class="row-fluid">
@@ -61,7 +63,7 @@
                                 <div class="nav-collapse collapse">
                                     <ul class="nav ul-search">
                                         <li class="not-anchor">SEARCH OPTIONS</li>
-                                        <li><a href="#" class="active" ng-click="callAllLO()" >All</a></li> 
+                                        <li><a ng-href="#" class="active" ng-click="callAllLO()" >All</a></li> 
                                         <li><a href="#" ng-click="callAllMostDownloaded()">Most Downloaded</a></li>
                                         <li><a href="#" ng-click="callAllMostLiked()">Most Liked</a></li>
                                         <li><a href="#" ng-click="callLoriTopLOs()">LORI's Top LOs</a></li>    
@@ -84,6 +86,7 @@
                                 
                 </div>
         </header>
+        
         <div id="message" class="modal hide fade" tabindex="-1" data-width="760">
             <div class="modal-center">
                 <div class="modal-header">
@@ -141,25 +144,24 @@
                     <div class="row-fluid">
                         <div class="">
                             <div class="few-details">
-                                <h5>LO Title:</h5> <h5 ng-model="title">{{title}}</h5>
-                                <h5>LO ID:</h5> <p ng-model="id">{{id}}</p>
-                                <h5>LO Description:</h5> <p ng-model="description">{{description}}</p>
-                                <h5>LO Price:</h5> <p ng-model="price">{{price}}</p>                                
-                            </div>
-                            
+                                <h5>LO Title:</h5> <p ng-model="lotitle">{{lotitle}}</p>
+                                <h5>LO ID:</h5> <p ng-model="loid">{{loid}}</p>
+                                <h5>LO Description:</h5> <p ng-model="lodescription">{{lodescription}}</p>
+                                <h5>LO Price:</h5> <p ng-model="loprice">{{loprice}}</p>                                
+                            </div>                            
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <div class="row-fluid">
                         <div class="span10 offset1">
-                            <button type="button" data-dismiss="modal" class="btn btn-primary">&nbsp;&nbsp;Ok&nbsp;&nbsp;</button>
+                            <button type="button" data-dismiss="modal" class="btn btn-primary" href="download">&nbsp;&nbsp;Ok&nbsp;&nbsp;</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
+        </div>
         <div class="wrapIt">
             <!--
                 TODO:
@@ -328,8 +330,8 @@
                 </div>
             </section>
             
-            <div class="clearfix" ng-controller="loController"></div><!-- Gi balhin nako ngari ang controller kay mag conflict sila sa AccountController-->
-            <section id="learning-objects">
+            <div class="clearfix"></div><!-- Gi balhin nako ngari ang controller kay mag conflict sila sa AccountController-->
+            <section id="learning-objects" ng-controller="LOcontroller">
                 <div class="content-row">
                     <table class="table table-hover user">
                         <thead>
@@ -350,14 +352,12 @@
                                     </div>
                                 </td>
                                 <td>{{lo.subject}}</td>
-                                <td>{{lo.dateUpload}}</td>
+                                <td>{{lo.uploadDate}}</td>
                                 <td><a href="#evaluation" class="" data-toggle="modal" ng-click="lori(lo.id)"><img class="lori" src="img/logo2-3.png"></a></td>
                                 <%// if(isession != "icms_guest") { %>
                                 <td>
                                     <s:form action="purchase-lo">
-                                        <s:hidden name="filename" value="{{lo.filepath}}" />
-                                        <s:hidden name="id" value="{{lo.id}}" />
-                                        <button title="Purchase" class="btn-download" data-toggle="modal" data-target="#purchase" ng-click="ModalInstance(lo.price, lo.title, lo.description, lo.id)"><i class="icon-download-alt btn-index"></i> &nbsp;</button>
+                                        <button title="Purchase" class="btn-download" data-toggle="modal" data-target="#purchase" ng-click="ModalInstance(lo)"><i class="icon-download-alt btn-index"></i> &nbsp;</button>
                                     </s:form>
                                 </td>
                                 
@@ -388,7 +388,6 @@
         <script src="site_js/page/main.js"></script>
         <script src="site_js/services/userService.js"></script>
         <script src="site_js/includes/activeAccount.js"></script>
-        <script src="scripts/loController.js"></script>
         <script src="site_js/services/lo-service.js"></script>
         <!-- datepicker plugin -->
         <!--

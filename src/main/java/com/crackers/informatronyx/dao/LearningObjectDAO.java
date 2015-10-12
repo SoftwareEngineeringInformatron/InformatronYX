@@ -102,6 +102,8 @@ public class LearningObjectDAO {
         lo.setPrice(69.00f);
         lo.setDescription("We Nihingooooooo!");
         lo.setId("LO1");
+        lo.setSubject("Japanese");
+        lo.setUploadDate("12/11/2015");
         System.out.println(lo.getPrice());
         LearningObjectDAO.addLearningObject(lo);
         
@@ -111,6 +113,8 @@ public class LearningObjectDAO {
         lo2.setPrice(1.50f);
         lo2.setDescription("Cagot dribbles the ball.. WITH HIS HEAD!");
         lo2.setId("LO2");
+        lo2.setSubject("Meikz City");
+        lo2.setUploadDate("09/11/2000");
         LearningObjectDAO.addLearningObject(lo2);
         
         lo3.setLikes(9);
@@ -124,6 +128,7 @@ public class LearningObjectDAO {
         lo4.setLikes(50);
         lo4.setDownloads(73);
         lo4.setTitle("walksPerSecond");
+        lo4.setId("LO4");
         LearningObjectDAO.addLearningObject(lo4);
         
         //JOptionPane.showMessageDialog(null, LearningObjectDAO.getMostLikedList().toString());
