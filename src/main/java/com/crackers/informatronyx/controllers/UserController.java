@@ -234,7 +234,6 @@ public class UserController {
                 UserDto user = all.get(i);
                 if(user.getLastLogin()!=null){
                     long difference = today.getTime() - user.getLastLogin().getTime();
-                    Date view = new Date(difference);
                     if(difference >= userInactiveThreshold)
                         inactiveUsers.add(user);
                 }else
@@ -244,5 +243,11 @@ public class UserController {
             Logger.getLogger(UserController.class.getName()).log(Level.CONFIG, "MongoDB is not connected");
         }
         return inactiveUsers;
+    }
+    
+    @RequestMapping("/exists")
+    public boolean exists(@RequestBody UserDto user){
+        UserService service = new UserService();
+        return service.exists(user.getUsername());
     }
 }

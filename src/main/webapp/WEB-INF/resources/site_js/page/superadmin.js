@@ -6,18 +6,14 @@
 
 
 var app = angular.module("SuperAdmin",['ngStorage']);
-app.controller("userController",function($scope,userService){
-    $scope.allUsers = [];
+app.controller("userController",function($rootScope,$scope,userService){
     $scope.displayedUsers = [];
     $scope.confirmPassword = "TEST";
     $scope.errorList = [];
     
-    $scope.userInfo = {
-        
-        
-    };
-    $scope.loadAllUsers = function(){
-        var allUserPromise = userService.getAllUsers();
+    
+    $rootScope.loadAllUsers = function(){
+        var allUserPromise = userService.getAllAdminUsers();
         allUserPromise.success(function(response){
             //$rootScope.allUsers = response;
             //$scope.displayedUsers = $rootScope.allUsers;
@@ -28,20 +24,8 @@ app.controller("userController",function($scope,userService){
             
         });
     };
-    $scope.addUser = function( ){
-        $scope.errorList = [];
-        $scope.checkUserInfo();
-        if($scope.errorList==0){
-            alert();
-            
-        }
-    };
-    // Filter
-    $scope.checkUserInfo = function(){
-        
-    };
     // INITIALIZE
-    $scope.loadAllUsers();
+    $rootScope.loadAllUsers();
 });
 
 app.controller("navBarController",function($scope){
@@ -61,6 +45,43 @@ app.controller("navBarController",function($scope){
     };
     $scope.loadBlocked = function(){
         $scope.setActive("blocked");
+        
+    };
+});
+
+app.controller("modalController",function($scope,$rootScope,userService){
+    $scope.userInfo = {
+        firstName:'',
+        lastName:'',
+        functionType:0,
+        username:'',
+        password:''
+    };
+    $scope.confirmPassword = '',
+    $scope.errorList = [];
+    $scope.addUser = function( ){
+        $scope.errorList = [];
+        $scope.checkUserInfo();
+        if($scope.errorList==0){
+            var addPromise = userService.signup($scope.userInfo);
+                addPromise.success(function(response){
+                    $rootScope.loadAllUsers();
+                    $('#addAccount').toggle();
+                });
+                addPromise.error(function(response){
+                   alert("Sorry an error has occurred upon adding a new user.");
+                });
+        }
+    };
+    // Filter
+    $scope.checkUserInfo = function(){
+        userService.exists($scope.userInfo).success(function(response){
+            if(response == 'true')
+                $scope.errorList.push("Username exists.");
+        });
+        
+        if($scope.userInfo.password!=$scope.confirmPassword)
+            $scope.errorList.push("Password and Confirm Password does not match.");
         
     };
 });

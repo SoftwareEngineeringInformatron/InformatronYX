@@ -66,6 +66,12 @@ app.factory('userService', function($http) {
         get: function(data){
             var url = "/InformatronYX/informatron/user/get";
             return $http.post(url,data);
+        },
+        exists: function(data){
+            var url = "/InformatronYX/informatron/user/exists";
+            return $http.post(url,data);
         }
+        
+        
     };    
 });

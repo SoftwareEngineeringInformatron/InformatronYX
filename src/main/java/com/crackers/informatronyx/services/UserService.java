@@ -59,11 +59,29 @@ public class UserService {
             model.setFirstName(user.getFirstName());
             model.setLastName(user.getLastName());
             model.setEmail(user.getEmail());
+            model.setFunctionType(user.getFunctionType());
+            model = determineUserType(model);
+            if(model.getUserType().equals(User.USERTYPE_ADMIN) || model.getUserType().equals(User.USERTYPE_SUPERADMIN))
+                model.setApproved(true);
             UserDAO.addUser(model);
             ok = true;
         }
         return ok;
     }
+    
+    private User determineUserType(User model){
+        if(model.getFunctionType() == User.FUNCTION_ADMIN_APPROVAL || model.getFunctionType() == User.FUNCTION_ADMIN_METERING )
+                model.setUserType(User.USERTYPE_ADMIN);
+            else if(model.getFunctionType() == User.FUNCTION_SUPERADMIN)
+                model.setUserType(User.USERTYPE_SUPERADMIN);
+            else if(model.getFunctionType() == User.FUNCTION_COMMON)
+                model.setUserType(User.USERTYPE_COMMON);
+            else
+                model.setUserType(User.USERTYPE_GUEST);
+        return model;
+    }
+    
+    
     public boolean edit(UserDto user) throws UnknownHostException, Exception{
         boolean ok = false;
         User model = UserDAO.getUser(user.getId());
@@ -118,16 +136,12 @@ public class UserService {
             else
             {
                 model.setFunctionType(user.getFunctionType());
-                switch(model.getUserType()){
-                    case User.USERTYPE_COMMON : model.setUserType(User.USERTYPE_ADMIN);break;
-                    case User.USERTYPE_ADMIN : model.setUserType(User.USERTYPE_SUPERADMIN);break;
-                }
+                model = determineUserType(model);
                 if(!UserDAO.editUser(model))
                     model = null;
             }
         }
         UserDto dto = null;
-        
         if(model!=null){
             dto = new UserDto();
             dto.setData(model);
@@ -170,7 +184,9 @@ public class UserService {
         return modelsToDto(UserDAO.getAllUsers());
     }
     public List<UserDto> getAllAdmin() throws UnknownHostException{
-        return modelsToDto(UserDAO.getAllUserOfType(User.USERTYPE_ADMIN));
+        List<UserDto> admins = modelsToDto(UserDAO.getAllUserOfType(User.USERTYPE_ADMIN));
+        admins.addAll(modelsToDto(UserDAO.getAllUserOfType(User.USERTYPE_SUPERADMIN)));
+        return admins;
     }
     public List<UserDto> getAllCommonUsers() throws UnknownHostException{
         return modelsToDto(UserDAO.getAllUserOfType(User.USERTYPE_COMMON));
@@ -203,6 +219,14 @@ public class UserService {
             users.add(user);
         }
         return users;
+    }
+
+    public boolean exists(String username) {
+        try{
+            return UserDAO.exists(username);
+        }catch(Exception e){
+            return false;
+        }
     }
     
 }

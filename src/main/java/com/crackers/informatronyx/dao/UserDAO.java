@@ -11,6 +11,7 @@ import com.crackers.informatronyx.models.User;
 import com.mongodb.Mongo;
 import java.net.UnknownHostException;
 import java.util.List;
+import org.springframework.data.domain.Sort;
 
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -88,7 +89,13 @@ public class UserDAO {
         query.addCriteria(where("username").is(username).andOperator(where("password").is(password)));
         return DatabaseManager.getMongoOpsInstance("database").findOne(query, User.class);
     }
-    public static List<User> getAllUserOfType(String type){return null;}
+    public static List<User> getAllUserOfType(String type) throws UnknownHostException{
+        Query query = new Query();
+        Sort sort = new Sort(Sort.Direction.ASC,"functionType","username");
+        query.addCriteria(where("userType").is(type)).with(sort);
+        return DatabaseManager.getMongoOpsInstance("database"). find(query, User.class);
+    
+    }
 
     public static List<User> getAllUsers() throws UnknownHostException {
         return DatabaseManager.getMongoOpsInstance("database").findAll(User.class);
