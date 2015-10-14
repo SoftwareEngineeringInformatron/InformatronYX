@@ -7,6 +7,14 @@
 
 //angular.module("Account",["ngStorage"]).
 app.controller('AccountController',function($scope,$sessionStorage,userService){
+        
+    var eligibilityChecker = [
+        {type:['home','main']},
+        {type:['main','downloads','mylos','setting','logout']},
+        {type:['main','downloads','mylos','setting','logout']},
+        {type:['main','downloads','mylos','approveadmin','setting','logout']},
+        {type:['main','downloads','mylos','super_admin','admin_meter','admin_history','setting','logout']},
+    ];
     
     $scope.userInfo = {
         functionType : 0
@@ -34,8 +42,26 @@ app.controller('AccountController',function($scope,$sessionStorage,userService){
         if($sessionStorage.user!=null){
             $scope.userInfo = $sessionStorage.user;
         }
-        // REDIRECT IF NULL
+        checkEligibility($sessionStorage.user.functionType);
     }
+    
+    function checkEligibility(functionType) {
+        if(functionType == undefined)
+            functionType = 0;
+        var currentURL = window.location.toString().split('/store/')[1];
+        var userFunction = eligibilityChecker[functionType].type;
+        var flag = 0;
+        alert(functionType);
+        for(var i=0; i < userFunction.length; i++) {
+            if(userFunction[i] == currentURL) {
+                flag = 1;
+                break;
+            }
+        }
+        if(flag == 0)
+            window.location.href = "main";
+    }
+    
     function loadFunctions(){
         switch($scope.userInfo.functionType)
         {
@@ -46,12 +72,14 @@ app.controller('AccountController',function($scope,$sessionStorage,userService){
             case 1: $scope.functions = [
                     {url: 'main',str: 'Store'},
                     {url: 'downloads',str: 'My LOs'},
+                    {url: 'mylos',str:'My collection'},
                     {url: 'setting',str: 'Account Settings'},
                     {url: 'logout',str: 'Sign Out'}
                     ];break; // COMMON
             case 2: $scope.functions = [
                     {url: 'main',str: 'Store'},
                     {url: 'downloads',str: 'My LOs'},
+                    {url: 'mylos',str:'My collection'},
                     {url: 'admin_meter',str: 'Metering'},
                     {url: 'admin_history',str: 'Metering History'},
                     {url: 'setting',str: 'Account Settings'},
@@ -60,6 +88,7 @@ app.controller('AccountController',function($scope,$sessionStorage,userService){
             case 3: $scope.functions = [
                     {url: 'main',str: 'Store'},
                     {url: 'downloads',str: 'My LOs'},
+                    {url: 'mylos',str:'My collection'},
                     {url: 'approveadmin',str: 'Admin View'},
                     {url: 'setting',str: 'Account Settings'},
                     {url: 'logout',str: 'Sign Out'}                    
@@ -67,6 +96,7 @@ app.controller('AccountController',function($scope,$sessionStorage,userService){
             case 4: $scope.functions = [
                     {url: 'main',str: 'Store'},
                     {url: 'downloads',str: 'My LOs'},
+                    {url: 'mylos',str:'My collection'},
                     {url: 'super_admin',str: 'Super Admin View'},
                     {url: 'admin_meter',str: 'Metering'},
                     {url: 'admin_history',str: 'Metering History'},
