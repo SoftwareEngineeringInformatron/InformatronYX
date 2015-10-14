@@ -18,7 +18,7 @@ public class LearningObject {
     private int downloads;
     private String uploadDate;
     private int likes;
-    private List<LearningElement> sequence;
+    private List<LearningElement[]> sequence;
     private float price;
 
     public void setId(String id) {
@@ -49,7 +49,7 @@ public class LearningObject {
         this.likes = likes;
     }
 
-    public void setSequence(List<LearningElement> sequence) {
+    public void setSequence(List<LearningElement[]> sequence) {
         this.sequence = sequence;
     }
 
@@ -85,7 +85,7 @@ public class LearningObject {
         return likes;
     }
 
-    public List<LearningElement> getSequence() {
+    public List<LearningElement[]> getSequence() {
         return sequence;
     }
 
@@ -93,7 +93,16 @@ public class LearningObject {
         return price;
     }
 
-    public LearningObject() {
+    public LearningElement getLearningElement(String le){
+        boolean ok = false;
+        for(LearningElement[] elements: this.sequence)
+            for(LearningElement element: elements)
+                if(element.getId().equals(le))
+                {
+                    return element;
+                    
+                }
+        return null;
     }
     
     @Override

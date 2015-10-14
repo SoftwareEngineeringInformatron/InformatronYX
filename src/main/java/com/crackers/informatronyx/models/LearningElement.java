@@ -15,6 +15,7 @@ public class LearningElement {
     String Id;
     String title;
     String type;
+    String fileExtension;
     String description;
     Date dateCreated;
 
@@ -58,5 +59,13 @@ public class LearningElement {
 
     public void setDateCreated(Date dateCreated) {
         this.dateCreated = dateCreated;
+    }
+
+    public String getFileExtension() {
+        return fileExtension;
+    }
+
+    public void setFileExtension(String fileExtension) {
+        this.fileExtension = fileExtension;
     }
 }

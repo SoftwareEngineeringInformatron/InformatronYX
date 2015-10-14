@@ -7,14 +7,6 @@
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
-   <filter>
-	<filter-name>CORSFilter</filter-name>
-	<filter-class>com.crackers.infomtronyx.config.SimpleCORSFilter</filter-class>
-    </filter>
-    <filter-mapping>
-    	<filter-name>CORSFilter</filter-name>
-	<url-pattern>/informatron/*</url-pattern>
-    </filter-mapping>
 
     <servlet>
         <servlet-name>page</servlet-name>

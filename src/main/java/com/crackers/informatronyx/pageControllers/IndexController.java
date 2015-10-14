@@ -5,8 +5,6 @@
  */
 package com.crackers.informatronyx.pageControllers;
 
-import com.crackers.informatronyx.models.Quiz;
-import com.crackers.informatronyx.models.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,10 +20,7 @@ public class IndexController {
     public ModelAndView accessIndex() {
         return new ModelAndView("index");
     }  
-    @RequestMapping("/test")
-    public ModelAndView accessTestPage() {
-        return new ModelAndView("test");
-    }
+    
     @RequestMapping("/testdownloadrecord")
     public ModelAndView accessTestDownloadRecordPage() {
         return new ModelAndView("testdownloadrecord");
@@ -118,6 +113,11 @@ public class IndexController {
     @RequestMapping("/LORI")
     public ModelAndView LORITestPage() {
         return new ModelAndView("testPages/LORI");
+    }
+    
+    @RequestMapping("/testDownload")
+    public ModelAndView testDownloadPage(){
+        return new ModelAndView("testPages/testDownload");
     }
 }
 

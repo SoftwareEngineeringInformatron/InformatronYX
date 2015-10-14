@@ -76,8 +76,31 @@ public class LearningObjectController {
         LearningElement le = new LearningElement();
         le.setTitle("Titulo");
         le.setId("123");
-        dto.setSequence(new ArrayList<LearningElement>());
-        dto.getSequence().add(le);
+        dto.setSequence(new ArrayList<LearningElement[]>());
+        // FIST PAGE
+        LearningElement[] elements = new LearningElement[2];
+        elements[0] = new LearningElement();
+        elements[0].setTitle("Element 1");
+        elements[0].setId("el1");
+        elements[0].setType(".txt");
+        elements[1] = new LearningElement();
+        elements[1].setTitle("Element 2");
+        elements[1].setId("el2");
+        elements[1].setType("mp3");
+        
+        // SECOND PAGE
+        LearningElement[] elements2 = new LearningElement[2];
+        elements2[0] = new LearningElement();
+        elements2[0].setTitle("Element 3");
+        elements2[0].setId("el3");
+        elements2[0].setFileExtension(".mp4");
+        elements2[1] = new LearningElement();
+        elements2[1].setTitle("Element 4");
+        elements2[1].setId("el4");
+        elements2[1].setFileExtension(".pptx");
+        
+        dto.getSequence().add(elements); // ADD PAGE 1
+        dto.getSequence().add(elements2);// ADD PAGE 2
         return dto;
     }
     

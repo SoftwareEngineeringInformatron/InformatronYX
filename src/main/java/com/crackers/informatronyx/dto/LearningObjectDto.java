@@ -21,7 +21,7 @@ public class LearningObjectDto {
     private int downloads;
     private String uploadDate;
     private int likes;
-    private List<LearningElement> sequence;
+    private List<LearningElement[]> sequence;
     private float price;
     List<String> errorList;
     
@@ -85,11 +85,11 @@ public class LearningObjectDto {
         this.likes = likes;
     }
 
-    public List<LearningElement> getSequence() {
+    public List<LearningElement[]> getSequence() {
         return sequence;
     }
 
-    public void setSequence(List<LearningElement> sequence) {
+    public void setSequence(List<LearningElement[]> sequence) {
         this.sequence = sequence;
     }
 

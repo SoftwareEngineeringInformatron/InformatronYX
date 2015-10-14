@@ -23,5 +23,6 @@ public class AppConfig {
     public static int mongodb_port = 27017;
     public static String DATABASE_TRANSACTION = "transaction";
     public static String DATABASE_USER = "user";
+    public static String LOOP_DOWNLOAD_LE = "http://localhost:8080/InformatronYX/store/site_js/page/admin.js";
 
 }
