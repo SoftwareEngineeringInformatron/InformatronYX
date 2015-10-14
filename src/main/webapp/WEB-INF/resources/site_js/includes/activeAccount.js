@@ -51,7 +51,6 @@ app.controller('AccountController',function($scope,$sessionStorage,userService){
         var currentURL = window.location.toString().split('/store/')[1];
         var userFunction = eligibilityChecker[functionType].type;
         var flag = 0;
-        alert(functionType);
         for(var i=0; i < userFunction.length; i++) {
             if(userFunction[i] == currentURL) {
                 flag = 1;
