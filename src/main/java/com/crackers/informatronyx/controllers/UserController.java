@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -26,9 +27,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+    @Autowired UserService service;
     @RequestMapping("/get")
     public UserDto getUser(@RequestBody UserDto user) throws UnknownHostException{
-        UserService service = new UserService();
+        
         user = service.getUserInfo(user);
         return user;
     }
@@ -38,7 +40,7 @@ public class UserController {
     public UserDto signup(@RequestBody UserDto user) throws UnknownHostException
     {
         try{
-        UserService service = new UserService();
+        
         boolean ok = service.register(user);
         if(ok==false)
             user.getErrorList().add("Registration unsucessful.");
@@ -51,7 +53,7 @@ public class UserController {
     public UserDto login(@RequestBody UserDto user) throws UnknownHostException
     {
         try{
-        UserService service = new UserService();
+        
         UserDto result = service.login(user);
         if(!result.isApproved()){
             user.getErrorList().add("User account is not yet approved by admin.");
@@ -92,7 +94,7 @@ public class UserController {
     @RequestMapping("/approve")
     public boolean approve(@RequestBody UserDto user){
         boolean ok = false;
-        UserService service = new UserService();
+        
         try {
             ok  = service.appoveUserRegistration(user);
         } catch (UnknownHostException ex) {
@@ -106,7 +108,7 @@ public class UserController {
     @RequestMapping("/promote")
     public boolean promote(@RequestBody UserDto user){
         boolean ok = false;
-        UserService service = new UserService();
+        
         try {
             ok  = service.promote(user)!=null;
         } catch (UnknownHostException ex) {
@@ -120,7 +122,7 @@ public class UserController {
     @RequestMapping("/demote")
     public boolean demote(@RequestBody UserDto user){
         boolean ok = false;
-        UserService service = new UserService();
+        
         try {
             ok  = service.demote(user)!=null;
         } catch (UnknownHostException ex) {
@@ -134,7 +136,7 @@ public class UserController {
     @RequestMapping("/block")
     public boolean block(@RequestBody UserDto user){
         boolean ok = false;
-        UserService service = new UserService();
+        
         try {
             ok  = service.block(user);
         } catch (UnknownHostException ex) {
@@ -148,7 +150,7 @@ public class UserController {
     @RequestMapping("/unblock")
     public boolean unblock(@RequestBody UserDto user){
         boolean ok = false;
-        UserService service = new UserService();
+        
         try {
             ok  = service.unblock(user);
         } catch (UnknownHostException ex) {
@@ -162,7 +164,7 @@ public class UserController {
     @RequestMapping("/admins")
     public List<UserDto> admins(){
         List<UserDto> admins = new ArrayList<>();
-        UserService service = new UserService();
+        
         try {
             admins = service.getAllAdmin();
         } catch (UnknownHostException ex) {
@@ -174,7 +176,7 @@ public class UserController {
     @RequestMapping("/commonUsers")
     public List<UserDto> commonUsers(){
         List<UserDto> commonUsers = new ArrayList<>();
-        UserService service = new UserService();
+        
         try {
             commonUsers = service.getAllCommonUsers();
         } catch (UnknownHostException ex) {
@@ -185,7 +187,7 @@ public class UserController {
     @RequestMapping("/pendingUsers")
     public List<UserDto> pendingUsers(UserDto user){
         List<UserDto> commonUsers = new ArrayList<>();
-        UserService service = new UserService();
+        
         try {
             commonUsers = service.getAllPendingUsers();
         } catch (UnknownHostException ex) {
@@ -196,7 +198,7 @@ public class UserController {
     @RequestMapping("/allUsers")
     public List<UserDto> allUsers(){
         List<UserDto> commonUsers = new ArrayList<>();
-        UserService service = new UserService();
+        
         try {
             commonUsers = service.getAllUsers();
         } catch (UnknownHostException ex) {
@@ -208,7 +210,7 @@ public class UserController {
     @RequestMapping("/blocked")
     public List<UserDto> blockedUsers(){
         List<UserDto> blockedUsers = new ArrayList<>();
-        UserService service = new UserService();
+        
         try {
             List<UserDto> all = service.getAllUsers();
             for(int i=0;i<all.size();i++){
@@ -225,7 +227,7 @@ public class UserController {
     @RequestMapping("/inactive")
     public List<UserDto> inactiveUsers(){
         List<UserDto> inactiveUsers = new ArrayList<>();
-        UserService service = new UserService();
+        
         try {
             List<UserDto> all = service.getAllUsers();
             Date today = new Date();
@@ -247,7 +249,7 @@ public class UserController {
     
     @RequestMapping("/exists")
     public boolean exists(@RequestBody UserDto user){
-        UserService service = new UserService();
+        
         return service.exists(user.getUsername());
     }
 }

@@ -5,9 +5,16 @@
  */
 package com.crackers.informatronyx.config;
 
+import com.mongodb.Mongo;
+import com.mongodb.MongoClientOptions;
+import com.mongodb.MongoClientOptions.Builder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.mongodb.core.MongoClientFactoryBean;
 import org.springframework.data.mongodb.core.MongoFactoryBean;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 /**
  *
@@ -24,5 +31,28 @@ public class AppConfig {
     public static String DATABASE_TRANSACTION = "transaction";
     public static String DATABASE_USER = "user";
     public static String LOOP_DOWNLOAD_LE = "http://localhost:8080/InformatronYX/store/site_js/page/admin.js";
-
+    
+    
+    // MONGODB CONFIGURATION
+    public static int connectionsPerHost = 40;
+    public static int connectionTimeOut = 1000;
+    @Bean
+    public Mongo mongo() throws Exception{
+             MongoClientFactoryBean b = new MongoClientFactoryBean();
+             b.setSingleton(false);
+             b.setHost(AppConfig.mongodb_host);
+             b.setPort(AppConfig.mongodb_port);
+             Builder builder = MongoClientOptions.builder();
+             builder.connectionsPerHost(AppConfig.connectionsPerHost);
+             builder.connectTimeout(AppConfig.connectionTimeOut);
+             b.setMongoClientOptions(builder.build());
+             return b.getObject();
+    }
+    
+    @Bean
+    public MongoOperations userMongoOps() throws Exception{
+        Mongo mongo = mongo();
+        return new MongoTemplate(mongo(),AppConfig.DATABASE_USER);
+        
+    }
 }

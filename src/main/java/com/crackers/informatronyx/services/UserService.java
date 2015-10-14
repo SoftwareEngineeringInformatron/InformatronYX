@@ -12,16 +12,19 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Ted Ian Osias
  */
+@Service
 public class UserService {
-    
+    @Autowired UserDAO dao;
     public List<String> verify(UserDto user) throws UnknownHostException{
         List<String> errorList = new ArrayList<>();
-        User model = UserDAO.getUser(user.getUsername(), user.getPassword());
+        User model = dao.getUser(user.getUsername(), user.getPassword());
         if(model!=null)
             errorList.add("User does not exist.");
         else{
@@ -38,21 +41,21 @@ public class UserService {
     
     }
     public UserDto login(UserDto user) throws UnknownHostException{
-        User userModel = UserDAO.getUser(user.getUsername(), user.getPassword());
+        User userModel = dao.getUser(user.getUsername(), user.getPassword());
         if(userModel != null){
             user.setData(userModel);
             userModel.setLastLogin(new Date());
             userModel.generateToken();
             user.setLastLogin(userModel.getLastLogin());
             user.setToken(userModel.getToken());
-            if(!UserDAO.editUser(userModel))
+            if(!dao.editUser(userModel))
                 user = null;
         }
         return user;
     }
     public boolean register(UserDto user) throws UnknownHostException{
         boolean ok = false;
-        if(!UserDAO.exists(user.getUsername())){
+        if(!dao.exists(user.getUsername())){
             User model = new User();
             model.setUsername(user.getUsername());
             model.setPassword(user.getPassword());
@@ -63,7 +66,7 @@ public class UserService {
             model = determineUserType(model);
             if(model.getUserType().equals(User.USERTYPE_ADMIN) || model.getUserType().equals(User.USERTYPE_SUPERADMIN))
                 model.setApproved(true);
-            UserDAO.addUser(model);
+            dao.addUser(model);
             ok = true;
         }
         return ok;
@@ -84,7 +87,7 @@ public class UserService {
     
     public boolean edit(UserDto user) throws UnknownHostException, Exception{
         boolean ok = false;
-        User model = UserDAO.getUser(user.getId());
+        User model = dao.getUser(user.getId());
         if( model !=null)
         {
             model.setFirstName(user.getFirstName());
@@ -95,7 +98,7 @@ public class UserService {
             model.setApproved(user.isApproved());
             model.setBlocked(user.isBlocked());
             model.setFunctionType(user.getFunctionType());
-            ok = UserDAO.editUser(model);
+            ok = dao.editUser(model);
         }
         else
             throw new Exception("User does not exist. ");
@@ -103,10 +106,10 @@ public class UserService {
     }
     public boolean block(UserDto user) throws UnknownHostException, Exception{
         boolean ok = false;
-        User model = UserDAO.getUser(user.getId());
+        User model = dao.getUser(user.getId());
         if(model!= null){
             model.setBlocked(true);
-            UserDAO.editUser(model);
+            dao.editUser(model);
             ok = true;
         }
         else
@@ -115,10 +118,10 @@ public class UserService {
     }
     public boolean unblock(UserDto user) throws UnknownHostException, Exception{
         boolean ok = false;
-        User model = UserDAO.getUser(user.getId());
+        User model = dao.getUser(user.getId());
         if(model!= null){
             model.setBlocked(false);
-            UserDAO.editUser(model);
+            dao.editUser(model);
             ok = true;
         }
         else
@@ -126,7 +129,7 @@ public class UserService {
         return ok;
     }
     public UserDto promote(UserDto user) throws UnknownHostException, Exception{
-        User model = UserDAO.getUser(user.getId());
+        User model = dao.getUser(user.getId());
         if(model== null)
             throw new Exception("User does not exist. ");
         else
@@ -137,7 +140,7 @@ public class UserService {
             {
                 model.setFunctionType(user.getFunctionType());
                 model = determineUserType(model);
-                if(!UserDAO.editUser(model))
+                if(!dao.editUser(model))
                     model = null;
             }
         }
@@ -149,7 +152,7 @@ public class UserService {
         return dto;
     }
     public UserDto demote(UserDto user) throws UnknownHostException, Exception{
-        User model = UserDAO.getUser(user.getId());
+        User model = dao.getUser(user.getId());
         if(model== null)
             throw new Exception("User does not exist. ");
         else
@@ -163,7 +166,7 @@ public class UserService {
                 switch(model.getUserType()){
                     case User.USERTYPE_ADMIN : model.setUserType(User.USERTYPE_COMMON);break;
                 }
-                if(!UserDAO.editUser(model))
+                if(!dao.editUser(model))
                     model = null;
             }
         }
@@ -175,7 +178,7 @@ public class UserService {
         return dto;
     }
     public UserDto getUserInfo(UserDto user) throws UnknownHostException{
-        User model = UserDAO.getUser(user.getId());
+        User model = dao.getUser(user.getId());
         if(model!=null)
             user.setData(model);
         else 
@@ -183,27 +186,27 @@ public class UserService {
         return user;
     }
     public List<UserDto> getAllUsers() throws UnknownHostException{
-        return modelsToDto(UserDAO.getAllUsers());
+        return modelsToDto(dao.getAllUsers());
     }
     public List<UserDto> getAllAdmin() throws UnknownHostException{
-        List<UserDto> admins = modelsToDto(UserDAO.getAllUserOfType(User.USERTYPE_ADMIN));
-        admins.addAll(modelsToDto(UserDAO.getAllUserOfType(User.USERTYPE_SUPERADMIN)));
+        List<UserDto> admins = modelsToDto(dao.getAllUserOfType(User.USERTYPE_ADMIN));
+        admins.addAll(modelsToDto(dao.getAllUserOfType(User.USERTYPE_SUPERADMIN)));
         return admins;
     }
     public List<UserDto> getAllCommonUsers() throws UnknownHostException{
-        return modelsToDto(UserDAO.getAllUserOfType(User.USERTYPE_COMMON));
+        return modelsToDto(dao.getAllUserOfType(User.USERTYPE_COMMON));
     }
     public List<UserDto> getAllPendingUsers() throws UnknownHostException{
-        return modelsToDto(UserDAO.getUserByPropertyAndValue("approved", false));
+        return modelsToDto(dao.getUserByPropertyAndValue("approved", false));
     }
     public boolean appoveUserRegistration(UserDto user) throws UnknownHostException, Exception{
         boolean ok = false;
-        User model = UserDAO.getUser(user.getId());
+        User model = dao.getUser(user.getId());
         if(model!= null){
             model.setApproved(true);
             model.setFunctionType(User.FUNCTION_COMMON);
             model.setUserType(User.USERTYPE_COMMON);    
-            UserDAO.editUser(model);
+            dao.editUser(model);
             ok = true;
         }
         else
@@ -225,7 +228,7 @@ public class UserService {
 
     public boolean exists(String username) {
         try{
-            return UserDAO.exists(username);
+            return dao.exists(username);
         }catch(Exception e){
             return false;
         }
