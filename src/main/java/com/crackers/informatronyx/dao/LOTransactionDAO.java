@@ -5,8 +5,6 @@
  */
 package com.crackers.informatronyx.dao;
 
-import com.crackers.informatronyx.config.AppConfig;
-import com.crackers.informatronyx.config.DatabaseManager;
 import java.net.UnknownHostException;
 import java.util.List;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
@@ -14,54 +12,54 @@ import org.springframework.data.mongodb.core.query.Query;
 import com.crackers.informatronyx.models.LearningObjectTransaction;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import static org.springframework.data.mongodb.core.query.Query.query;
+import org.springframework.stereotype.Repository;
 
 
 /**
  *
  * @author Ted Ian Osias
  */
+@Repository
 public class LOTransactionDAO {
+    @Autowired MongoOperations transactionMongoOps;
     
-    public static boolean recordLOTransaction(LearningObjectTransaction transaction) throws UnknownHostException
+    public  boolean recordLOTransaction(LearningObjectTransaction transaction) throws UnknownHostException
     {
-        DatabaseManager.getMongoOpsInstance(AppConfig.DATABASE_TRANSACTION).insert(transaction);
+        transactionMongoOps.insert(transaction);
         return true;
     }
-    public static boolean updateLOTransaction(LearningObjectTransaction transaction) throws UnknownHostException
+    public  boolean updateLOTransaction(LearningObjectTransaction transaction) throws UnknownHostException
     {
         if(getLOTransactionByProperty("id",transaction.getId()) != null){
-            DatabaseManager.getMongoOpsInstance(AppConfig.DATABASE_TRANSACTION).save(transaction);
+            transactionMongoOps.save(transaction);
             return true;
         }
         return false;
     }
-    public static boolean deleteLOTransaction(LearningObjectTransaction transaction) throws UnknownHostException 
+    public  boolean deleteLOTransaction(LearningObjectTransaction transaction) throws UnknownHostException 
     {   
         Logger.getLogger(LOTransactionDAO.class.getName()).log(Level.INFO, 
-            DatabaseManager.getMongoOpsInstance(AppConfig.DATABASE_TRANSACTION).remove(getLOTransactionByProperty("id",transaction.getId())).toString()
+            transactionMongoOps.remove(getLOTransactionByProperty("id",transaction.getId())).toString()
         );
         return true;
     }
-    private static LearningObjectTransaction getLOTransactionByProperty(String property,Object value) throws UnknownHostException{
+    private  LearningObjectTransaction getLOTransactionByProperty(String property,Object value) throws UnknownHostException{
         Query query = new Query();
         query.addCriteria(where(property).is(value));
-        return DatabaseManager.getMongoOpsInstance(AppConfig.DATABASE_TRANSACTION).findOne(query, LearningObjectTransaction.class);
+        return transactionMongoOps.findOne(query, LearningObjectTransaction.class);
     }
-    public static List<LearningObjectTransaction> getAllLOTransactionByUser(String id) 
+    public  List<LearningObjectTransaction> getAllLOTransactionByUser(String id) 
     {
-        try {
-            Query query = new Query();
-            query.addCriteria(where("user_id").is(id));
-            return DatabaseManager.getMongoOpsInstance(AppConfig.DATABASE_TRANSACTION).find(query, LearningObjectTransaction.class);
-        } catch (UnknownHostException ex) {
-            return null;
-        }
+        Query query = new Query();
+        query.addCriteria(where("user_id").is(id));
+        return transactionMongoOps.find(query, LearningObjectTransaction.class);
     }
     
-    public static boolean exists(String user_id, String lo_id) throws UnknownHostException {
-        boolean ok = DatabaseManager.getMongoOpsInstance(AppConfig.DATABASE_TRANSACTION).exists(query(where("user_id").is(user_id).andOperator(where("learningObjectId").is(lo_id))), LearningObjectTransaction.class);
+    public  boolean exists(String user_id, String lo_id) throws UnknownHostException {
+        boolean ok = transactionMongoOps.exists(query(where("user_id").is(user_id).andOperator(where("learningObjectId").is(lo_id))), LearningObjectTransaction.class);
         return ok;
     }
 }

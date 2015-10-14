@@ -8,11 +8,9 @@ package com.crackers.informatronyx.config;
 import com.mongodb.Mongo;
 import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoClientOptions.Builder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.MongoClientFactoryBean;
-import org.springframework.data.mongodb.core.MongoFactoryBean;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
@@ -51,8 +49,12 @@ public class AppConfig {
     
     @Bean
     public MongoOperations userMongoOps() throws Exception{
-        Mongo mongo = mongo();
         return new MongoTemplate(mongo(),AppConfig.DATABASE_USER);
         
+    }
+    
+    @Bean
+    public MongoOperations transactionMongoOps() throws Exception{
+        return new MongoTemplate(mongo(),AppConfig.DATABASE_TRANSACTION);
     }
 }

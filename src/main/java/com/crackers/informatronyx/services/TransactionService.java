@@ -29,8 +29,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class TransactionService {
     @Autowired UserDAO userDAO;
-    
-    
+    @Autowired LOTransactionDAO lOTransactionDAO;
+    @Autowired CreditTransactionDAO creditTransactionDAO;
     public boolean addCreditsToUser(CreditTransactionDto trans) throws UnknownHostException, Exception{ 
         
         CreditTransaction transaction = new CreditTransaction();
@@ -42,22 +42,22 @@ public class TransactionService {
         transaction.setAmount(trans.getAmnt());
         transaction.setDateOfTransaction(new Date());
         transaction.setFinished(false);
-        if(CreditTransactionDAO.existsByOfficialReciept(trans.getOr()))
+        if(creditTransactionDAO.existsByOfficialReciept(trans.getOr()))
             throw new Exception("Offcial Recepit has already been registered");
         transaction.setOfficialReceipt(trans.getOr());
         //transaction.setApproveBy(trans.getAppBy());
-        CreditTransactionDAO.addCreditTransaction(transaction);
+        creditTransactionDAO.addCreditTransaction(transaction);
         return true;
     }
     public boolean approveCreditTransaction(CreditTransactionDto trans) throws UnknownHostException{
         boolean ok = false;
-        CreditTransaction obj = CreditTransactionDAO.getCreditTransactionById(trans.getId());
+        CreditTransaction obj = creditTransactionDAO.getCreditTransactionById(trans.getId());
         obj.setApproveBy(trans.getAppBy());
         obj.setFinished(true);
         User user = userDAO.getUser(obj.getUser_Id());
         user.setCredits(user.getCredits() + obj.getAmount());
         if(userDAO.editUser(user))
-            ok = CreditTransactionDAO.editCreditTransaction(obj);
+            ok = creditTransactionDAO.editCreditTransaction(obj);
         return ok;
     }
     public boolean removeCreditsFromUser(CreditTransactionDto dto) throws UnknownHostException{ 
@@ -72,7 +72,7 @@ public class TransactionService {
         transaction.setFinished(true);
         //transaction.setOfficialReceipt("Removed By:" + approvedBy.getUsername());
        // transaction.setApproveBy(approvedBy.getId());
-        if(CreditTransactionDAO.addCreditTransaction(transaction)){
+        if(creditTransactionDAO.addCreditTransaction(transaction)){
             userDAO.editUser(userModel);
             ok = true;
         }
@@ -84,14 +84,14 @@ public class TransactionService {
         {
             System.out.println(transaction.getU_Id());
             System.out.println(transaction.getLo_id());
-            if(!LOTransactionDAO.exists(transaction.getU_Id(), transaction.getLo_id())) {
+            if(!lOTransactionDAO.exists(transaction.getU_Id(), transaction.getLo_id())) {
             LearningObjectTransaction transModel = new LearningObjectTransaction();
             transModel.setAmount(transaction.getAmount());
             transModel.setDateOfTransaction(new Date());
             transModel.setFinished(false);
             transModel.setLearningObjectId(transaction.getLo_id());
             transModel.setUser_id(transaction.getU_Id());
-            LOTransactionDAO.recordLOTransaction(transModel);
+            lOTransactionDAO.recordLOTransaction(transModel);
             return true;
             } else {
                 return false;
@@ -101,7 +101,7 @@ public class TransactionService {
             return false;
     }
     public List<LOTransactionDto> getLOTransactionHistory(UserDto user){
-        List<LearningObjectTransaction> trans = LOTransactionDAO.getAllLOTransactionByUser(user.getId());
+        List<LearningObjectTransaction> trans = lOTransactionDAO.getAllLOTransactionByUser(user.getId());
         List<LOTransactionDto> dtos = new ArrayList<>();
         for(LearningObjectTransaction transaction : trans)
         {
@@ -112,7 +112,7 @@ public class TransactionService {
         return dtos;
     }
     public List<CreditTransactionDto> getCreditTransactionHistory(UserDto user) throws UnknownHostException{
-        List<CreditTransaction> trans = CreditTransactionDAO.getAllTransactionByUserId(user.getId());
+        List<CreditTransaction> trans = creditTransactionDAO.getAllTransactionByUserId(user.getId());
         List<CreditTransactionDto> dtos = new ArrayList<>();
         for(CreditTransaction transaction : trans)
         {
@@ -126,7 +126,7 @@ public class TransactionService {
     public boolean removeCreditTransaction(CreditTransactionDto trans) throws UnknownHostException {
         CreditTransaction model = new CreditTransaction();
         model.setId(trans.getId());
-        return CreditTransactionDAO.removeCreditTransaction(model);
+        return creditTransactionDAO.removeCreditTransaction(model);
     }
     
     
