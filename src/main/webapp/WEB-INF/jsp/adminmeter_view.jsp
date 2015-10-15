@@ -112,7 +112,7 @@
                                 <td>
                                     <div class="text-center">
                                         <button  ng-click="loadTransaction(trans)" class="btn" data-toggle="modal" data-target="#approveAction"> Approve </button>
-                                        <button  ng-click="loadTransaction(trans)" class="btn" data-toggle="modal" data-target="#declineAction"> Decline </button>
+                                        <!--<button  ng-click="loadTransaction(trans)" class="btn" data-toggle="modal" data-target="#declineAction"> Decline </button>-->
                                     </div>
                                 </td>
                                 <td></td>
@@ -220,5 +220,6 @@
         <script src="site_js/services/userService.js"></script>
         <script src="site_js/services/loTransactionService.js"></script>
         <script src="site_js/services/lo-service.js"></script>
+        <script src="site_js/services/creditService.js"></script>
     </body>
 </html>

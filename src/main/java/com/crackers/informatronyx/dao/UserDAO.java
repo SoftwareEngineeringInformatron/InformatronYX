@@ -56,7 +56,7 @@ public class UserDAO {
     public  boolean deleteUser(User user) throws UnknownHostException{
         MongoOperations mongoOps =userMongoOps;
         boolean ok = false;
-        mongoOps.remove(user);
+        mongoOps.remove(this.getUser(user.getId()));
         ok = true;
         return ok;
     }

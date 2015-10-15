@@ -24,11 +24,11 @@ public class AppConfig {
     /*
      * Factory bean that creates the com.mongodb.Mongo instance
      */
-    public static String mongodb_host = "localhost";
+    public static String mongodb_host = "localhost";//"192.168.254.104";
     public static int mongodb_port = 27017;
     public static String DATABASE_TRANSACTION = "transaction";
     public static String DATABASE_USER = "user";
-    public static String LOOP_DOWNLOAD_LE = "http://localhost:8080/InformatronYX/store/site_js/page/admin.js";
+    public static String LOOP_DOWNLOAD_LE = "http://localhost:8080/InformatronYX/store/img/elope.png";
     
     
     // MONGODB CONFIGURATION

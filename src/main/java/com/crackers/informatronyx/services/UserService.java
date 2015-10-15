@@ -12,6 +12,8 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -230,6 +232,16 @@ public class UserService {
         try{
             return dao.exists(username);
         }catch(Exception e){
+            return false;
+        }
+    }
+
+    public boolean removeUser(UserDto user) {
+        try {
+            User model = new User();
+            model.setId(user.getId());
+            return dao.deleteUser(model);
+        } catch (UnknownHostException ex) {
             return false;
         }
     }

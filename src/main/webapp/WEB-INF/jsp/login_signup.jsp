@@ -148,7 +148,8 @@
             </footer>
         </div>
 
-        
+        <jsp:include page="includes/scripts.jsp" />
+        <!--
         <script src="bootstrap/js/jquery-1.10.2.min.js"></script>
         <script src="js/jquery-1.9.0.min.js"></script>
         <script src="js/jquery-ui-1.10.3.custom.min.js"></script>
@@ -160,7 +161,7 @@
         <script src="js/jquery.placeholder.js"></script>
         <script src="js/jquery.stacktable.js"></script>
         <script src="js/application.js"></script>
-        <script src="js/original.js"></script>
+        <script src="js/original.js"></script>-->
         
         <!-- slider js plugin -->
         <script type="text/javascript" src="js/jquery.nivo.slider.js"></script>

@@ -147,6 +147,9 @@
                         </div>
                     </form>
                 </div>
+                <!-- Save Action -->
+                
+                
                 <div id="saveAction" class="modal hide fade" tabindex="-1" data-width="760">
                     <form name="saveData">
                         <div class="modal-center">
@@ -177,6 +180,41 @@
                         </div>
                     </form>
                 </div>
+                <!--  Request Credits -->
+                <div id="saveAction1" class="modal hide fade" tabindex="-1" data-width="760">
+                    <form name="saveData">
+                        <div class="modal-center">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <span class="popup">Settings</span>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row-fluid">
+                                    <div class="span10 offset1">
+                                        <label class="text-info">Number of tries left {{numTries}}</label>
+                                        <label class="file-action">Please input old username and old password for authentication<br>
+                                        <br><input ng-disabled="numTries == 0" type="text" size="20" placeholder="Username" ng-model="a_username" required>
+                                        <br><input ng-disabled="numTries == 0" type="password" size="20" placeholder="Password" ng-model="a_password" required>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <div class="row-fluid">
+                                    <div class="span10 offset1">
+                                        <button ng-click="saveAccount(a_username,a_password)" ng-disabled="numTries == 0" type="submit" class="btn btn-primary" ng-click="saveAccount(a_username, a_password)" data-dismiss="modal"><i class="icon-plus-sign-alt icon-large default"></i> Save Now</button>
+                                        <button type="reset" data-dismiss="modal" class="btn btn-cancel" ng-click="cancelAccount()"></i> Cancel</button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                
+                
+                
                 <div class="container">
                     <div class="setting span6 offset3">
                         <div class="account-setting name-setting " >
@@ -240,6 +278,7 @@
         <script src="site_js/page/settings.js"></script>
         <script src="site_js/includes/activeAccount.js"></script>
         <script src="site_js/services/userService.js"></script>
+        <script src="site_js/services/creditService.js"></script>
     </body>
 </html>
 

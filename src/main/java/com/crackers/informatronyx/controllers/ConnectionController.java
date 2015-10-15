@@ -68,8 +68,12 @@ public class ConnectionController {
         }
             
     }
+    @RequestMapping(value= "/download/test/{le_id}", method = RequestMethod.GET)
+    public void getLe(@PathVariable("le_id") String leId,HttpServletResponse response){
+        sendLE(leId,response);
+    }
     private void sendLE(String leId,HttpServletResponse response){
-        SimpleClientHttpRequestFactory requestfactory = new SimpleClientHttpRequestFactory();
+            SimpleClientHttpRequestFactory requestfactory = new SimpleClientHttpRequestFactory();
         ClientHttpResponse loopResponse;
         try {
             ClientHttpRequest createRequest = requestfactory.createRequest(new URI(AppConfig.LOOP_DOWNLOAD_LE), HttpMethod.GET);

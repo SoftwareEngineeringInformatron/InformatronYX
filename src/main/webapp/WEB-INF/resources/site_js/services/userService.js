@@ -19,6 +19,10 @@ app.factory('userService', function($http) {
             var url = "/InformatronYX/informatron/user/approve";
             return $http.post(url,data);
         },
+        decline:function(data){
+            var url = "/InformatronYX/informatron/user/remove";
+            return $http.post(url,data);
+        },
         block: function(data){
             var url = "/InformatronYX/informatron/user/block";
             return $http.post(url,data);

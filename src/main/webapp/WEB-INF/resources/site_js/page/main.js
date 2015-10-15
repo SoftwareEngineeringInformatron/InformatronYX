@@ -1,21 +1,15 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 var app=angular.module('LO',['ngStorage']);
 
 app.controller("navBarController", function($scope, $rootScope){  
     
     $scope.allLOs = function(){
-        $rootScope.allLOs();
+        $rootScope.callAllLO();
     };    
     $scope.mostDownloadedLOs = function(){
-        $rootScope.mostDownloadedLOs();
+        $rootScope.callAllMostDownloaded();
     };    
     $scope.mostLikedLOs = function(){
-        $rootScope.mostLikedLOs();
+        $rootScope.callAllMostLiked();
     };
     $scope.modalInstance = function() {
         $rootScope.modalInstance();
@@ -23,8 +17,7 @@ app.controller("navBarController", function($scope, $rootScope){
 });
 
 
-app.controller("LOcontroller", function($scope, $rootScope, loRepository, $location){
-    //alert('');
+app.controller("LOcontroller", function($sessionStorage,$scope, $rootScope, loRepository, loTransactionService){
     
     $scope.ModalInstance = function(lo) {
         $rootScope.loprice = lo.price;
@@ -33,23 +26,19 @@ app.controller("LOcontroller", function($scope, $rootScope, loRepository, $locat
         $rootScope.loid = lo.id;
     };
     
-    $scope.searchLO = function(name, subject, dateStart, dateEnd, orderBy) {
-        loRepository.searchLO(name, subject, dateStart, dateEnd, orderBy).success(function(lo) {
+    $scope.searchLO = function(title, subject, dateStart, dateEnd, orderBy) {
+        loRepository.searchLO(title, subject, dateStart, dateEnd, orderBy).success(function(lo) {
             $rootScope.LOs = lo.searchlo;
             
             if(lo.searchlo == undefined)
                 $scope.errorMessage = 'No learning objects found';
             
-            $scope.name = '';
-            $scope.subject = '';
+            $rootScope.lotitle = "";
+            $rootScope.subject = "";
             $scope.dateStart = '';
             $scope.dateEnd = '';
-            $scope.orderBy = '';
+            $scope.orderBy = "";
         });        
-    };
-    
-    $scope.go = function (path) {
-        $location.path(path);
     };
     
     function displayAll() {
@@ -57,34 +46,65 @@ app.controller("LOcontroller", function($scope, $rootScope, loRepository, $locat
             $rootScope.LOs = lo;
         });
     }    
-    
-    displayAll();
-});
-    
-app.controller('LOController',function($scope,$rootScope,loRepository) {
-    //alert('alright');
+    /// ADDED
     $rootScope.LOs = [];
-    
     $rootScope.loprice = "";
     $rootScope.lodescription = "";
     $rootScope.loid = "";
     $rootScope.lotitle = "";
     
-    $scope.callAllMostDownloaded = function() {
+    $rootScope.userID = "";
+    
+    $rootScope.callAllMostDownloaded = function() {
         loRepository.getMostDownloaded().success(function(lo) {
             $rootScope.LOs = lo;
         });
     };
     
-    $scope.callAllLO = function() {
+    $rootScope.callAllLO = function() {
         loRepository.getAllLO().success(function(lo) {
             $rootScope.LOs = lo;
         });
     };
     
-    $scope.callAllMostLiked = function() {
+    $rootScope.callAllMostLiked = function() {
         loRepository.getMostLiked().success(function(lo) {
             $rootScope.LOs = lo;
+        });
+    };
+    
+    displayAll();
+    
+    $rootScope.purchaseLO = function() {
+        var transactionData = {
+          "lo_id":$rootScope.loid,
+          "u_Id":$sessionStorage.user.id,
+          "errorList":null
+        };
+        loTransactionService.recordLOPurchase(transactionData).success(function(lo) {
+            if(lo == "true") {
+                alert('SUCCESS');
+            }
+        });                
+    };
+    
+    
+});
+    
+
+
+app.controller("loriController",function($scope,$rootScope,loriService){
+    $scope.displayLoris = [];
+    $rootScope.lori = function(lori){
+        var data = {
+            learningObjectId:lori
+        };
+        var loriOfLO = loriService.getLORIsByLOId(data);
+        loriOfLO.success(function(response){
+            $scope.displayLoris = response;
+        });
+        loriOfLO.error(function(response){
+            alert(response);
         });
     };
 });

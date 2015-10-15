@@ -140,5 +140,6 @@
         <script src="site_js/services/userService.js"></script>
         <script src="site_js/services/loTransactionService.js"></script>
         <script src="site_js/services/lo-service.js"></script>
+        <script src="site_js/services/creditService.js"></script>
     </body>
 </html>

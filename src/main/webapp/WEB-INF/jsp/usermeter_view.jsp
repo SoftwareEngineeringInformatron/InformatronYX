@@ -204,7 +204,7 @@
         <script src="scripts/jquery-scripts.js"></script>
         <script src="scripts/userController.js"></script>
         <script src="scripts/user-service.js"></script>
-        
+        <script src="site_js/services/creditService.js"></script>
         
     </body>
 </html>

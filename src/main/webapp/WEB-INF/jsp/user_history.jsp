@@ -36,26 +36,9 @@
             @import "bootstrap-table/css/demo_table.css";
         </style>
         
-        <%   
-    /*    String isid = (String) session.getAttribute("icms_id");
-        
-        if(session.getAttribute("USER") == null) 
-                response.sendRedirect("login.action");
-        else if("icms_guest".equals((String)session.getAttribute("USER")))
-            response.sendRedirect("main.action");
-        else if("icms_superadmin".equals((String)session.getAttribute("USER")))
-            response.sendRedirect("superadmin.action");
-        else if("icms_approveadmin".equals((String)session.getAttribute("USER")))
-            response.sendRedirect("approveadmin.action");
-        else if("icms_meteradmin".equals((String)session.getAttribute("USER")))
-            response.sendRedirect("meteradmin.action");*/
-        %> 
-
+   
     </head>
     <body >
-    <s:url id='url_main' action='main'/>
-    <s:url id='url_usermeter' action='usermeter'/>
-    
         <div class="wrapIt">
             <header id="header-wrap" >
                 <div class="navbar navbar-inverse">
@@ -183,5 +166,6 @@
         <script src="site_js/services/loTransactionService.js"></script>
         <script src="site_js/services/lo-service.js"></script>
         <script src="site_js/services/downloadRecordService.js"></script>
+        <script src="site_js/services/creditService.js"></script>
     </body>
 </html>

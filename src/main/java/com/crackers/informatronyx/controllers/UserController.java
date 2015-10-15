@@ -49,6 +49,20 @@ public class UserController {
         }
         return user;
     }
+    
+    @RequestMapping("/remove")
+    public boolean remove(@RequestBody UserDto user){
+        boolean ok = false;
+        try{
+            ok = service.removeUser(user);
+        if(ok==false)
+            user.getErrorList().add("Registration unsucessful.");
+        }catch(Exception e){
+            
+        }
+        return ok;
+    }
+    
     @RequestMapping("/login")
     public UserDto login(@RequestBody UserDto user) throws UnknownHostException
     {

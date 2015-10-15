@@ -12,6 +12,15 @@ app.controller("login_signupController", function($scope,$sessionStorage,userSer
         username:"",
         password:""
     };
+    $scope.load = function(){
+        if($sessionStorage.user!=null){
+            if(confirm("You have an existing session. Do you want to login with the same account?"))
+                window.location="main";
+            else
+                delete $sessionStorage.user;
+        }
+    }
+    
     $scope.invalidEmail = true;
     
     $scope.login = function(){
@@ -46,6 +55,7 @@ app.controller("login_signupController", function($scope,$sessionStorage,userSer
             if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
                return decodeURIComponent(name[1]);
     }
+    $scope.load();
 });
 
 

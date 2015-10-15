@@ -112,11 +112,11 @@ app.controller("adminAccountManagementController",function($scope,$rootScope,use
         for(var i=0;i<$rootScope.selectedUsers.length;i++){
             if($rootScope.selectedUsers[i] == true){
                 var user = $rootScope.displayedUsers[i];
-                //$scope.promote(user);
+                $scope.decline(user);
+                $rootScope.newAccounts();
             }
         }
-        $rootScope.allAccounts();
-        $rootScope.newAccounts();
+        
     };
     $scope.unblockMass = function(){
         for(var i=0;i<$rootScope.selectedUsers.length;i++){
@@ -186,6 +186,19 @@ app.controller("adminAccountManagementController",function($scope,$rootScope,use
             $scope.errorList.push("An error has come up upon blocking "+user.username);
         });
         return result;
+    };
+    $scope.decline = function(user){
+        var declinePromise = userService.decline(user);
+        var result = false;
+        declinePromise.success(function(response){
+            if(response == 'true')
+                result = true;
+        });
+        declinePromise.error(function(response){
+            $scope.errorList.push("An error has come up upon blocking "+user.username);
+        });
+        return result;
+        
     };
 });
 app.controller("adminNavBarController",function($scope,$rootScope){

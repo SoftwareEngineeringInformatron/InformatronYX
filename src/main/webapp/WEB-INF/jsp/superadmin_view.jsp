@@ -115,5 +115,6 @@
         <script src="site_js/page/superadmin.js"></script>
         <script src="site_js/includes/activeAccount.js"></script>
         <script src="site_js/services/userService.js"></script>
+        <script src="site_js/services/creditService.js"></script>
     </body>
 </html>

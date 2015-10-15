@@ -37,7 +37,7 @@
     </head>
     
     <body>
-        <div ng-controller="LOController">
+        
         <header id="header-wrap" >
                 <div class="navbar navbar-inverse">
                         <div class="row-fluid">
@@ -60,13 +60,13 @@
                                     <b><span class="icon-chevron-down"></span></b>
                                 </a>    
                                 
-                                <div class="nav-collapse collapse">
+                                <div class="nav-collapse collapse" ng-controller="navBarController">
                                     <ul class="nav ul-search">
                                         <li class="not-anchor">SEARCH OPTIONS</li>
-                                        <li><a ng-href="#" class="active" ng-click="callAllLO()" >All</a></li> 
-                                        <li><a href="#" ng-click="callAllMostDownloaded()">Most Downloaded</a></li>
-                                        <li><a href="#" ng-click="callAllMostLiked()">Most Liked</a></li>
-                                        <li><a href="#" ng-click="callLoriTopLOs()">LORI's Top LOs</a></li>    
+                                        <li><a ng-href="#" class="active" ng-click="allLOs()" >All</a></li> 
+                                        <li><a href="#" ng-click="mostDownloadedLOs()">Most Downloaded</a></li>
+                                        <li><a href="#" ng-click="mostLikedLOs()">Most Liked</a></li>
+                                        <li><a href="#" ng-click="">LORI's Top LOs</a></li>    
                                         <li>
                                             <div class="accordion-heading">
                                                 <a class="accordion-toggle foracc" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
@@ -87,81 +87,6 @@
                 </div>
         </header>
         
-        <div id="message" class="modal hide fade" tabindex="-1" data-width="760">
-            <div class="modal-center">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <span class="popup">Error Message</span>
-                </div>
-                <div class="modal-body">
-                    <div class="row-fluid">
-                        <div class="span10 offset1">
-                            <label class="file-action">
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <div class="row-fluid">
-                        <div class="span10 offset1">
-                            <button type="button" data-dismiss="modal" class="btn btn-primary">&nbsp;&nbsp;Ok&nbsp;&nbsp;</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--  evaluation -->
-        <div id="evaluation" class="modal hide fade" tabindex="-1" data-width="1000" >
-            <div class="modal-center">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <span class="popup">LORI Evaluation</span>
-                </div>
-                <div class="modal-body">
-                    <div class="row-fluid">
-                        <div class="">
-                            <canvas id="myChart" width="900" height="400"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <div class="row-fluid">
-                        <div class="span10 offset1">
-                            <button type="button" data-dismiss="modal" class="btn btn-primary">&nbsp;&nbsp;Ok&nbsp;&nbsp;</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--  purchase LO -->
-        <div id="purchase" class="modal hide fade" tabindex="-1" data-width="1000" >
-            <div class="modal-center">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <span class="popup">Purchase LO</span>
-                </div>
-                <div class="modal-body">
-                    <div class="row-fluid">
-                        <div class="">
-                            <div class="few-details">
-                                <h5>LO Title:</h5> <p ng-model="lotitle">{{lotitle}}</p>
-                                <h5>LO ID:</h5> <p ng-model="loid">{{loid}}</p>
-                                <h5>LO Description:</h5> <p ng-model="lodescription">{{lodescription}}</p>
-                                <h5>LO Price:</h5> <p ng-model="loprice">{{loprice}}</p>                                
-                            </div>                            
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <div class="row-fluid">
-                        <div class="span10 offset1">
-                            <button type="button" data-dismiss="modal" class="btn btn-primary" href="download">&nbsp;&nbsp;Ok&nbsp;&nbsp;</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </div>
         <div class="wrapIt">
             <!--
                 TODO:
@@ -332,6 +257,7 @@
             
             <div class="clearfix"></div><!-- Gi balhin nako ngari ang controller kay mag conflict sila sa AccountController-->
             <section id="learning-objects" ng-controller="LOcontroller">
+                <jsp:include page="includes/mainPageModals.jsp" /> 
                 <div class="content-row">
                     <table class="table table-hover user">
                         <thead>
@@ -354,11 +280,9 @@
                                 <td>{{lo.subject}}</td>
                                 <td>{{lo.uploadDate}}</td>
                                 <td><a href="#evaluation" class="" data-toggle="modal" ng-click="lori(lo.id)"><img class="lori" src="img/logo2-3.png"></a></td>
-                                <%// if(isession != "icms_guest") { %>
+                                
                                 <td>
-                                    <s:form action="purchase-lo">
-                                        <button title="Purchase" class="btn-download" data-toggle="modal" data-target="#purchase" ng-click="ModalInstance(lo)"><i class="icon-download-alt btn-index"></i> &nbsp;</button>
-                                    </s:form>
+                                    <button title="Purchase" class="btn-download" data-toggle="modal" data-target="#purchase" ng-click="ModalInstance(lo)"><i class="icon-download-alt btn-index"></i> &nbsp;</button>
                                 </td>
                                 
 				<td>
@@ -372,6 +296,40 @@
                                 <h5>{{errorMessage}}</h5>
                             </div>
                 </div>
+            </section>
+            <section ng-controller="loriController">
+                 <div id="evaluation" class="modal hide fade" tabindex="-1" data-width="1000" >
+                    <div class="modal-center">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <span class="popup">LORI Evaluation</span>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row-fluid">
+                                <ul>
+                                    <li ng-repeat="lori in displayLoris" >
+                                        {{lori.learningObjectId}}
+                                        <div >
+                                            Scores:
+                                            <ul>
+                                                <li ng-repeat = "score in lori.evaluation">
+                                                    {{score}}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="row-fluid">
+                                <div class="span10 offset1">
+                                    <button type="button" data-dismiss="modal" class="btn btn-primary">&nbsp;&nbsp;Ok&nbsp;&nbsp;</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>               
             </section>
             <div class="clearfix"></div>
             <footer id="footer-index" class="navbar navbar-inverse navbar-fixed-bottom">
@@ -389,6 +347,9 @@
         <script src="site_js/services/userService.js"></script>
         <script src="site_js/includes/activeAccount.js"></script>
         <script src="site_js/services/lo-service.js"></script>
+        <script src="site_js/services/loriService.js"></script>
+        <script src="site_js/services/loTransactionService.js"></script>
+        <script src="site_js/services/creditService.js"></script>
         <!-- datepicker plugin -->
         <!--
         <script src="bootstrap-formhelpers/js/bootstrap-formhelpers-datepicker.en_US.js"></script>

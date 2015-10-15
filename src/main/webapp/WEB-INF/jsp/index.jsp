@@ -208,4 +208,5 @@
        <jsp:include page="includes/scripts.jsp" /> 
     </body>
 </html>
+<script type="text/javascript" src="js/jquery.nivo.slider.js"></script>
 <script src= "site_js/page/index.js" type="text/javascript"></script>
