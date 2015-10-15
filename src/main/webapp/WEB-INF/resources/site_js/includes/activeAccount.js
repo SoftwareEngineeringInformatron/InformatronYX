@@ -10,10 +10,10 @@ app.controller('AccountController',function($scope,$sessionStorage,userService){
         
     var eligibilityChecker = [
         {type:['home','main']},
-        {type:['main','downloads','mylos','setting','logout']},
-        {type:['main','downloads','mylos','setting','logout']},
-        {type:['main','downloads','mylos','approveadmin','setting','logout']},
-        {type:['main','downloads','mylos','super_admin','admin_meter','admin_history','setting','logout']},
+        {type:['main','downloads','mylos','setting','logout','quiz']},
+        {type:['main','downloads','mylos','admin','setting','logout','quiz']},
+        {type:['main','downloads','mylos','admin','approveadmin','setting','logout','quiz']},
+        {type:['main','downloads','mylos','admin','super_admin','admin_meter','admin_history','setting','logout','quiz']},
     ];
     
     $scope.userInfo = {
@@ -48,7 +48,7 @@ app.controller('AccountController',function($scope,$sessionStorage,userService){
     function checkEligibility(functionType) {
         if(functionType == undefined)
             functionType = 0;
-        var currentURL = window.location.toString().split('/store/')[1];
+        var currentURL = window.location.toString().split('/store/')[1].split('?')[0];
         var userFunction = eligibilityChecker[functionType].type;
         var flag = 0;
         for(var i=0; i < userFunction.length; i++) {

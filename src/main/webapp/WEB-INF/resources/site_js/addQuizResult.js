@@ -21,7 +21,7 @@ var quizApp = angular.module("QUIZ", []);
           "lo_id":null,
           "lo_name": $scope.lo,
           "score": $scope.score,
-          "subject": null,
+          "subject": "",
           "totalScore":0,
           "date_submitted": null,
           "time_started": new Date(document.getElementById('time_started').value),

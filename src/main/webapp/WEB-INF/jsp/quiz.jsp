@@ -11,49 +11,31 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html ng-app="QUIZ">
+<html ng-app="QuizResults">
     <head>
-        <title>Informatron Plus</title>
+        <title>Informatron Plus</title> 
         
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
         <meta name="HandheldFriendly" content="True" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
-        
+        <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />        
     <!--plugins-->
         <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css" />
         <link rel="stylesheet" media="screen"  href="bootstrap/css/bootstrap-customize.css" />
         <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />
-        <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-responsive.min.css" />
+	    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-responsive.min.css" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
         <link rel="stylesheet" type="text/css" href="css/940grid.css" />
-        <link rel="stylesheet" type="text/css" href="css/media.css" />
+        <link rel="stylesheet" type="text/css" href="css/table-original.css" />
         <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css" />
-        
     <!--data-table-->
         <style type="text/css" title="currentStyle">
             @import "bootstrap-table/css/demo_page.css";
             @import "bootstrap-table/css/demo_table.css";
         </style>
-        
-    <!-- Date Picker -->
-        <link href="bootstrap-formhelpers/docs/css/bootstrap-responsive.css" rel="stylesheet" />
-        <link href="bootstrap-formhelpers/css/bootstrap-formhelpers.css" rel="stylesheet" />
-        
-    <%   
-        /*String isession = (String) session.getAttribute("USER");
-        String isid = (String) session.getAttribute("icms_id");
-        if(isession  == null) 
-                response.sendRedirect("login.action");
-        String loid = (String) request.getParameter("loid");
-        */
-    %>
-    
-    
-    
     </head>
-    <body ng-controller="loController">
+    <body>
    
     <s:url id='url_advance' action='advancesearch'/>
     <s:url id='url_main' action='main'/>
@@ -87,7 +69,7 @@
             <div class="modal-center">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <span class="popup">LORI Evaluation</span>
+                    <span class="popup">Quiz Results</span>
                 </div>
                 <div class="modal-body">
                     <div class="row-fluid">
@@ -113,16 +95,7 @@
                             <div class="span12 header-wrap main">
                             
                                 <a href="${url_main}" class="brand offset1 header-txt"><i class="icon-download-alt logo"></i> InformatronPlus</a>
-
-                                <div class="account"> <!--ng-controller="userController"-->
-                                    <ul class="nav pull-right">
-                                        <li class="dropdown" id="usermeter">  
-                                            
-                                        </li> 
-                                        <li class="dropdown">
-                                            <a data-toggle="dropdown" class="dropdown-toggle font-up header-txt" href="#"><b class="caret"></b> <span><i class="icon-user"></i></span></a>
-                                            <ul class="dropdown-menu" id="functions" >
-                                                
+                                <jsp:include page="includes/ActiveAccount.jsp" /> 
                                             </ul>
                                         </li>                                   
                                     </ul>
@@ -309,7 +282,7 @@
             </section>
             
             <div class="clearfix"></div>
-            <section id="learning-objects" style="padding-bottom: 45px;">
+            <section id="learning-objects" style="padding-bottom: 45px;" ng-controller="QuizController">
                 <div class="content-row">
                     <table my-table="overrideOptions"
                             aa-data="QuizResult"
@@ -327,17 +300,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="result in quizList">
-								<td><a href="learningobject?loID={{result.lo_id}}"><i class="icon-file"></i> {{result.lo_name}}</a>
+                            <tr ng-repeat="result in quiz">
+								<td><a href="learningobject?loID={{getID(result.lo_id)}}"><i class="icon-file"></i> {{result.lo_name}}</a>
                                     <!--<div class="few-details"><i>Downloads: {{result.lo.downloads}} &nbsp;&nbsp;<span class="icon-thumbs-up"></span> {{result.lo.likes}} &nbsp;&nbsp;
                                         </i>
                                     </div>-->
                                 </td>
-								<td>{{result.lo_subject}}</td>
+								<td>{{getSubject(result.lo_name)}}</td>
 								<th>{{result.username}}</th>
-								<td>{{result.time_started}}</td>
-								<td>{{result.time_finished}}</td>
-								<td>{{result.date_submitted}}</td>
+								<td>{{result.time_started | date:"MMMM d yyyy hh:mm:ss"}}</td>
+								<td>{{result.time_finished | date:"MMMM d yyyy hh:mm:ss"}}</td>
+								<td>{{result.date_submitted | date:"MMMM d yyyy"}}</td>
 								<td>{{result.score}}</td>
                             </tr>
                         </tbody>
@@ -360,50 +333,16 @@
             <input type="hidden" id="usertype" value="<% //out.println(isid); %>" />
             
         </div>
-        
-        
-        
-        <script src="bootstrap/js/jquery-1.10.2.min.js"></script>
-        <script src="js/jquery-1.9.0.min.js"></script>
-    	<script src="js/jquery-ui-1.10.3.custom.min.js"></script>
-    	<script src="js/jquery.ui.touch-punch.min.js"></script>
-		
-		
-
-		<!-- data-table -->
-        <script type="text/javascript" language="javascript" src="bootstrap-table/js/jquery.js"></script>
-        <script type="text/javascript" language="javascript" src="bootstrap-table/js/jquery.dataTables.js"></script>
-        
-        <!-- chart plugin -->
-        <script type="text/javascript" src="js/Chart.min.js"></script>
-        <script type="text/javascript" src="js/chartjs-option.js"></script>
-        
-    	<script src="js/bootstrap.min.js"></script>
-    	<script src="js/bootstrap-select.js"></script>
-    	<script src="js/bootstrap-switch.js"></script>
-    	<script src="js/flatui-checkbox.js"></script>
-    	<script src="js/flatui-radio.js"></script>
-    	<script src="js/jquery.tagsinput.js"></script>
-    	<script src="js/jquery.placeholder.js"></script>
-    	<script src="js/jquery.stacktable.js"></script>
-    	<script src="js/application.js"></script>
-        <script src="js/jquery-scripts.js"></script>
-        <script src="js/original.js"></script>
-        
-        <script src="scripts/angular.min.js"></script>
-        <script src="scripts/quizController.js"></script>
-        <script src="scripts/quizServices.js"></script>
-        <!--<script src="scripts/userController.js"></script>
-        <script src="scripts/user-service.js"></script>-->
-        
-        <!-- datepicker plugin -->
-        <script src="bootstrap-formhelpers/js/bootstrap-formhelpers-datepicker.en_US.js"></script>
-        <script src="bootstrap-formhelpers/js/bootstrap-formhelpers-datepicker.js"></script>
-        
-<!--        <script src="js/chart-original.js"></script>-->
-        
-        <script src="site_js/quiz.js"></script>
-        
+        <jsp:include page="includes/scripts.jsp" />    
+            
+        <script src="js/angular.js"></script>
+        <script src="site_js/ngStorage.js"></script>
+        <script src="site_js/page/quiz.js"></script>
+        <script src="site_js/includes/activeAccount.js"></script>
+        <script src="site_js/services/quizService.js"></script>
+        <script src="site_js/services/userService.js"></script>
+        <script src="site_js/services/loTransactionService.js"></script>
+        <script src="site_js/services/lo-service.js"></script>
     </body>
 </html>
 

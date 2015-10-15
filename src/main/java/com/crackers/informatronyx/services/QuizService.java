@@ -71,19 +71,20 @@ public class QuizService {
                         - NASpecific = all LOs from specific user
                         - empty/null/"" = all LOs from all users
     */
-    public List<QuizDto> getQuizResults(QuizDto quiz, String condition) throws UnknownHostException {
+    public List<QuizDto> getQuizResults(QuizDto quiz1, String condition) throws UnknownHostException {
         List<QuizDto> quizResultsDto = new ArrayList<QuizDto>();
+        QuizDto quiz = new QuizDto();
         try {
             Quiz quizModel = new Quiz();
             if(condition.isEmpty()) {
                 quiz.setQuizResults(QuizDAO.getQuizResults(quizModel,""));
                 //System.out.println(quiz.getQuizResults().get(0).getLo_name());
             } else {
-                quizModel.setLo_id(quiz.getLo_id());
-                quizModel.setLo_name(quiz.getLo_name());
-                quizModel.setLo_subject(quiz.getLo_subject());
-                quizModel.setUser_id(quiz.getUser_id());
-                quizModel.setUsername(quiz.getUsername());
+                quizModel.setLo_id(quiz1.getLo_id());
+                quizModel.setLo_name(quiz1.getLo_name());
+                quizModel.setLo_subject(quiz1.getLo_subject());
+                quizModel.setUser_id(quiz1.getUser_id());
+                quizModel.setUsername(quiz1.getUsername());
             if(condition.contentEquals("userSpecific"))
                 quiz.setQuizResults(QuizDAO.getQuizResults(quizModel,"both"));
             else if(condition.contentEquals("LOSpecific"))
@@ -97,8 +98,8 @@ public class QuizService {
             QuizDto quizDto;
             for(int i = 0; i < quiz.getQuizResults().size(); i++) {
                 quizDto = new QuizDto();
-                quizDto = quiz.getsetQuiz(quiz.getQuizResults().get(i));
-                quizResultsDto.add(quizDto);
+                quizResultsDto.add(quizDto.getsetQuiz(quiz.getQuizResults().get(i)));
+                
             }
         } catch(NullPointerException ae) {System.out.println("Service Error!"); ae.printStackTrace();}
          finally{return quizResultsDto;}
