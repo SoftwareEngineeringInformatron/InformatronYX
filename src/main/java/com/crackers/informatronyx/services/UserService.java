@@ -5,8 +5,10 @@
  */
 package com.crackers.informatronyx.services;
 
+import com.crackers.informatronyx.dao.LearningObjectDAO;
 import com.crackers.informatronyx.dao.UserDAO;
 import com.crackers.informatronyx.dto.UserDto;
+import com.crackers.informatronyx.models.LearningObject;
 import com.crackers.informatronyx.models.User;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -24,6 +26,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
     @Autowired UserDAO dao;
+    @Autowired LearningObjectDAO loDao;
+    
+    
     public List<String> verify(UserDto user) throws UnknownHostException{
         List<String> errorList = new ArrayList<>();
         User model = dao.getUser(user.getUsername(), user.getPassword());
@@ -48,6 +53,7 @@ public class UserService {
             user.setData(userModel);
             userModel.setLastLogin(new Date());
             userModel.generateToken();
+            userModel = updateUserLOs(userModel);
             user.setLastLogin(userModel.getLastLogin());
             user.setToken(userModel.getToken());
             if(!dao.editUser(userModel))
@@ -55,6 +61,16 @@ public class UserService {
         }
         return user;
     }
+    
+    private User updateUserLOs(User user){
+        List<LearningObject> newLOs = new ArrayList<LearningObject>();
+        for(LearningObject old : user.getLiableLearningObjects()){
+            newLOs.add(loDao.getLearningObjectById(old.getId()));
+        }
+        user.setLiableLearningObjects(newLOs);
+        return user;
+    }
+    
     public boolean register(UserDto user) throws UnknownHostException{
         boolean ok = false;
         if(!dao.exists(user.getUsername())){

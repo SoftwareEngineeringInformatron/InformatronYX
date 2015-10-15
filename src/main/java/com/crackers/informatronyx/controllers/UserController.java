@@ -93,7 +93,7 @@ public class UserController {
     @RequestMapping("/edit")
     public boolean edit(@RequestBody UserDto user){
         boolean ok = false;
-        UserService service  = new UserService();
+        
         
         try {
             ok = service.edit(user);

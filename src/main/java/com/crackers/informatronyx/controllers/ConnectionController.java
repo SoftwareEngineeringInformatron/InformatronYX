@@ -19,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.client.ClientHttpRequest;
 import org.springframework.http.client.ClientHttpResponse;
@@ -38,12 +39,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("/connect")
 public class ConnectionController {
+    @Autowired UserService service;
     @RequestMapping(value= "/download/le/{user_id}/{lo_id}/{le_id}", method = RequestMethod.GET)
     public void download(@PathVariable("user_id") String userId, 
                          @PathVariable("le_id") String leId,
                          @PathVariable("lo_id") String loId,
                          HttpServletResponse response) throws URISyntaxException, IOException{
-        UserService service = new UserService();
         UserDto user = new UserDto();
         user.setId(userId);
         user = service.getUserInfo(user);
@@ -63,7 +64,7 @@ public class ConnectionController {
                 if(le==null)
                     response.sendError(404, "Learning Element does not exist.");
                 else
-                    sendLE(leId,response);
+                    sendLE(le.getId()+le.getFileExtension(),response);
             }
         }
             
