@@ -80,7 +80,7 @@ app.controller('AccountController',function($scope,$sessionStorage,userService){
     }
     
     function loadFunctions(){
-        switch($scope.userInfo.functionType)
+        switch($sessionStorage.user.functionType)
         {
             case 0: $scope.functions = [
                     {url: 'home'            ,str: 'Home'            },
