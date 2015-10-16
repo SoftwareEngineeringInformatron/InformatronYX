@@ -313,6 +313,8 @@
 								<td>{{result.date_submitted | date:"MMMM d yyyy"}}</td>
 								<td>{{result.score}}</td>
                             </tr>
+                            
+                            <tr ng-show="quiz.length==0"><td colspan="5">No one has taken the quiz yet!<td></tr>
                         </tbody>
                     </table>
                            <!-- <div class="offset1 error">
