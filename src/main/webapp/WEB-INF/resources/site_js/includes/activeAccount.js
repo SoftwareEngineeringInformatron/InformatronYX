@@ -65,9 +65,13 @@ app.controller('AccountController',function($scope,$sessionStorage,userService){
         userService.validate(user).success(function(response){
            if(response.length > 0) {
                $scope.destroySession();
-               alert('Session Destroyed');
+               alert('Your account has been logged in to another device. You will now be redirected..');
            }
         });
+    }
+    
+    function ted() {
+        alert('');
     }
     
     function loadFunctions(){
@@ -123,7 +127,9 @@ app.controller('AccountController',function($scope,$sessionStorage,userService){
     loadFunctions();
     //setInterval(getUserFromSession(),1000);
     //setInterval(loadFunctions(),1000);
+    setInterval(function(){checkToken($scope.userInfo)},1000);
 });
+
 app.controller('requestCreditController',function($scope,$sessionStorage,creditService){
     $scope.amount = 0;$scope.OR = "";
 

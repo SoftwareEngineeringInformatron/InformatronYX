@@ -79,6 +79,5 @@ app.factory('userService', function($http) {
             var url = "/InformatronYX/informatron/user/validate";
             return $http.post(url,data);
         }
-        
     };    
 });
