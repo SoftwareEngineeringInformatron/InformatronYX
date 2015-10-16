@@ -37,7 +37,7 @@
                         <div class="row-fluid">
                             <div class="span12 header-wrap main">
                                 
-                                <a href="${url_main}" class="brand offset1 header-txt"><i class="icon-download-alt logo"></i> InformatronCMS</a>
+                                <a href="main" class="brand offset1 header-txt"><i class="icon-download-alt logo"></i> InformatronCMS</a>
                                 <jsp:include page="includes/ActiveAccount.jsp" /> 
                                 
                             </div> 
@@ -48,7 +48,7 @@
                         <div class="row-fluid">
                             <div class="span10 header-wrap main one-set">      
                                 <div class="span8"><h5>SETTINGS</h5></div>                                                            
-                                <div class="span4" ><a href="${url_main}" class="btn-index span9" >BACK TO LEARNING OBJECT</a></div>
+                                <div class="span4" ><a href="main" class="btn-index span9" >BACK TO LEARNING OBJECT</a></div>
                             </div> 
                         </div>
                     </div>
