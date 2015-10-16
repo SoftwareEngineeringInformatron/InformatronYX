@@ -5,9 +5,7 @@
  */
 package com.crackers.informatronyx.dao;
 
-import com.crackers.informatronyx.config.DatabaseManager;
 import com.crackers.informatronyx.models.User;
-import com.mongodb.Mongo;
 import java.net.UnknownHostException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -14,16 +14,22 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Nelson
  */
+@Service
 public class LearningObjectService {
+    
+    @Autowired LearningObjectDAO dao;
+            
     public boolean getRequiredLearningElements(){ return false;}
     
     public List<LearningObjectDto> getAvailableLearningObjects() throws UnknownHostException{
-        List<LearningObject> availableLO = LearningObjectDAO.getList();//LearningObjectDAO.getAllLearningObjectByDateUpload(new Date());
+        List<LearningObject> availableLO = dao.getList();//dao.getAllLearningObjectByDateUpload(new Date());
         List<LearningObjectDto> objects = new ArrayList<LearningObjectDto>();
         for(LearningObject model: availableLO){
             LearningObjectDto dto = new LearningObjectDto();
@@ -42,7 +48,7 @@ public class LearningObjectService {
     }
     
     public List<LearningObjectDto> getMostLikedLearningObjects() throws UnknownHostException {
-        List<LearningObject> mostLikedLO = LearningObjectDAO.getMostLikedList();
+        List<LearningObject> mostLikedLO = dao.getMostLikedList();
         List<LearningObjectDto> objects = new ArrayList<LearningObjectDto>();
         
         for(LearningObject model: mostLikedLO) {
@@ -62,7 +68,7 @@ public class LearningObjectService {
     }
     
     public List<LearningObjectDto> getMostDownloadedLearningObjects() throws UnknownHostException {
-        List<LearningObject> mostDownloadedLO = LearningObjectDAO.getMostDownloadedList();
+        List<LearningObject> mostDownloadedLO = dao.getMostDownloadedList();
         List<LearningObjectDto> objects = new ArrayList<LearningObjectDto>();
         
         for(LearningObject model: mostDownloadedLO) {
@@ -96,7 +102,8 @@ public class LearningObjectService {
                 model.setPrice(obj.getPrice());
                 model.setSubject(obj.getSubject());
                 model.setUploadDate(obj.getUploadDate());
-                LearningObjectDAO.addLearningObject(model);
+                model.setSequence(obj.getSequence());
+                dao.addLearningObject(model);
                 ok = true;
             } catch (UnknownHostException ex) {
             }

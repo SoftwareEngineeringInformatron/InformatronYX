@@ -31,6 +31,7 @@ public class TransactionService {
     @Autowired UserDAO userDAO;
     @Autowired LOTransactionDAO lOTransactionDAO;
     @Autowired CreditTransactionDAO creditTransactionDAO;
+    @Autowired LearningObjectDAO loDao;
     public boolean addCreditsToUser(CreditTransactionDto trans) throws UnknownHostException, Exception{ 
         
         CreditTransaction transaction = new CreditTransaction();
@@ -80,7 +81,7 @@ public class TransactionService {
        return ok;
     }
     public boolean recordLOPurchase(LOTransactionDto transaction) throws UnknownHostException{
-        if(!LearningObjectDAO.exists(transaction.getU_Id()))
+        if(!loDao.exists(transaction.getU_Id()))
         {
             System.out.println(transaction.getU_Id());
             System.out.println(transaction.getLo_id());
@@ -91,7 +92,13 @@ public class TransactionService {
             transModel.setFinished(false);
             transModel.setLearningObjectId(transaction.getLo_id());
             transModel.setUser_id(transaction.getU_Id());
-            lOTransactionDAO.recordLOTransaction(transModel);
+            
+            if(lOTransactionDAO.recordLOTransaction(transModel)){
+                User user = userDAO.getUser(transModel.getUser_id());
+                user.getLiableLearningObjects()
+                        .add(loDao.getLearningObjectById(transModel.getLearningObjectId()));
+                userDAO.editUser(user);
+            }
             return true;
             } else {
                 return false;

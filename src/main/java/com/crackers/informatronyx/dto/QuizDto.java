@@ -26,7 +26,7 @@ public class QuizDto {
     Date time_started;
     Date time_finished;
     String username;
-    int user_id;
+    String user_id;
     List<Quiz> quizResults;
     List<String> errorList;
     
@@ -114,11 +114,11 @@ public class QuizDto {
         this.username = username;
     }
 
-    public int getUser_id() {
+    public String getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(int user_id) {
+    public void setUser_id(String user_id) {
         this.user_id = user_id;
     }
 

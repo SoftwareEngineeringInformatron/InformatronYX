@@ -15,6 +15,8 @@ import com.crackers.informatronyx.services.UserService;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/LO")
 public class LearningObjectController {
     
-    LearningObjectService loService = new LearningObjectService();
+    @Autowired LearningObjectService loService;
     
     @RequestMapping("/downloadLO")
     public void download(@RequestBody LearningObject object) throws UnknownHostException {
@@ -111,9 +113,15 @@ public class LearningObjectController {
     }
     
     @RequestMapping("/upload/avaiableLOs")
-    public Boolean uploadAvaiableLearningObjects(@RequestBody LearningObjectDto[] objects) throws UnknownHostException {
-        //LearningObjectService service = new LearningObjectService ();
+    public Boolean uploadAvaiableLearningObjects(
+            @RequestBody LearningObjectDto[] objects,
+            HttpServletResponse response
+            ) throws UnknownHostException 
+    {
+        LearningObjectService service = new LearningObjectService ();
+        System.out.println("nisud");
         loService.uploadAvaiableLearningObjects(objects);
+        
         return true;
     }
 }

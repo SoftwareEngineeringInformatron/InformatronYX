@@ -6,12 +6,11 @@
 package com.crackers.informatronyx.controllers;
 
 import com.crackers.informatronyx.dto.QuizDto;
-import com.crackers.informatronyx.dto.UserDto;
-import com.crackers.informatronyx.models.LearningObject;
 import com.crackers.informatronyx.services.QuizService;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/quiz")
 public class QuizController {
-            QuizService q = new QuizService();
+    @Autowired QuizService q;
     
     @RequestMapping("/submit")
     public QuizDto submit(@RequestBody QuizDto quiz) throws UnknownHostException {

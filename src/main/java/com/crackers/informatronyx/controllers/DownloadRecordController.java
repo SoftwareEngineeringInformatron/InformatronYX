@@ -10,6 +10,7 @@ import com.crackers.informatronyx.services.DownloadRecordService;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/downloadRecords")
 public class DownloadRecordController {
     
-    DownloadRecordService DRservice = new DownloadRecordService();
+    @Autowired DownloadRecordService DRservice;
 
     @RequestMapping("/recordsByUserID")
     public List<DownloadRecordDto> getRecordsbyUserID(@RequestBody String UserID) throws UnknownHostException {

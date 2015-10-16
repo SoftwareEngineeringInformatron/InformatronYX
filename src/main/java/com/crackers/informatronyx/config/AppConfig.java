@@ -24,11 +24,17 @@ public class AppConfig {
     /*
      * Factory bean that creates the com.mongodb.Mongo instance
      */
-    public static String mongodb_host = "localhost";//"192.168.254.104";
-    public static int mongodb_port = 27017;
-    public static String DATABASE_TRANSACTION = "transaction";
-    public static String DATABASE_USER = "user";
-    public static String LOOP_DOWNLOAD_LE = "http://localhost:8080/InformatronYX/store/img/elope.png";
+    public static final String mongodb_host = "localhost";//"192.168.254.104";
+    public static final int mongodb_port = 27017;
+    public static final String DATABASE_TRANSACTION = "transaction";
+    public static final String DATABASE_USER = "user";
+    public static final String DATABASE_LEARNINGOBJECT = "learningobjects";
+    public static final String DATABASE_DOWNLOADRECORD = "downloadrecord";
+    public static final String DATABASE_LORI = "lori";
+    public static final String DATABASE_QUIZ = "quiz";
+    public static final String LOOP_HOST = "localhost";//"192.168.254.104";
+    public static final int    LOOP_PORT = 35277;//"192.168.254.104";
+    public static final String LOOP_DOWNLOAD_LE = "http://"+LOOP_HOST+":"+LOOP_PORT+"/DummyLoop/loop/downloadLE/";
     
     
     // MONGODB CONFIGURATION
@@ -56,5 +62,25 @@ public class AppConfig {
     @Bean
     public MongoOperations transactionMongoOps() throws Exception{
         return new MongoTemplate(mongo(),AppConfig.DATABASE_TRANSACTION);
+    }
+    
+    @Bean
+    public MongoOperations learningObjectMongoOps() throws Exception{
+        return new MongoTemplate(mongo(),AppConfig.DATABASE_LEARNINGOBJECT);
+    }
+    
+    @Bean
+    public MongoOperations downloadRecordMongoOps() throws Exception{
+        return new MongoTemplate(mongo(),AppConfig.DATABASE_DOWNLOADRECORD);
+    }
+    
+    @Bean
+    public MongoOperations loriMongoOps() throws Exception{
+        return new MongoTemplate(mongo(),AppConfig.DATABASE_LORI);
+    }
+    
+     @Bean
+    public MongoOperations quizMongoOps() throws Exception{
+        return new MongoTemplate(mongo(),AppConfig.DATABASE_QUIZ);
     }
 }

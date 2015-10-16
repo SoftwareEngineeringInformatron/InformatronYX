@@ -11,6 +11,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/lori")
 public class LearningObjectReviewInformationController {
-    LearningObjectReviewInformationService loriService = new LearningObjectReviewInformationService();
+    @Autowired LearningObjectReviewInformationService loriService;
     
     @RequestMapping("/submit")
     public LearningObjectReviewInformationDto submit(@RequestBody LearningObjectReviewInformationDto LORI) throws UnknownHostException {

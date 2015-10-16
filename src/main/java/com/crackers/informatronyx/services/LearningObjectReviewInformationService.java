@@ -11,12 +11,16 @@ import com.crackers.informatronyx.models.LearningObjectReviewInformation;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Andrew Paul Mago
  */
+@Service 
 public class LearningObjectReviewInformationService {
+    @Autowired LearningObjectReviewInformationDAO dao;
     
     public boolean submitReview(LearningObjectReviewInformationDto LORI) throws UnknownHostException {
         if(evaluate(LORI)) {
@@ -26,7 +30,7 @@ public class LearningObjectReviewInformationService {
             loriModel.setLearningObjectId(LORI.getLearningObjectId());
             loriModel.setReviewId(LORI.getReviewId());
             loriModel.setSubject(LORI.getSubject());
-            LearningObjectReviewInformationDAO.addLORI(loriModel);
+            dao.addLORI(loriModel);
             return true;
             } else
                 return false;
@@ -40,7 +44,7 @@ public class LearningObjectReviewInformationService {
             loriModel.setLearningObjectId(LORI.getLearningObjectId());
             loriModel.setReviewId(LORI.getReviewId());
             loriModel.setSubject(LORI.getSubject());
-            LearningObjectReviewInformationDAO.editLORI(loriModel);
+            dao.editLORI(loriModel);
             return true;
             } else
                 return false;
@@ -54,7 +58,7 @@ public class LearningObjectReviewInformationService {
             loriModel.setLearningObjectId(LORI.getLearningObjectId());
             loriModel.setReviewId(LORI.getReviewId());
             loriModel.setSubject(LORI.getSubject());
-            LearningObjectReviewInformationDAO.deleteLORI(loriModel);
+            dao.deleteLORI(loriModel);
             return true;
             } else
                 return false;
@@ -65,7 +69,7 @@ public class LearningObjectReviewInformationService {
         try {
             LearningObjectReviewInformation loriModel = new LearningObjectReviewInformation();
             if(condition.isEmpty()) {
-                LORI.setLORIs(LearningObjectReviewInformationDAO.getLORIs(loriModel, ""));
+                LORI.setLORIs(dao.getLORIs(loriModel, ""));
             } else {
             loriModel.setEvaluation(LORI.getEvaluation());
             loriModel.setId(LORI.getId());
@@ -73,11 +77,11 @@ public class LearningObjectReviewInformationService {
             loriModel.setReviewId(LORI.getReviewId());
             loriModel.setSubject(LORI.getSubject());
             if(condition.contentEquals("learningObjectId"))
-                LORI.setLORIs(LearningObjectReviewInformationDAO.getLORIs(loriModel, "learningObjectId"));
+                LORI.setLORIs(dao.getLORIs(loriModel, "learningObjectId"));
             else if(condition.contentEquals("reviewId"))
-                LORI.setLORIs(LearningObjectReviewInformationDAO.getLORIs(loriModel, "reviewId"));
+                LORI.setLORIs(dao.getLORIs(loriModel, "reviewId"));
             else if(condition.contentEquals("both"))
-                LORI.setLORIs(LearningObjectReviewInformationDAO.getLORIs(loriModel, "both"));
+                LORI.setLORIs(dao.getLORIs(loriModel, "both"));
             else
                 return null;
             }

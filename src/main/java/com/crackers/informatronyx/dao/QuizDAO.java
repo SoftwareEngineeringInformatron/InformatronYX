@@ -5,24 +5,26 @@
  */
 package com.crackers.informatronyx.dao;
 
-import com.crackers.informatronyx.config.DatabaseManager;
 import com.crackers.informatronyx.models.Quiz;
 import java.net.UnknownHostException;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Andrew Paul Mago
  */
+@Repository
 public class QuizDAO {
-    
-    public static boolean addQuiz(Quiz quiz) throws UnknownHostException {
+    @Autowired MongoOperations quizMongoOps;
+    public  boolean addQuiz(Quiz quiz) throws UnknownHostException {
         try {
-         MongoOperations mongoOps = DatabaseManager.getMongoOpsInstance("quiz");
-         mongoOps.insert(quiz);
+         
+         quizMongoOps.insert(quiz);
          return true;
          
         } catch (NullPointerException ae) {System.out.println(ae.getMessage()); return false;}   
@@ -31,7 +33,7 @@ public class QuizDAO {
     /*
     public static boolean editQuiz(Quiz quiz) throws UnknownHostException {
         try {
-         MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"quiz");
+         MongoOperations quizMongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"quiz");
          Update updateQuiz = new Update();
          updateQuiz.set("score",quiz.getScore());
          updateQuiz.set("time_started", quiz.getTime_started());
@@ -39,7 +41,7 @@ public class QuizDAO {
          updateQuiz.set("totalScore", quiz.getTotalScore());
          updateQuiz.set("date_submitted", quiz.getDate_submitted());
          updateQuiz.set("user_id", quiz.getUser_id());
-         mongoOps.findAndModify(query(where("username").is(quiz.getUsername()).andOperator((where("lo_id").is(quiz.getLo_id()).andOperator(where("lo_name").is(quiz.getLo_name()))))),updateQuiz,Quiz.class);
+         quizMongoOps.findAndModify(query(where("username").is(quiz.getUsername()).andOperator((where("lo_id").is(quiz.getLo_id()).andOperator(where("lo_name").is(quiz.getLo_name()))))),updateQuiz,Quiz.class);
          return true;
          
         } catch (NullPointerException ae) {System.out.println(ae.getMessage()); return false;}
@@ -47,37 +49,37 @@ public class QuizDAO {
     
     public static boolean deleteQuiz(Quiz quiz) throws UnknownHostException {
         try {
-         MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"quiz");
-         mongoOps.remove(query(where("username").is(quiz.getUsername()).andOperator(where("lo_name").is(quiz.getLo_name()))), Quiz.class);
+         MongoOperations quizMongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"quiz");
+         quizMongoOps.remove(query(where("username").is(quiz.getUsername()).andOperator(where("lo_name").is(quiz.getLo_name()))), Quiz.class);
          return true;
          
         } catch (NullPointerException ae) {System.out.println(ae.getMessage()); return false;}
     }
     
     public static Quiz getQuiz(Quiz quiz) throws UnknownHostException {
-        MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"quiz");
+        MongoOperations quizMongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"quiz");
         Quiz q = null;
-        q = mongoOps.findOne(query(where("username").is(quiz.getUsername()).andOperator((where("lo_name").is(quiz.getLo_name()).andOperator(where("lo_id").is(quiz.getLo_id()))))), Quiz.class);
+        q = quizMongoOps.findOne(query(where("username").is(quiz.getUsername()).andOperator((where("lo_name").is(quiz.getLo_name()).andOperator(where("lo_id").is(quiz.getLo_id()))))), Quiz.class);
         return q;
     }
     
     public static List<Quiz> getQuizResults() throws UnknownHostException {
-        MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"quiz");
-        return mongoOps.findAll(Quiz.class);
+        MongoOperations quizMongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"quiz");
+        return quizMongoOps.findAll(Quiz.class);
     }
     */
     
-    public static List<Quiz> getQuizResults(Quiz quiz,String filter) throws UnknownHostException {
+    public  List<Quiz> getQuizResults(Quiz quiz,String filter) throws UnknownHostException {
         try {
-        MongoOperations mongoOps = DatabaseManager.getMongoOpsInstance("quiz");
+        
         if(filter.contentEquals("lo_name"))
-        return mongoOps.find(query(where("lo_name").is(quiz.getLo_name())), Quiz.class);
+        return quizMongoOps.find(query(where("lo_name").is(quiz.getLo_name())), Quiz.class);
         else if(filter.contentEquals("both"))
-        return mongoOps.find(query(where("lo_name").is(quiz.getLo_name()).andOperator((where("username").is(quiz.getUsername())))), Quiz.class);   
+        return quizMongoOps.find(query(where("lo_name").is(quiz.getLo_name()).andOperator((where("username").is(quiz.getUsername())))), Quiz.class);   
         else if(filter.contentEquals("user"))
-        return mongoOps.find(query(where("username").is(quiz.getUsername())), Quiz.class);
+        return quizMongoOps.find(query(where("username").is(quiz.getUsername())), Quiz.class);
         else
-        return mongoOps.findAll(Quiz.class);
+        return quizMongoOps.findAll(Quiz.class);
         
         } catch(NullPointerException ae) {System.out.println("DAO Error!"); return null;}
     }

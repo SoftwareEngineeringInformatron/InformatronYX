@@ -5,65 +5,63 @@
  */
 package com.crackers.informatronyx.dao;
 
-import com.crackers.informatronyx.config.AppConfig;
 import com.crackers.informatronyx.models.LearningObject;
-import com.crackers.informatronyx.models.User;
-import com.mongodb.Mongo;
 import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.List;
-import javax.swing.JOptionPane;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import org.springframework.data.mongodb.core.query.Query;
 import static org.springframework.data.mongodb.core.query.Query.query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Nelson
  */
+@Repository
 public class LearningObjectDAO {
     
-    public static List<LearningObject> getList() throws UnknownHostException {
-       MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"learningObject");
-        return mongoOps.findAll(LearningObject.class);
+    @Autowired MongoOperations learningObjectMongoOps;
+    
+    
+    public  List<LearningObject> getList() throws UnknownHostException {
+       return learningObjectMongoOps.findAll(LearningObject.class);
     }
     
-    public static boolean exists(String id) throws UnknownHostException {
-        MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port), "learningObject");
+    public  boolean exists(String id) throws UnknownHostException {
         boolean ok = false;
         Query query = new Query();
         query.addCriteria(where("id").is(id));
-        ok = mongoOps.exists(query, LearningObject.class);
+        ok = learningObjectMongoOps.exists(query, LearningObject.class);
         return ok;
     }
     
-    public static List<LearningObject> getMostLikedList() throws UnknownHostException {
-       MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"learningObject");
+    public  List<LearningObject> getMostLikedList() throws UnknownHostException {
+       
        Query query = new Query();
        //query.with(new Sort(Sort.Direction.DESC, "likes"));
        query.with(new Sort(new Order(Direction.DESC, "likes")));
-       return mongoOps.find(query, LearningObject.class);
+       return learningObjectMongoOps.find(query, LearningObject.class);
     }
     
-    public static List<LearningObject> getMostDownloadedList() throws UnknownHostException {
-       MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"learningObject");
+    public  List<LearningObject> getMostDownloadedList() throws UnknownHostException {
        Query query = new Query();
        query.with(new Sort(new Order(Direction.DESC, "downloads")));
-       return mongoOps.find(query, LearningObject.class);
+       return learningObjectMongoOps.find(query, LearningObject.class);
     }
     
     //Clears the list then Adds the available LOs
-    public static boolean updateList(LearningObject object) throws UnknownHostException {
+    public  boolean updateList(LearningObject object) throws UnknownHostException {
         try {
-         MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"learningObject");
+         
          //Clear LO list
          //Add Available LOs         
-         mongoOps.insert(object);
+         learningObjectMongoOps.insert(object);
          return true;         
         } 
         catch (NullPointerException e) {
@@ -72,19 +70,19 @@ public class LearningObjectDAO {
         }
     }
     
-    public static void addLearningObject(LearningObject object) throws UnknownHostException {
-         MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"learningObject");
-         mongoOps.insert(object);
+    public  void addLearningObject(LearningObject object) throws UnknownHostException {
+         
+         learningObjectMongoOps.insert(object);
     }
     
-    public static void addLearningObjects(List<LearningObject> objects) throws UnknownHostException {
-         MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"learningObject");
-         mongoOps.insert(objects);
+    public  void addLearningObjects(List<LearningObject> objects) throws UnknownHostException {
+         
+         learningObjectMongoOps.insert(objects);
     }
     
-    public static List<LearningObject> getAllLearningObjectByDateUpload(Date date) throws UnknownHostException {
-        MongoOperations mongoOps = new MongoTemplate(new Mongo(AppConfig.mongodb_host, AppConfig.mongodb_port),"learningObject");
-        return mongoOps.find(query(where("uploadDate").is(date)), LearningObject.class);
+    public  List<LearningObject> getAllLearningObjectByDateUpload(Date date) throws UnknownHostException {
+        
+        return learningObjectMongoOps.find(query(where("uploadDate").is(date)), LearningObject.class);
     }
     
     
@@ -105,7 +103,7 @@ public class LearningObjectDAO {
         lo.setSubject("Japanese");
         lo.setUploadDate("12/11/2015");
         System.out.println(lo.getPrice());
-        LearningObjectDAO.addLearningObject(lo);
+        //LearningObjectDAO.addLearningObject(lo);
         
         lo2.setLikes(20);
         lo2.setDownloads(153);
@@ -115,7 +113,7 @@ public class LearningObjectDAO {
         lo2.setId("LO2");
         lo2.setSubject("Meikz City");
         lo2.setUploadDate("09/11/2000");
-        LearningObjectDAO.addLearningObject(lo2);
+       // LearningObjectDAO.addLearningObject(lo2);
         
         lo3.setLikes(9);
         lo3.setDownloads(15);
@@ -123,17 +121,23 @@ public class LearningObjectDAO {
         lo3.setPrice(7.50f);
         lo3.setDescription("ULTRA KILL!!");
         lo3.setId("LO3");
-        LearningObjectDAO.addLearningObject(lo3);
+        //LearningObjectDAO.addLearningObject(lo3);
         
         lo4.setLikes(50);
         lo4.setDownloads(73);
         lo4.setTitle("walksPerSecond");
         lo4.setId("LO4");
-        LearningObjectDAO.addLearningObject(lo4);
+        //LearningObjectDAO.addLearningObject(lo4);
         
         //JOptionPane.showMessageDialog(null, LearningObjectDAO.getMostLikedList().toString());
-        JOptionPane.showMessageDialog(null, LearningObjectDAO.getMostDownloadedList().toString());
+       // JOptionPane.showMessageDialog(null, LearningObjectDAO.getMostDownloadedList().toString());
         //System.out.println(LearningObjectDAO.getMostLikedList());
+    }
+
+    public LearningObject getLearningObjectById(String id) {
+        Query query = new Query();
+        query.addCriteria(where("id").is(id));
+        return learningObjectMongoOps.findOne(query, LearningObject.class);
     }
     
 }
