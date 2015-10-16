@@ -35,16 +35,21 @@ app.controller('AccountController',function($scope,$sessionStorage,userService){
         var getPromise = userService.get($sessionStorage.user);
             getPromise.success(function(response){
                 $sessionStorage.user = response ;
+                if(response != "") {
+                    $scope.userInfo = $sessionStorage.user;
+                    checkEligibility($scope.userInfo.functionType);
+                    setInterval(function(){checkToken($sessionStorage.user)},1000);
+                } else {
+                    $sessionStorage.user = {username:"Guest",functionType:0};
+                    $scope.userInfo = $sessionStorage.user;
+                    checkEligibility($sessionStorage.user.functionType);
+                }
             });
             getPromise.error(function(response){
-                $sessionStorage.user = response ;
+                $sessionStorage.user = {username:"Guest",functionType:0};
+                $scope.userInfo = $sessionStorage.user;
+                checkEligibility($sessionStorage.user.functionType);
             });
-        if($sessionStorage.user!=null){
-            $scope.userInfo = $sessionStorage.user;
-            checkEligibility($scope.userInfo.functionType);
-            checkToken($scope.userInfo);
-        } else
-            checkEligibility(0);
     }
     
     function checkEligibility(functionType) {
@@ -127,7 +132,6 @@ app.controller('AccountController',function($scope,$sessionStorage,userService){
     loadFunctions();
     //setInterval(getUserFromSession(),1000);
     //setInterval(loadFunctions(),1000);
-    setInterval(function(){checkToken($scope.userInfo)},1000);
 });
 
 app.controller('requestCreditController',function($scope,$sessionStorage,creditService){
