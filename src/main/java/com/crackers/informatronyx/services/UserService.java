@@ -53,7 +53,23 @@ public class UserService {
             user.setData(userModel);
             userModel.setLastLogin(new Date());
             userModel.generateToken();
-            userModel = updateUserLOs(userModel);
+            user.setData(updateUserLOs(userModel));
+            LearningObject [] objects = new LearningObject [userModel.getLiableLearningObjects().toArray().length];
+            objects = userModel.getLiableLearningObjects().toArray(objects);
+            for(int i=0;i<objects.length;i++){
+                for(LearningObject obj2: user.getLiableLearningObjects()){
+                    if(obj2.getId().equals(objects[i].getId())){
+                        objects[i].setTitle(obj2.getTitle());
+                        objects[i].setDescription(obj2.getDescription());
+                        objects[i].setLikes(obj2.getLikes());
+                        objects[i].setDownloads(obj2.getLikes());
+                        objects[i].setSequence(obj2.getSequence());
+                        objects[i].setSubject(obj2.getSubject());
+                        objects[i].setPrice(obj2.getPrice());
+                        objects[i].setUploadDate(obj2.getUploadDate());
+                    }
+                }
+            }
             user.setLastLogin(userModel.getLastLogin());
             user.setToken(userModel.getToken());
             if(!dao.editUser(userModel))
