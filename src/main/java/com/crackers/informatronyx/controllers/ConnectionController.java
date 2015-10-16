@@ -74,6 +74,7 @@ public class ConnectionController {
         sendLE(leId,response);
     }
     private void sendLE(String leId,HttpServletResponse response){
+        System.out.println(leId);
             SimpleClientHttpRequestFactory requestfactory = new SimpleClientHttpRequestFactory();
         ClientHttpResponse loopResponse;
         try {
@@ -84,6 +85,7 @@ public class ConnectionController {
                 String headerValue = String.format("attachment; filename=\"%s\"", leId);
                 response.setHeader(headerKey, headerValue);
                 IOUtils.copy(fileStream,response.getOutputStream());
+                fileStream.close();
                 response.getOutputStream().close();
             }
             
