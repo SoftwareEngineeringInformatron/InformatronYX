@@ -53,7 +53,7 @@ app.controller('AccountController',function($scope,$sessionStorage,userService){
     }
     
     function checkEligibility(functionType) {
-        var currentURL = window.location.toString().split('/store/')[1];
+        var currentURL = window.location.toString().split('/store/')[1].split('?')[0];
         var userFunction = eligibilityChecker[functionType].type;
         var flag = 0;
         for(var i=0; i < userFunction.length; i++) {
