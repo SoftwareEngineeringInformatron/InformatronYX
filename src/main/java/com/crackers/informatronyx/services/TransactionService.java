@@ -95,6 +95,7 @@ public class TransactionService {
             
             if(lOTransactionDAO.recordLOTransaction(transModel)){
                 User user = userDAO.getUser(transModel.getUser_id());
+                user.setCredits(user.getCredits()-transaction.getAmount());
                 user.getLiableLearningObjects()
                         .add(loDao.getLearningObjectById(transModel.getLearningObjectId()));
                 userDAO.editUser(user);
