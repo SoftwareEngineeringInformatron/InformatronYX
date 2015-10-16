@@ -41,13 +41,13 @@ app.controller('AccountController',function($scope,$sessionStorage,userService){
             });
         if($sessionStorage.user!=null){
             $scope.userInfo = $sessionStorage.user;
-        }
-        checkEligibility($sessionStorage.user.functionType);
+            checkEligibility($scope.userInfo.functionType);
+            checkToken($scope.userInfo);
+        } else
+            checkEligibility(0);
     }
     
     function checkEligibility(functionType) {
-        if(functionType == undefined)
-            functionType = 0;
         var currentURL = window.location.toString().split('/store/')[1];
         var userFunction = eligibilityChecker[functionType].type;
         var flag = 0;
@@ -59,6 +59,15 @@ app.controller('AccountController',function($scope,$sessionStorage,userService){
         }
         if(flag == 0)
             window.location.href = "main";
+    }
+    
+    function checkToken(user) {
+        userService.validate(user).success(function(response){
+           if(response.length > 0) {
+               $scope.destroySession();
+               alert('Session Destroyed');
+           }
+        });
     }
     
     function loadFunctions(){
@@ -112,8 +121,8 @@ app.controller('AccountController',function($scope,$sessionStorage,userService){
     }
     getUserFromSession();
     loadFunctions();
-    setInterval(getUserFromSession(),1000);
-    setInterval(loadFunctions(),1000);
+    //setInterval(getUserFromSession(),1000);
+    //setInterval(loadFunctions(),1000);
 });
 app.controller('requestCreditController',function($scope,$sessionStorage,creditService){
     $scope.amount = 0;$scope.OR = "";

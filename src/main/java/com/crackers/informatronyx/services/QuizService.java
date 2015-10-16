@@ -108,9 +108,9 @@ public class QuizService {
     }
     
     private boolean evaluate(QuizDto quiz) {
-        //if(quiz.getEndTime()!=null && quiz.getLearningObjectTitle()!=null && quiz.getResult()>=0 && quiz.getStartTime()!=null && quiz.getUsername()!=null)
+        if(quiz.getTime_finished()!=null && quiz.getLo_id()!=null && quiz.getScore()>=0 && quiz.getTime_started()!=null && quiz.getUser_id()!=null)
             return true;
-        //else
-        //    return false;
+        else
+            return false;
     }
 }

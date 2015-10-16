@@ -80,10 +80,10 @@ public class UserController {
         return user;
     }
     @RequestMapping("/validate")
-    public List<String> validate(UserDto user){
+    public List<String> validate(@RequestBody UserDto user){
         List<String> errorList = new ArrayList<>();
         try{
-             errorList = (new UserService()).verify(user);
+             errorList = service.verify(user);
         } catch (UnknownHostException ex) {
             Logger.getLogger(UserController.class.getName()).log(Level.CONFIG, "MongoDB is not connected");
         }

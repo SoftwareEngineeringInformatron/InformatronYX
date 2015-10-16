@@ -32,7 +32,7 @@ public class UserService {
     public List<String> verify(UserDto user) throws UnknownHostException{
         List<String> errorList = new ArrayList<>();
         User model = dao.getUser(user.getUsername(), user.getPassword());
-        if(model!=null)
+        if(model==null)
             errorList.add("User does not exist.");
         else{
             if(model.getToken() == null){
@@ -40,7 +40,7 @@ public class UserService {
             }
             if(user.getToken() == null)
                 errorList.add("No Acces Token found.");
-            else if(user.getToken().equals(model.getToken()))
+            else if(!(user.getToken().equals(model.getToken())))
                 errorList.add("Outdated Access Token.");
         }
         
