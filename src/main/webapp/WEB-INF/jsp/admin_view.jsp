@@ -386,7 +386,7 @@
                 <div class="navbar navbar-inverse">
                         <div class="row-fluid">
                             <div class="span12 header-wrap main">
-                                <a href="home" class="brand offset1 header-txt"><i class="icon-download-alt logo"></i> InformatronCMS</a>
+                                <a href="main" class="brand offset1 header-txt"><i class="icon-download-alt logo"></i> InformatronCMS</a>
                                 <jsp:include page="includes/ActiveAccount.jsp" /> 
                             </div> 
                         </div>

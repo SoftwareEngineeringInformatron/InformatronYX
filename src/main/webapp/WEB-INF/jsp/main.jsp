@@ -272,7 +272,7 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="lo in LOs | filter:searchText">
-                                <td><a href="learningobject?loID={{lo.id}}"><i class="icon-file"></i> {{lo.title}}</a>
+                                <td><i class="icon-file"></i> {{lo.title}}</a>
                                     <div class="few-details"><i>Downloads: {{lo.downloads}} &nbsp;&nbsp;<span class="icon-thumbs-up"></span> {{lo.likes}} &nbsp;&nbsp;
                                         </i>
                                     </div>
@@ -282,7 +282,7 @@
                                 <td><a href="#evaluation" class="" data-toggle="modal" ng-click="lori(lo.id)"><img class="lori" src="img/logo2-3.png"></a></td>
                                 
                                 <td>
-                                    <button title="Purchase" class="btn-download" data-toggle="modal" data-target="#purchase" ng-click="ModalInstance(lo)"><i class="icon-download-alt btn-index"></i> &nbsp;</button>
+                                    <button title="Purchase" class="btn-download" data-toggle="modal" data-target="#purchase" ng-click="ModalInstance(lo)"><img src="img/check.png" ></i> &nbsp;</button>
                                 </td>
                                 
 				<td>
