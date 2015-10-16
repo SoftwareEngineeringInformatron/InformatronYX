@@ -48,12 +48,13 @@ app.controller("LOcontroller", function($sessionStorage,$scope, $rootScope, loRe
     }    
     /// ADDED
     $rootScope.LOs = [];
-    $rootScope.loprice = "";
+    $rootScope.loprice = 0;
     $rootScope.lodescription = "";
     $rootScope.loid = "";
     $rootScope.lotitle = "";
-    
+    $rootScope.purchased = "";
     $rootScope.userID = "";
+    $rootScope.credits = {user:$sessionStorage.user.credits};
     
     $rootScope.callAllMostDownloaded = function() {
         loRepository.getMostDownloaded().success(function(lo) {
@@ -79,19 +80,17 @@ app.controller("LOcontroller", function($sessionStorage,$scope, $rootScope, loRe
         var transactionData = {
           "lo_id":$rootScope.loid,
           "u_Id":$sessionStorage.user.id,
+          "amount":$rootScope.loprice,
           "errorList":null
         };
         loTransactionService.recordLOPurchase(transactionData).success(function(lo) {
             if(lo == "true") {
                 alert('SUCCESS');
+                $rootScope.purchased = lo;
             }
         });                
     };
-    
-    
 });
-    
-
 
 app.controller("loriController",function($scope,$rootScope,loriService){
     $scope.displayLoris = [];

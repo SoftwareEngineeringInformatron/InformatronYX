@@ -74,21 +74,21 @@
                                 >
                                 <thead>
                                 <tr>
+                                    <th>Learning Object</th>
                                     <th>Transaction ID</th>
                                     <th>User ID</th>
                                     <th>Amount Paid</th>
                                     <th>Date Paid</th>
-                                    <th>O.R. number</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                     <tr ng-if="lotransactions == 0"><td>User has no transactions!<td></tr>
                                     <tr ng-repeat="trans in lotransactions">
+                                        <td>{{getLOTitleById(trans.lo_id)}}</td>
                                         <td>{{trans.lo_id}}</td>
                                         <td>{{trans.u_Id}}</td>
                                         <td>{{trans.amount}}</td>
                                         <td>{{trans.dateOfTransaction | date: "MMMM d yyyy"}}</td>
-                                        <td>{{trans.officialReceipt}}</td>
                                     </tr>
                                 </tbody>
                             </table>

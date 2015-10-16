@@ -280,13 +280,12 @@
                                 <td>{{lo.subject}}</td>
                                 <td>{{lo.uploadDate}}</td>
                                 <td><a href="#evaluation" class="" data-toggle="modal" ng-click="lori(lo.id)"><img class="lori" src="img/logo2-3.png"></a></td>
-                                
                                 <td>
-                                    <button title="Purchase" class="btn-download" data-toggle="modal" data-target="#purchase" ng-click="ModalInstance(lo)"><img src="img/check.png" ></i> &nbsp;</button>
+                                    <button ng-if="lo.price <= credits.user" title="Purchase" class="btn-download" data-toggle="modal" data-target="#purchase" ng-click="ModalInstance(lo)"><img src="img/check.png" ></i> &nbsp;</button>
                                 </td>
                                 
 				<td>
-                                    <a href="quiz?loid={{lo.id}}&uid=<% //if( isession == "icms_user" ) out.println(user_id); else out.println("0"); %>"><img src="img/quiz.jpg"></img></a>
+                                    <a href="quiz?id={{lo.title}}"><img src="img/quiz.jpg"></img></a>
                                 </td>
 				<%// } %><!-- gets na  -->
                             </tr>
