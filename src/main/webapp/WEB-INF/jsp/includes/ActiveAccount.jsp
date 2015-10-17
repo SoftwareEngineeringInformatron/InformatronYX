@@ -28,7 +28,7 @@
                 </li>
                 <li class="divider"></li>
                 <li>
-                    <a ng-click="destroySession()">
+                    <a ng-click="destroySession()" ng-if="userInfo.functionType!=0">
                         Sign Out
                     </a>
                 </li>

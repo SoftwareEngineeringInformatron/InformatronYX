@@ -44,11 +44,13 @@ app.controller('AccountController',function($scope,$sessionStorage,userService){
                     $scope.userInfo = $sessionStorage.user;
                     checkEligibility($sessionStorage.user.functionType);
                 }
+                loadFunctions();
             });
             getPromise.error(function(response){
                 $sessionStorage.user = {username:"Guest",functionType:0};
                 $scope.userInfo = $sessionStorage.user;
                 checkEligibility($sessionStorage.user.functionType);
+                loadFunctions();
             });
     }
     
@@ -129,7 +131,6 @@ app.controller('AccountController',function($scope,$sessionStorage,userService){
         window.location = "home";
     }
     getUserFromSession();
-    loadFunctions();
     //setInterval(getUserFromSession(),1000);
     //setInterval(loadFunctions(),1000);
 });

@@ -64,6 +64,7 @@
                                                 <ul class="nav pull-right index">
                                                     <li class="sign-up"><a class="btn index btn-index" href="login_signup?action=signup">Sign Up</a></li>
                                                     <li class="sign-up"><a class="btn index btn-index" href="login_signup?action=login">Login</a></li>
+                                                    <li class="sign-up"><a class="btn index btn-index" href="main">Store</a></li>
                                                 </ul>				                   
                                             </div>
                                      </div> 
