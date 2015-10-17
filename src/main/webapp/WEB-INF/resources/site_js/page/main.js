@@ -75,7 +75,13 @@ app.controller("LOcontroller", function($sessionStorage,$scope, $rootScope, loRe
     };
     
     displayAll();
-    
+    $rootScope.userHasLO = function(LO){
+        for(var i=0;i<$sessionStorage.user.liableLearningObjects.length;i++){
+            if($sessionStorage.user.liableLearningObjects[i].id == LO.id)
+                return true;
+        }
+        return false;
+    }
     $rootScope.purchaseLO = function() {
         var transactionData = {
           "lo_id":$rootScope.loid,
