@@ -67,7 +67,7 @@ app.controller("meterController",function($sessionStorage,$scope,$rootScope,cred
     
     $scope.approveTransaction = function(transaction){
         if($sessionStorage.user!=null)
-            transaction.appBy = $sessionStorage.user.id;
+            transaction.byUser = $sessionStorage.user.id;
         var transactionPOST = creditService.approveTransaction(transaction);
         transactionPOST.success(function (response){
             if(response=='true'){
@@ -82,6 +82,8 @@ app.controller("meterController",function($sessionStorage,$scope,$rootScope,cred
         $('#approveAction').toggle();
     };
     $scope.declineTransaction = function(transaction){
+        if($sessionStorage.user!=null)
+            transaction.byUser = $sessionStorage.user.id;
         var transactionPOST = creditService.removeTransaction(transaction);
         transactionPOST.success(function (response){
             if(response=='true'){

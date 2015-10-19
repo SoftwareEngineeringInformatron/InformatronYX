@@ -67,7 +67,7 @@ public class TransactionController {
     public boolean removeCreditTransaction(@RequestBody  CreditTransactionDto trans) throws UnknownHostException{
         if(trans!=null){
             
-            return service.removeCreditTransaction(trans);
+            return service.declineCreditTransaction(trans);
         }
         return false;
     }

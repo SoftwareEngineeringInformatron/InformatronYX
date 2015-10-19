@@ -95,7 +95,7 @@
                                 <th>Name</th>
                                 <th>Amount Issued</th>
                                 <th>Receipt</th>
-                                <th> <div  class="text-center">Approve</div></th>
+                                <th> <div  class="text-center">Action</div></th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -104,14 +104,14 @@
                             <tr ng-if="transactions.length == 0">
                                 <td><h3>There no pending credit transactions that needs approval.</h3></td>
                             </tr>
-                            <tr ng-repeat="trans in transactions" ng-if="trans.ok == false">
+                            <tr ng-repeat="trans in transactions" ng-if="trans.ok == false && !trans.declined">
                                 <td></td>
                                 <td><a href="#payCharges" data-toggle="modal">{{getUserNameById(trans.u_ID)}}</a></td>
                                 <td>{{trans.amnt}}</td>
                                 <td>{{trans.or}}</td>
                                 <td>
                                     <div class="text-center">
-                                        <button  ng-click="loadTransaction(trans)" class="btn" data-toggle="modal" data-target="#approveAction"> Approve </button>
+                                        <button  ng-click="loadTransaction(trans)" class="btn" data-toggle="modal" data-target="#approveAction"> Action </button>
                                         <!--<button  ng-click="loadTransaction(trans)" class="btn" data-toggle="modal" data-target="#declineAction"> Decline </button>-->
                                     </div>
                                 </td>
@@ -134,7 +134,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="trans in lotransactions">
+                            <tr ng-repeat="trans in lotransactions" >
                                 <td></td>
                                 <td><a href="#payCharges" data-toggle="modal">{{getUserNameById(trans.u_Id)}}</a></td>
                                 <td>{{getLOById(trans.lo_id)}}</td>
@@ -165,7 +165,7 @@
                             <div class="row-fluid">
                                 <div class="span10 offset1">
                                     <button ng-click="approveTransaction(currentTransaction)" type="button"  class="btn btn-success">&nbsp;&nbsp;CONFIRM&nbsp;&nbsp;</button>
-                                    <button type="button" data-dismiss="modal" class="btn btn-danger">&nbsp;&nbsp;DECLINE&nbsp;&nbsp;</button>
+                                    <button ng-click="declineTransaction(currentTransaction)" type="button" data-dismiss="modal" class="btn btn-danger">&nbsp;&nbsp;DECLINE&nbsp;&nbsp;</button>
                                 </div>
                             </div>
                         </div>

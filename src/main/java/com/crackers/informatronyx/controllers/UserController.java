@@ -69,13 +69,13 @@ public class UserController {
         try{
         
         UserDto result = service.login(user);
+        if(result.getId() == null)
+            user.getErrorList().add("User does not exist.");
         if(!result.isApproved()){
             user.getErrorList().add("User account is not yet approved by admin.");
         }
-        if(result==null)
-            user.getErrorList().add("Registration unsucessful.");
         }catch(Exception e){
-            user.getErrorList().add(e.toString());
+            user.getErrorList().add(e.getMessage());
         }
         return user;
     }

@@ -63,8 +63,8 @@ public class CreditTransactionDAO {
         query.addCriteria(where("id").is(transaction.getId()));
         return transactionMongoOps.exists(query, CreditTransaction.class);
     }
-    public  boolean existsByOfficialReciept(String OR) throws UnknownHostException{
-        return transactionMongoOps.exists(generateQuery("officialReceipt",OR), CreditTransaction.class);
+    public  CreditTransaction getTransactionByReceipt(String OR) throws UnknownHostException{
+        return transactionMongoOps.findOne(generateQuery("officialReceipt",OR), CreditTransaction.class);
     }
     private  Query generateQuery(String property,Object value){
         Query query = new Query();

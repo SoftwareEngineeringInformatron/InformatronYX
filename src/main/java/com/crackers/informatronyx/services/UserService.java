@@ -47,9 +47,11 @@ public class UserService {
         return errorList;
     
     }
-    public UserDto login(UserDto user) throws UnknownHostException{
+    public UserDto login(UserDto user) throws UnknownHostException, Exception{
         User userModel = dao.getUser(user.getUsername(), user.getPassword());
         if(userModel != null){
+            if(userModel.isBlocked())
+                throw new Exception("User is blocked");
             user.setData(userModel);
             userModel.setLastLogin(new Date());
             userModel.generateToken();

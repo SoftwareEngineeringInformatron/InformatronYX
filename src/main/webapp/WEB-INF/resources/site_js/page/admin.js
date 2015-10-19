@@ -65,7 +65,7 @@ app.controller("adminAccountManagementController",function($scope,$rootScope,use
             //$rootScope.displayedUsers = response;
             $scope.buttonAction = '#'+$rootScope.actions[3];
             for(var i=0;i<response.length;i++){
-                    if(response[i].userType == "Common"){
+                    if(response[i].userType == "User"){
                         $rootScope.displayedUsers.push(response[i]);
                         $rootScope.selectedUsers.push(false);
                      }
@@ -79,7 +79,7 @@ app.controller("adminAccountManagementController",function($scope,$rootScope,use
             //$rootScope.displayedUsers = response;
             $scope.buttonAction = '#'+$rootScope.actions[2];
             for(var i=0;i<response.length;i++){
-                if(response[i].userType == "Common"){
+                if(response[i].userType == "User"){
                    $rootScope.displayedUsers.push(response[i]);
                    $rootScope.selectedUsers.push(false);
                 }

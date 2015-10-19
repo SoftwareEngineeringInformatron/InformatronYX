@@ -43,7 +43,8 @@ public class TransactionService {
         transaction.setAmount(trans.getAmnt());
         transaction.setDateOfTransaction(new Date());
         transaction.setFinished(false);
-        if(creditTransactionDAO.existsByOfficialReciept(trans.getOr()))
+        CreditTransaction temp = creditTransactionDAO.getTransactionByReceipt(trans.getOr());
+        if(temp!=null && !temp.isDeclined())
             throw new Exception("Offcial Recepit has already been registered");
         transaction.setOfficialReceipt(trans.getOr());
         //transaction.setApproveBy(trans.getAppBy());
@@ -53,7 +54,7 @@ public class TransactionService {
     public boolean approveCreditTransaction(CreditTransactionDto trans) throws UnknownHostException{
         boolean ok = false;
         CreditTransaction obj = creditTransactionDAO.getCreditTransactionById(trans.getId());
-        obj.setApproveBy(trans.getAppBy());
+        obj.setByUser(trans.getByUser());
         obj.setFinished(true);
         User user = userDAO.getUser(obj.getUser_Id());
         user.setCredits(user.getCredits() + obj.getAmount());
@@ -131,10 +132,11 @@ public class TransactionService {
         return dtos;
     }
 
-    public boolean removeCreditTransaction(CreditTransactionDto trans) throws UnknownHostException {
-        CreditTransaction model = new CreditTransaction();
-        model.setId(trans.getId());
-        return creditTransactionDAO.removeCreditTransaction(model);
+    public boolean declineCreditTransaction(CreditTransactionDto trans) throws UnknownHostException {
+        CreditTransaction model = this.creditTransactionDAO.getCreditTransactionById(trans.getId());
+        model.setDeclined(true);
+        model.setByUser(trans.getByUser());
+        return creditTransactionDAO.editCreditTransaction(model);
     }
     
     

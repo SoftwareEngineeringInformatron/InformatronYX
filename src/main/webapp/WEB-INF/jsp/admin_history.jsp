@@ -102,7 +102,10 @@
                                     <th>Amount Paid</th>
                                     <th>Date Paid</th>
                                     <th>O.R. number</th>
-                                    <th>Approved By</th>
+                                    <th>Declined</th>
+                                    <th>By User</th>
+                                    
+                                    
                                 </tr>
                                 </thead>
                                 <tr ng-if='creditTransactions.length==0'>
@@ -111,14 +114,15 @@
                                 <tr ng-repeat="trans in creditTransactions" 
                                     ng-if='creditTransactions.indexOf(trans) <= stop && creditTransactions.indexOf(trans)>=start'>
                                     <td>{{creditTransactions.indexOf(trans) + 1}}</td>
-                                    <td>{{getUserNameById(trans.id)}}</td>
+                                    <td>{{getUserById(trans.u_ID).username}}</td>
                                     <td>{{trans.id}}</td>
                                     <td>{{trans.amnt}}</td>
                                     <td>{{trans.date}}</td>
                                     <td>{{trans.or}}</td>
+                                    <td>{{trans.declined}}</td>
                                     <td>
-                                        <div ng-if="getUserById(trans.appBy)!=null">
-                                            {{getUserById(trans.appBy).username}}(<i>{{getUserById(trans.appBy).userType}}</i>)
+                                        <div ng-if="getUserById(trans.byUser)!=null">
+                                            {{getUserById(trans.byUser).username}}(<i>{{getUserById(trans.byUser).userType}}</i>)
                                         </div>
                                     </td>
                                 </tr>
@@ -150,7 +154,7 @@
                                 </thead>
                                 <tr ng-repeat="trans in loTransaction"
                                     ng-if='loTransaction.indexOf(trans) <= stop && loTransaction.indexOf(trans)>=start'>
-                                    <td>{{getUserById(trans.u_Id).username}}</td>
+                                    <td>{{trans.u_ID}}{{getUserById(trans.u_Id).username}}</td>
                                     <td>{{trans.lo_id}}</td>
                                     <td></td>
                                     <td>{{trans.dot_str}}</td>

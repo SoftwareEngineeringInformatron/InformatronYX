@@ -13,15 +13,24 @@ package com.crackers.informatronyx.models;
 public class CreditTransaction extends Transaction{
     
     private String user_Id = null;
-    private String approveBy = null;
+    private String byUser = null;
+    private boolean declined;
     
 
-    public String getApproveBy() {
-        return approveBy;
+    public String getByUser() {
+        return byUser;
     }
 
-    public void setApproveBy(String approveBy) {
-        this.approveBy = approveBy;
+    public boolean isDeclined() {
+        return declined;
+    }
+
+    public void setDeclined(boolean declined) {
+        this.declined = declined;
+    }
+
+    public void setByUser(String approveBy) {
+        this.byUser = approveBy;
     }
 
     public String getUser_Id() {

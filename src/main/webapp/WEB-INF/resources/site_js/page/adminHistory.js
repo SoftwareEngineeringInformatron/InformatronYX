@@ -43,7 +43,7 @@ app.controller("creditHistory",function($rootScope,$scope,userService,creditServ
     }
     $rootScope.getUserById = function(id){
         for(var i=0;i<$rootScope.allUsers.length;i++){
-                if($rootScope.allUsers[i].id = id)
+                if($rootScope.allUsers[i].id == id)
                     return $rootScope.allUsers[i];
             }
         return null;
