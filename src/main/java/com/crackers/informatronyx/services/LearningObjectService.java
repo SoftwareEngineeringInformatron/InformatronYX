@@ -91,6 +91,7 @@ public class LearningObjectService {
    
     public boolean uploadAvaiableLearningObjects(LearningObjectDto[] objects) {
         boolean ok  = false;
+        dao.clearCollection();
         for(LearningObjectDto obj : objects){
             try {
                 LearningObject model = new LearningObject();

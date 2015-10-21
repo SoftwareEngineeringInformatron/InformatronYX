@@ -140,4 +140,13 @@ public class LearningObjectDAO {
         return learningObjectMongoOps.findOne(query, LearningObject.class);
     }
     
+    public boolean clearCollection(){
+        try{
+        learningObjectMongoOps.dropCollection(LearningObject.class);
+        return true;
+        }catch(Exception e){
+            return false;
+        }
+    }
+    
 }

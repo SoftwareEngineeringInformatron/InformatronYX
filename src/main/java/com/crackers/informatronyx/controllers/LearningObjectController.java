@@ -9,9 +9,7 @@ import com.crackers.informatronyx.dto.LOTransactionDto;
 import com.crackers.informatronyx.dto.LearningObjectDto;
 import com.crackers.informatronyx.models.LearningElement;
 import com.crackers.informatronyx.models.LearningObject;
-import com.crackers.informatronyx.models.LearningObjectTransaction;
 import com.crackers.informatronyx.services.LearningObjectService;
-import com.crackers.informatronyx.services.UserService;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
@@ -112,16 +110,12 @@ public class LearningObjectController {
         return true;
     }
     
-    @RequestMapping("/upload/avaiableLOs")
+    @RequestMapping("/upload/availableLOs")
     public Boolean uploadAvaiableLearningObjects(
             @RequestBody LearningObjectDto[] objects,
             HttpServletResponse response
-            ) throws UnknownHostException 
+            ) 
     {
-        LearningObjectService service = new LearningObjectService ();
-        System.out.println("nisud");
-        loService.uploadAvaiableLearningObjects(objects);
-        
-        return true;
+        return loService.uploadAvaiableLearningObjects(objects);
     }
 }

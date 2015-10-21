@@ -52,41 +52,39 @@ public class UserService {
         if(userModel != null){
             if(userModel.isBlocked())
                 throw new Exception("User is blocked");
-            user.setData(userModel);
             userModel.setLastLogin(new Date());
             userModel.generateToken();
-            user.setData(updateUserLOs(userModel));
-            LearningObject [] objects = new LearningObject [userModel.getLiableLearningObjects().toArray().length];
-            objects = userModel.getLiableLearningObjects().toArray(objects);
-            for(int i=0;i<objects.length;i++){
-                for(LearningObject obj2: user.getLiableLearningObjects()){
-                    if(obj2.getId().equals(objects[i].getId())){
-                        objects[i].setTitle(obj2.getTitle());
-                        objects[i].setDescription(obj2.getDescription());
-                        objects[i].setLikes(obj2.getLikes());
-                        objects[i].setDownloads(obj2.getLikes());
-                        objects[i].setSequence(obj2.getSequence());
-                        objects[i].setSubject(obj2.getSubject());
-                        objects[i].setPrice(obj2.getPrice());
-                        objects[i].setUploadDate(obj2.getUploadDate());
+            user.setData(userModel);
+            user.setLiableLearningObjects(getUpdatedLOs(userModel));
+            List<LearningObject>objects = userModel.getLiableLearningObjects();
+            for(LearningObject obj:user.getLiableLearningObjects()){
+                for(int i=0;i<userModel.getLiableLearningObjects().size();i++)
+                    if(obj.getId().equals(userModel.getLiableLearningObjects().get(i).getId())){
+                            userModel.getLiableLearningObjects().get(i).setTitle(obj.getTitle());
+                            userModel.getLiableLearningObjects().get(i).setDescription(obj.getDescription());
+                            userModel.getLiableLearningObjects().get(i).setLikes(obj.getLikes());
+                            userModel.getLiableLearningObjects().get(i).setDownloads(obj.getLikes());
+                            userModel.getLiableLearningObjects().get(i).setSequence(obj.getSequence());
+                            userModel.getLiableLearningObjects().get(i).setSubject(obj.getSubject());
+                            userModel.getLiableLearningObjects().get(i).setPrice(obj.getPrice());
+                            userModel.getLiableLearningObjects().get(i).setUploadDate(obj.getUploadDate());
                     }
-                }
             }
+            try{dao.editUser(userModel);}catch(Exception e){ }
             user.setLastLogin(userModel.getLastLogin());
-            user.setToken(userModel.getToken());
-            if(!dao.editUser(userModel))
-                user = null;
+            user.setToken(userModel.getToken());            
         }
         return user;
     }
     
-    private User updateUserLOs(User user){
-        List<LearningObject> newLOs = new ArrayList<LearningObject>();
+    private List<LearningObject> getUpdatedLOs(User user){
+        List<LearningObject> newLOs = new ArrayList<>();
         for(LearningObject old : user.getLiableLearningObjects()){
-            newLOs.add(loDao.getLearningObjectById(old.getId()));
+            LearningObject temp = loDao.getLearningObjectById(old.getId());
+            if(temp!=null)
+                newLOs.add(temp);
         }
-        user.setLiableLearningObjects(newLOs);
-        return user;
+        return newLOs;
     }
     
     public boolean register(UserDto user) throws UnknownHostException{
