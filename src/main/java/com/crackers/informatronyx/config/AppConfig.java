@@ -32,9 +32,9 @@ public class AppConfig {
     public static final String DATABASE_DOWNLOADRECORD = "downloadrecord";
     public static final String DATABASE_LORI = "lori";
     public static final String DATABASE_QUIZ = "quiz";
-    public static final String LOOP_HOST = "192.168.254.100";//"192.168.254.104";
-    public static final int    LOOP_PORT = 8080;//"192.168.254.104";
-    public static final String LOOP_DOWNLOAD_LE = "http://"+LOOP_HOST+":"+LOOP_PORT+"/loop-XYZ/loop/downloadLE/";
+    public static final String LOOP_HOST = "192.168.254.102";//"192.168.254.104";
+    public static final int    LOOP_PORT = 8080;//29353//"192.168.254.104";
+    public static final String LOOP_DOWNLOAD_LE = "http://"+LOOP_HOST+":"+LOOP_PORT+"/loop-XYZ/loop/LE/downloadLE/";//"/DummyLoop/loop/learningElements/";
     
     
     // MONGODB CONFIGURATION

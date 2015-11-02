@@ -70,7 +70,7 @@ var app = angular.module("MyLOs",['ngStorage']).filter('object2Array', function(
     $scope.getTransactionOR = function(id) {
         for(var i=0; i < $scope.lotransactions.length; i++)
             if($scope.lotransactions[i].lo_id == id)
-                return $scope.lotransactions[i].officialReceipt;
+                return $scope.lotransactions[i].id;//officialReceipt;
     }
     
     $scope.getSortMethod = function() {

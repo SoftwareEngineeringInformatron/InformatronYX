@@ -45,6 +45,7 @@ app.controller("userHistory",function($sessionStorage,$scope,$rootScope,userServ
             if($scope.los[i].id == id) 
                 return $scope.los[i].title;
         }
+        return id;
     }
     
     $scope.getLOSubjectById = function(id) {

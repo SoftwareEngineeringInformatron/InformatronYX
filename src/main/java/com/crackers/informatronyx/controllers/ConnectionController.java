@@ -64,7 +64,8 @@ public class ConnectionController {
                 if(le==null)
                     response.sendError(404, "Learning Element does not exist.");
                 else
-                    sendLE(le.getId(),response);
+                    sendLE(le.getId()//+le.getFileExtension()
+                            ,response);
             }
         }
             
@@ -78,7 +79,8 @@ public class ConnectionController {
             SimpleClientHttpRequestFactory requestfactory = new SimpleClientHttpRequestFactory();
         ClientHttpResponse loopResponse;
         try {
-            ClientHttpRequest createRequest = requestfactory.createRequest(new URI(AppConfig.LOOP_DOWNLOAD_LE+leId), HttpMethod.GET);
+            ClientHttpRequest createRequest = requestfactory.createRequest(new URI(AppConfig.LOOP_DOWNLOAD_LE+leId//+"/"
+            ), HttpMethod.GET);
             loopResponse = createRequest.execute();
             try (InputStream fileStream = loopResponse.getBody()) {
                 String headerKey = "Content-Disposition";

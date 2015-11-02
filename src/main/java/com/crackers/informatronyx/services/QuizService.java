@@ -23,7 +23,7 @@ public class QuizService {
     @Autowired QuizDAO dao;
     public boolean record(QuizDto quiz) throws UnknownHostException {
         //try {
-            if(evaluate(quiz)) {
+            //if(evaluate(quiz)) {
             Quiz quizModel = new Quiz();
             quizModel.setScore(quiz.getScore());
             quizModel.setLo_name(quiz.getLo_name());
@@ -38,8 +38,8 @@ public class QuizService {
             quizModel.setUser_id(quiz.getUser_id());
             dao.addQuiz(quizModel);
             return true;
-            } else
-                return false;
+            //} else
+              //  return false;
         //} catch(NullPointerException ae) {System.out.println(ae.getMessage());}
         // finally{return false;}
     }
