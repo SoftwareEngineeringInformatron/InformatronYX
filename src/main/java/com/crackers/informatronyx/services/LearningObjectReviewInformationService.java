@@ -23,17 +23,17 @@ public class LearningObjectReviewInformationService {
     @Autowired LearningObjectReviewInformationDAO dao;
     
     public boolean submitReview(LearningObjectReviewInformationDto LORI) throws UnknownHostException {
-        if(evaluate(LORI)) {
             LearningObjectReviewInformation loriModel = new LearningObjectReviewInformation();
             loriModel.setEvaluation(LORI.getEvaluation());
             loriModel.setId(LORI.getId());
             loriModel.setLearningObjectId(LORI.getLearningObjectId());
             loriModel.setReviewId(LORI.getReviewId());
             loriModel.setSubject(LORI.getSubject());
-            dao.addLORI(loriModel);
+            if(!dao.exists(loriModel)) {
+                dao.addLORI(loriModel);
             return true;
             } else
-                return false;
+                return editReview(LORI);
     }
     
     public boolean editReview(LearningObjectReviewInformationDto LORI) throws UnknownHostException {
@@ -97,6 +97,6 @@ public class LearningObjectReviewInformationService {
     }
     
     private boolean evaluate(LearningObjectReviewInformationDto LORI) {
-        return true;
+        return LORI != null;
     }
 }

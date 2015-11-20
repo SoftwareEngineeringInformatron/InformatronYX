@@ -24,16 +24,13 @@ public class LearningObjectReviewInformationDAO {
     @Autowired MongoOperations loriMongoOps;
     public  boolean addLORI(LearningObjectReviewInformation LORI) throws UnknownHostException {
          try {
-         
          loriMongoOps.insert(LORI);
          return true;
-         
         } catch (NullPointerException ae) {System.out.println(ae.getMessage()); return false;}
     }
     
     public  boolean editLORI(LearningObjectReviewInformation LORI) throws UnknownHostException {
         try {
-         
          Update updateLORI = new Update();
          //updateLORI.set("id",LORI.getId());
          updateLORI.set("evaluation", LORI.getEvaluation());
@@ -51,6 +48,15 @@ public class LearningObjectReviewInformationDAO {
          
          loriMongoOps.remove(query(where("learningObjectId").is(LORI.getLearningObjectId()).andOperator(where("reviewId").is(LORI.getReviewId()))), LearningObjectReviewInformation.class);
          return true;
+         
+        } catch (NullPointerException ae) {System.out.println(ae.getMessage()); return false;}
+    }
+    
+    public boolean exists(LearningObjectReviewInformation LORI) throws UnknownHostException {
+        try {
+         boolean exists = false;
+         loriMongoOps.findOne(query(where("learningObjectId").is(LORI.getLearningObjectId()).andOperator(where("reviewId").is(LORI.getReviewId()))), LearningObjectReviewInformation.class);
+         return exists;
          
         } catch (NullPointerException ae) {System.out.println(ae.getMessage()); return false;}
     }
