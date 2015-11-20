@@ -278,7 +278,7 @@
                                     </div>
                                 </td>
                                 <td>{{lo.subject}}</td>
-                                <td>{{lo.uploadDate}}</td>
+                                <td>{{lo.uploadDate | date: "MMMM d yyyy"}}</td>
                                 <td><a href="#evaluation" class="" data-toggle="modal" ng-click="lori(lo.id)"><img class="lori" src="img/logo2-3.png"></a></td>
                                 <td>
                                     <button ng-if="lo.price <= credits.user && !userHasLO(lo)" title="Purchase" class="btn-download" data-toggle="modal" data-target="#purchase" ng-click="ModalInstance(lo)"><img src="img/check.png" ></i> &nbsp;</button>

@@ -25,25 +25,15 @@ var app = angular.module("MyLOs",['ngStorage']).filter('object2Array', function(
     function load(){
             userService.get($sessionStorage.user).success(function(response){
                 $scope.user  = response;
-                loadLOTransaction($scope.user);
              });
-             
             loRepository.getAllLO().success(
             function(response) {
                 $scope.los = response;
-                getOwnedLOs();
+                loadLOTransaction($scope.user);
             });
     }
     
-    function loadLOTransaction(user) {
-            loTransactionService.getLOTransactionHistory(user).success(
-                function(response) {
-                    for(var i=0; i < response.length;i++)
-                        $scope.lotransactions.push(response[i]);
-                    console.log("lo transactions loaded");
-                }
-            );
-    }
+    
     
     function getOwnedLOs() {
         if($scope.lotransactions != undefined || $scope.los != undefined) {
@@ -53,6 +43,17 @@ var app = angular.module("MyLOs",['ngStorage']).filter('object2Array', function(
                         $scope.ownedLOs.push($scope.los[i]);
             }
         }
+    }
+    
+    function loadLOTransaction(user) {
+            loTransactionService.getLOTransactionHistory(user).success(
+                function(response) {
+                    for(var i=0; i < response.length;i++)
+                        $scope.lotransactions.push(response[i]);
+                    console.log("lo transactions loaded");
+                    getOwnedLOs();
+                }
+            );
     }
     
     $scope.getTransactionAmount = function(id) {

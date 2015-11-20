@@ -45,8 +45,7 @@ public class DownloadRecordController {
     
     @RequestMapping("/addRecord")
     public boolean addRecord(@RequestBody DownloadRecordDto DR) throws UnknownHostException {
-        DRservice.addRecord(DR);
-        return true;
+        return DRservice.addRecord(DR);
     }
     
     @RequestMapping("/editRecord")

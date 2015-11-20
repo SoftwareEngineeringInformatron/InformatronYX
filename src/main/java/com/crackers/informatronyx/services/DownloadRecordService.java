@@ -6,8 +6,12 @@
 package com.crackers.informatronyx.services;
 
 import com.crackers.informatronyx.dao.DownloadRecordDAO;
+import com.crackers.informatronyx.dao.LearningObjectDAO;
+import com.crackers.informatronyx.dao.UserDAO;
 import com.crackers.informatronyx.dto.DownloadRecordDto;
 import com.crackers.informatronyx.models.DownloadRecord;
+import com.crackers.informatronyx.models.LearningObject;
+import com.crackers.informatronyx.models.User;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +25,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class DownloadRecordService {
     @Autowired DownloadRecordDAO dao;
+    @Autowired UserDAO userDAO;
+    @Autowired LearningObjectDAO loDAO;
     
     public List<DownloadRecordDto> getDownloadRecordsByUserID(String ID) throws UnknownHostException {
         List<DownloadRecord> records = dao.getAllDownloadRecordByUserID(ID);
@@ -89,7 +95,9 @@ public class DownloadRecordService {
             return false;
     }
     
-    private boolean evaluate(DownloadRecordDto record) {
-        return true;
+    private boolean evaluate(DownloadRecordDto record) throws UnknownHostException {
+        User user = userDAO.getUser(record.getUserId());
+        LearningObject lo =  loDAO.getLearningObjectById(record.getLearningObjectId());
+        return user != null && lo != null;
     }
 }
